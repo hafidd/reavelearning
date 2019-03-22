@@ -19,7 +19,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'postgres'),
+    'default' => env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,7 +65,6 @@ return [
             ]) : [],
         ],
 
-        /*
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),
@@ -79,8 +78,7 @@ return [
             'schema' => 'public',
             'sslmode' => 'prefer',
         ],
-        */
-
+        
         'pgsql' => array(
             'driver'   => 'pgsql',
             'host'     => $host,
