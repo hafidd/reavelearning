@@ -2,10 +2,21 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 export default class App extends Component {
+    constructor() {
+        super();
+        this.state = {
+            test: 'ngetes laravel react heroku'
+        }
+    }
+
+    componentDidMount() {
+        console.log(this.state.test);
+    }
+
     render() {
         return (
             <div className="container-fluid">
-                test laravel react 
+                nongol berarti sukses
             </div>
         );
     }
