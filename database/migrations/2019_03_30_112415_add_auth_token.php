@@ -14,7 +14,7 @@ class AddAuthToken extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('auth_token')->after('email');
+            $table->string('auth_token')->nullable()->after('email');
         });
     }
 
