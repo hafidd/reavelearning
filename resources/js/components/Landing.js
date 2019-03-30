@@ -21,27 +21,22 @@ export default class Landing extends Component {
     }
 
     componentDidMount() {
-        let state = localStorage["appState"];
-        if (state) {
-            let AppState = JSON.parse(state);
-            console.log(AppState);
-            this.setState({ isLoggedIn: AppState.isLoggedIn, user: AppState.user });
-        }
+        
     }
 
     isLoggedIn() {
-        const st = localStorage.getItem('appState')
+        const st = localStorage.getItem('token')
         if (st !== null) {
-            const token = JSON.parse(st).user.auth_token
+            const token = JSON.parse(st).token
             return jwtDecode(token).exp > Date.now() / 1000
         }
         return false
     }
 
-    setLoggedIn(user) {
-        const appState = { user: user }
-        localStorage["appState"] = JSON.stringify(appState);
-        this.setState({ user: user })
+    setLoggedIn(token) {
+        const data = { token: token }
+        localStorage["token"] = JSON.stringify(data);
+        this.props.history.push('/protected')
     }
 
     formChange(form) { this.setState({ form: form }) }

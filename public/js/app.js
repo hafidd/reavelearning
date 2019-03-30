@@ -44743,25 +44743,14 @@ function (_Component) {
 
   _createClass(Landing, [{
     key: "componentDidMount",
-    value: function componentDidMount() {
-      var state = localStorage["appState"];
-
-      if (state) {
-        var AppState = JSON.parse(state);
-        console.log(AppState);
-        this.setState({
-          isLoggedIn: AppState.isLoggedIn,
-          user: AppState.user
-        });
-      }
-    }
+    value: function componentDidMount() {}
   }, {
     key: "isLoggedIn",
     value: function isLoggedIn() {
-      var st = localStorage.getItem('appState');
+      var st = localStorage.getItem('token');
 
       if (st !== null) {
-        var token = JSON.parse(st).user.auth_token;
+        var token = JSON.parse(st).token;
         return jwt_decode__WEBPACK_IMPORTED_MODULE_1___default()(token).exp > Date.now() / 1000;
       }
 
@@ -44769,14 +44758,12 @@ function (_Component) {
     }
   }, {
     key: "setLoggedIn",
-    value: function setLoggedIn(user) {
-      var appState = {
-        user: user
+    value: function setLoggedIn(token) {
+      var data = {
+        token: token
       };
-      localStorage["appState"] = JSON.stringify(appState);
-      this.setState({
-        user: user
-      });
+      localStorage["token"] = JSON.stringify(data);
+      this.props.history.push('/protected');
     }
   }, {
     key: "formChange",
@@ -44900,10 +44887,10 @@ function (_React$Component) {
   }, {
     key: "isLoggedIn",
     value: function isLoggedIn() {
-      var st = localStorage.getItem('appState');
+      var st = localStorage.getItem('token');
 
       if (st !== null) {
-        var token = JSON.parse(st).user.auth_token;
+        var token = JSON.parse(st).token;
         return jwt_decode__WEBPACK_IMPORTED_MODULE_1___default()(token).exp > Date.now() / 1000;
       }
 
@@ -44912,7 +44899,7 @@ function (_React$Component) {
   }, {
     key: "logOut",
     value: function logOut() {
-      localStorage.removeItem('appState');
+      localStorage.removeItem('token');
       this.props.history.push('/');
     }
   }, {
@@ -44927,7 +44914,7 @@ function (_React$Component) {
         onClick: function onClick() {
           return _this2.logOut();
         }
-      }, "Log out"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "halo ", localStorage.getItem('appState')));
+      }, "Log out"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "halo ", localStorage.getItem('token')));
     }
   }]);
 
@@ -45022,7 +45009,7 @@ function (_React$Component) {
         isLoading: true
       });
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/user/login', this.state).then(function (response) {
-        if (response.data.success) {
+        if (!response.data.err) {
           _this2.setState({
             isLoading: false,
             err: '',
@@ -45030,14 +45017,16 @@ function (_React$Component) {
             password: ''
           });
 
-          _this2.props.setLoggedIn(response.data.data);
+          _this2.props.setLoggedIn(response.data.access_token);
         } else {
           _this2.setState({
-            err: response.data.data,
+            err: 'email / password salah',
             isLoading: false
           });
         }
       }).catch(function (err) {
+        console.log(err);
+
         _this2.setState({
           err: 'server error',
           isLoading: false

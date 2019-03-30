@@ -15,16 +15,16 @@ export default class ProtectedPage extends React.Component {
     }
 
     isLoggedIn() {
-        const st = localStorage.getItem('appState')
+        const st = localStorage.getItem('token')
         if (st !== null) {
-            const token = JSON.parse(st).user.auth_token
+            const token = JSON.parse(st).token
             return jwtDecode(token).exp > Date.now() / 1000
         }
         return false
     }
 
     logOut() {
-        localStorage.removeItem('appState');
+        localStorage.removeItem('token');
         this.props.history.push('/')
     }
 
@@ -33,7 +33,7 @@ export default class ProtectedPage extends React.Component {
         return (
             <div>
                 <button onClick={() => this.logOut()}>Log out</button>
-                <p>halo {localStorage.getItem('appState')}</p>
+                <p>halo {localStorage.getItem('token')}</p>
             </div>
         )
     }

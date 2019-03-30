@@ -26,17 +26,18 @@ export default class LoginForm extends React.Component {
         this.setState({ isLoading: true })
         axios.post('/api/user/login', this.state)
             .then(response => {
-                if (response.data.success) {
+                if (!response.data.err) {
                     this.setState({ isLoading: false, err: '', email: '', password: '' })
-                    this.props.setLoggedIn(response.data.data)
+                    this.props.setLoggedIn(response.data.access_token)
                 } else {
                     this.setState({
-                        err: response.data.data,
+                        err: 'email / password salah',
                         isLoading: false
                     })
                 }
             })
             .catch(err => {
+                console.log(err)
                 this.setState({
                     err: 'server error',
                     isLoading: false
