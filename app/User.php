@@ -54,6 +54,12 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return [];
+        return ['role' => $this->role, 'name' => $this->name];
+        $menus = RoleMenu::select(['name', 'path', 'component', 'order', 'parent'])
+            ->leftJoin('menus as m', 'm.id', '=', 'menu')
+            ->where('role', $this->role)
+            ->get();
+        return ['menus' => $menus];
     }
+
 }

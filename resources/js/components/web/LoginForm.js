@@ -1,6 +1,5 @@
 import React from 'react'
 import axios from 'axios'
-import { Row, Col } from 'reactstrap'
 
 export default class LoginForm extends React.Component {
     constructor(props) {
@@ -27,7 +26,7 @@ export default class LoginForm extends React.Component {
         axios.post('/api/user/login', this.state)
             .then(response => {
                 if (!response.data.err) {
-                    this.setState({ isLoading: false, err: '', email: '', password: '' })
+                    //this.setState({ isLoading: false, err: '', email: '', password: '' })
                     this.props.setLoggedIn(response.data.access_token)
                 } else {
                     this.setState({

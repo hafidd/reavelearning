@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import jwtDecode from 'jwt-decode'
-import { Redirect } from 'react-router-dom'
+import { Redirect, withRouter } from 'react-router-dom'
 
 import {
     Button,
@@ -10,9 +10,9 @@ import TopNav from './web/TopNav'
 import FormLogin from './web/LoginForm'
 import FormRegister from './web/RegisterForm'
 
-export default class Landing extends Component {
-    constructor() {
-        super();
+class Landing extends Component {
+    constructor(props) {
+        super(props);
         this.state = {
             form: '',
         }
@@ -21,8 +21,12 @@ export default class Landing extends Component {
     }
 
     componentDidMount() {
-        
-    }
+        if (this.isLoggedIn()) {
+            const role = jwtDecode(JSON.parse(localStorage.getItem('token')).token).role
+            this.props.updateRole(role, true)
+            this.props.history.push('/dashboard')
+        }
+    }    
 
     isLoggedIn() {
         const st = localStorage.getItem('token')
@@ -36,12 +40,15 @@ export default class Landing extends Component {
     setLoggedIn(token) {
         const data = { token: token }
         localStorage["token"] = JSON.stringify(data);
-        this.props.history.push('/protected')
+        this.props.updateRole(jwtDecode(data.token).role, true)
+        console.log('tendang ke dashbor')
+        this.props.history.push('/dashboard')
     }
 
     formChange(form) { this.setState({ form: form }) }
 
     home(form) {
+        //console.log('rendering landing')
         if (form === 'login') return <FormLogin formChange={this.formChange} setLoggedIn={this.setLoggedIn} />
         else if (form === 'register') return <FormRegister formChange={this.formChange} setLoggedIn={this.setLoggedIn} />
         return (
@@ -53,15 +60,15 @@ export default class Landing extends Component {
                         <span className="laravel-color"><strong>Laravel</strong>
                         </span> dan <span className="react-color"><strong>React</strong></span>
                     </h4>
-                    <Button onClick={() => this.formChange('login')} className="btn btn-lg btn-landing">Log In </Button>
-                    <p className="lead">Belum punya akun? <button onClick={() => this.formChange('register')} className="btn-register-link">Register</button></p>
+                    <Button onClick={() => this.formChange('login')} className="btn btn-lg btn-landing" disabled={this.props.fetch}>Log In </Button>
+                    <p className="lead">Belum punya akun? <button onClick={() => this.formChange('register')} className="btn-register-link" disabled={this.props.fetch}>Register</button></p>
                 </div>
             </div>
         )
     }
 
     render() {
-        if (this.isLoggedIn()) return <Redirect to='/protected' />
+        //if (this.isLoggedIn()) return <Redirect to='/protected' />
         return (
             <div className="app">
                 <TopNav />
@@ -72,3 +79,5 @@ export default class Landing extends Component {
         );
     }
 }
+
+export default withRouter(Landing)
