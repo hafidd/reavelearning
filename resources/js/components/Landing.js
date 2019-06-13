@@ -5,14 +5,14 @@ import Token from './../Token'
 import { Button } from 'reactstrap';
 
 import TopNav from './web/TopNav'
-import FormLogin from './web/LoginForm'
+import Login from './web/Login'
 import FormRegister from './web/RegisterForm'
 
 class Landing extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            form: '',
+            form: props.form,
         }
         this.formChange = this.formChange.bind(this)
         this.setLoggedIn = this.setLoggedIn.bind(this)
@@ -28,13 +28,17 @@ class Landing extends Component {
     setLoggedIn(token) {
         Token.setToken(token)
         this.props.updateRole(Token.getRole(), true)
-        this.props.history.push('/dashboard')
+        if (this.props.lastPath) {
+            this.props.history.push(this.props.lastPath)
+        } else {
+            this.props.history.push('/dashboard')
+        }
     }
 
     formChange(form) { this.setState({ form: form }) }
 
     home(form) {
-        if (form === 'login') return <FormLogin formChange={this.formChange} setLoggedIn={this.setLoggedIn} />
+        if (form === 'login') return <Login formChange={this.formChange} setLoggedIn={this.setLoggedIn} />
         else if (form === 'register') return <FormRegister formChange={this.formChange} setLoggedIn={this.setLoggedIn} />
         return (
             <div className="d-flex justify-content-center h-100">

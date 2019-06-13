@@ -32,7 +32,10 @@ class Mapel extends React.Component {
     }
 
     loadData = (values = {}, page = this.state.page, test = "") => {
-        if (!Token.cek()) this.props.logOut
+        if (!Token.cek()) {
+            this.props.logOut('mapel')
+            return
+        }
         this.setState({ fetch: true })
         axios.get('/api/mapel?page=' + page, {
             params: values,
@@ -59,7 +62,8 @@ class Mapel extends React.Component {
                 })
             }).catch(err => {
                 if (err.response.status === 401) {
-                    this.setState({ error: 'mohon login ulang', fetch: false })
+                    //this.setState({ error: 'mohon login ulang', fetch: false })
+                    this.props.logOut('mapel')
                 } else {
                     this.setState({ error: 'server error', fetch: false })
                 }

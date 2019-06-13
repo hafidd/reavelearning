@@ -1,7 +1,8 @@
 import React from 'react'
 import axios from 'axios'
+import LoginForm from './../form/LoginForm'
 
-export default class LoginForm extends React.Component {
+export default class Login extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -26,7 +27,6 @@ export default class LoginForm extends React.Component {
         axios.post('/api/user/login', this.state)
             .then(response => {
                 if (!response.data.err) {
-                    //this.setState({ isLoading: false, err: '', email: '', password: '' })
                     this.props.setLoggedIn(response.data.access_token)
                 } else {
                     this.setState({
@@ -54,26 +54,14 @@ export default class LoginForm extends React.Component {
                     </div>
                     <div className="card-body">
                         {this.state.err !== '' && <p className="form-error">{this.state.err}</p>}
-                        <form onSubmit={this.submitForm}>
-                            <div className="input-group form-group">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text"><i className="fas fa-user"></i></span>
-                                </div>
-                                <input type="email" placeholder="Email" name="email" value={this.state.email} onChange={this.handleChange} className="form-control" disabled={this.state.isLoading} />
-                            </div>
-                            <div className="input-group form-group">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text"><i className="fas fa-key"></i></span>
-                                </div>
-                                <input type="password" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange} className="form-control" disabled={this.state.isLoading} />
-                            </div>
-                            <div className="row align-items-center remember">
-                                <input type="checkbox" />Remember Me
-					            </div>
-                            <div className="form-group">
-                                <button className="btn float-right login_btn" disabled={this.state.isLoading}>{this.state.isLoading && <span className="fa fa-spinner fa-pulse"></span>} Log In</button>
-                            </div>
-                        </form>
+                        <LoginForm
+                            submitForm={this.submitForm}
+                            handleChange={this.handleChange}
+                            email={this.state.email}
+                            password={this.state.password}
+                            disabled={this.state.isLoading}
+                        />
+
                     </div>
                     <div className="card-footer card-login-footer">
                         <div className="d-flex justify-content-center links">

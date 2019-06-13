@@ -201,7 +201,12 @@ function (_React$Component) {
       var values = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _this.state.page;
       var test = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
-      if (!_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) _this.props.logOut;
+
+      if (!_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) {
+        _this.props.logOut('mapel');
+
+        return;
+      }
 
       _this.setState({
         fetch: true
@@ -235,10 +240,8 @@ function (_React$Component) {
         });
       })["catch"](function (err) {
         if (err.response.status === 401) {
-          _this.setState({
-            error: 'mohon login ulang',
-            fetch: false
-          });
+          //this.setState({ error: 'mohon login ulang', fetch: false })
+          _this.props.logOut('mapel');
         } else {
           _this.setState({
             error: 'server error',

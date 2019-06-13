@@ -33550,10 +33550,10 @@ function (_React$Component) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "logOut", function () {
+    _defineProperty(_assertThisInitialized(_this), "logOut", function (lastPath) {
       _Token__WEBPACK_IMPORTED_MODULE_3__["default"].del();
 
-      _this.updateRole(0, false);
+      _this.updateRole(0, false, lastPath);
     });
 
     _defineProperty(_assertThisInitialized(_this), "components", function (a) {
@@ -33576,10 +33576,11 @@ function (_React$Component) {
       }, "Loading...");
     });
 
-    _defineProperty(_assertThisInitialized(_this), "updateRole", function (role, loggedIn) {
+    _defineProperty(_assertThisInitialized(_this), "updateRole", function (role, loggedIn, lastPath) {
       _this.setState({
         userRole: role,
-        loggedIn: loggedIn
+        loggedIn: loggedIn,
+        lastPath: lastPath
       });
     });
 
@@ -33590,8 +33591,7 @@ function (_React$Component) {
       userRole: _Token__WEBPACK_IMPORTED_MODULE_3__["default"].getRole(),
       exp: '',
       loggedIn: false,
-      fetch: true,
-      updated: 0
+      fetch: true
     };
     _this.logOut = _this.logOut.bind(_assertThisInitialized(_this));
     return _this;
@@ -33647,7 +33647,8 @@ function (_React$Component) {
         component: function component() {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Landing, {
             updateRole: _this2.updateRole,
-            fetch: _this2.state.fetch
+            fetch: _this2.state.fetch,
+            lastPath: _this2.state.lastPath
           });
         }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(PrivateRoute, {
@@ -33689,7 +33690,8 @@ function (_React$Component) {
         component: function component() {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Landing, {
             updateRole: _this2.updateRole,
-            fetch: _this2.state.fetch
+            fetch: _this2.state.fetch,
+            lastPath: _this2.state.lastPath
           });
         }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(PrivateRoute, {

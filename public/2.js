@@ -15,7 +15,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Token__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../Token */ "./resources/js/Token.js");
 /* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
 /* harmony import */ var _web_TopNav__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./web/TopNav */ "./resources/js/components/web/TopNav.js");
-/* harmony import */ var _web_LoginForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./web/LoginForm */ "./resources/js/components/web/LoginForm.js");
+/* harmony import */ var _web_Login__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./web/Login */ "./resources/js/components/web/Login.js");
 /* harmony import */ var _web_RegisterForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./web/RegisterForm */ "./resources/js/components/web/RegisterForm.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -55,7 +55,7 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Landing).call(this, props));
     _this.state = {
-      form: ''
+      form: props.form
     };
     _this.formChange = _this.formChange.bind(_assertThisInitialized(_this));
     _this.setLoggedIn = _this.setLoggedIn.bind(_assertThisInitialized(_this));
@@ -75,7 +75,12 @@ function (_Component) {
     value: function setLoggedIn(token) {
       _Token__WEBPACK_IMPORTED_MODULE_2__["default"].setToken(token);
       this.props.updateRole(_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getRole(), true);
-      this.props.history.push('/dashboard');
+
+      if (this.props.lastPath) {
+        this.props.history.push(this.props.lastPath);
+      } else {
+        this.props.history.push('/dashboard');
+      }
     }
   }, {
     key: "formChange",
@@ -89,7 +94,7 @@ function (_Component) {
     value: function home(form) {
       var _this2 = this;
 
-      if (form === 'login') return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_web_LoginForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      if (form === 'login') return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_web_Login__WEBPACK_IMPORTED_MODULE_5__["default"], {
         formChange: this.formChange,
         setLoggedIn: this.setLoggedIn
       });else if (form === 'register') return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_web_RegisterForm__WEBPACK_IMPORTED_MODULE_6__["default"], {
@@ -138,10 +143,10 @@ function (_Component) {
 
 /***/ }),
 
-/***/ "./resources/js/components/web/LoginForm.js":
-/*!**************************************************!*\
-  !*** ./resources/js/components/web/LoginForm.js ***!
-  \**************************************************/
+/***/ "./resources/js/components/form/LoginForm.js":
+/*!***************************************************!*\
+  !*** ./resources/js/components/form/LoginForm.js ***!
+  \***************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -150,8 +155,78 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LoginForm; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+function LoginForm(props) {
+  var submitForm = props.submitForm,
+      handleChange = props.handleChange,
+      email = props.email,
+      password = props.password,
+      disabled = props.disabled;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: submitForm
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "input-group form-group"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "input-group-prepend"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "input-group-text"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-user"
+  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "email",
+    placeholder: "Email",
+    name: "email",
+    value: email || '',
+    onChange: handleChange,
+    className: "form-control",
+    disabled: disabled
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "input-group form-group"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "input-group-prepend"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "input-group-text"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-key"
+  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "password",
+    placeholder: "Password",
+    name: "password",
+    value: password || '',
+    onChange: handleChange,
+    className: "form-control",
+    disabled: disabled
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row align-items-center remember"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "checkbox"
+  }), "Remember Me"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn float-right login_btn",
+    disabled: disabled
+  }, disabled && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "fa fa-spinner fa-pulse"
+  }), " Log In")));
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/web/Login.js":
+/*!**********************************************!*\
+  !*** ./resources/js/components/web/Login.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Login; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _form_LoginForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../form/LoginForm */ "./resources/js/components/form/LoginForm.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -175,17 +250,18 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var LoginForm =
+
+var Login =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(LoginForm, _React$Component);
+  _inherits(Login, _React$Component);
 
-  function LoginForm(props) {
+  function Login(props) {
     var _this;
 
-    _classCallCheck(this, LoginForm);
+    _classCallCheck(this, Login);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(LoginForm).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Login).call(this, props));
     _this.state = {
       email: '',
       password: '',
@@ -197,7 +273,7 @@ function (_React$Component) {
     return _this;
   }
 
-  _createClass(LoginForm, [{
+  _createClass(Login, [{
     key: "handleChange",
     value: function handleChange(e) {
       this.setState(_defineProperty({}, e.target.name, e.target.value));
@@ -221,7 +297,6 @@ function (_React$Component) {
       });
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/user/login', this.state).then(function (response) {
         if (!response.data.err) {
-          //this.setState({ isLoading: false, err: '', email: '', password: '' })
           _this2.props.setLoggedIn(response.data.access_token);
         } else {
           _this2.setState({
@@ -260,52 +335,13 @@ function (_React$Component) {
         className: "card-body"
       }, this.state.err !== '' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "form-error"
-      }, this.state.err), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this.submitForm
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group form-group"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group-prepend"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "input-group-text"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-user"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "email",
-        placeholder: "Email",
-        name: "email",
-        value: this.state.email,
-        onChange: this.handleChange,
-        className: "form-control",
+      }, this.state.err), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form_LoginForm__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        submitForm: this.submitForm,
+        handleChange: this.handleChange,
+        email: this.state.email,
+        password: this.state.password,
         disabled: this.state.isLoading
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group form-group"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input-group-prepend"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "input-group-text"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-key"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "password",
-        placeholder: "Password",
-        name: "password",
-        value: this.state.password,
-        onChange: this.handleChange,
-        className: "form-control",
-        disabled: this.state.isLoading
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row align-items-center remember"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "checkbox"
-      }), "Remember Me"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-group"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn float-right login_btn",
-        disabled: this.state.isLoading
-      }, this.state.isLoading && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "fa fa-spinner fa-pulse"
-      }), " Log In")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-footer card-login-footer"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "d-flex justify-content-center links"
@@ -322,7 +358,7 @@ function (_React$Component) {
     }
   }]);
 
-  return LoginForm;
+  return Login;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 

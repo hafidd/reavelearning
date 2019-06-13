@@ -38,9 +38,9 @@ class Root extends React.Component {
             exp: '',
             loggedIn: false,
             fetch: true,
-            updated: 0
         }
         this.logOut = this.logOut.bind(this)
+
     }
 
     componentDidMount() {
@@ -58,9 +58,9 @@ class Root extends React.Component {
         }))
     }
 
-    logOut = () => {
+    logOut = (lastPath) => {
         Token.del()
-        this.updateRole(0, false)
+        this.updateRole(0, false, lastPath)
     }
 
     components = (a) => {
@@ -91,7 +91,7 @@ class Root extends React.Component {
                     {this.state.loggedIn ? <div style={{ marginLeft: this.state.expanded ? 240 : 64 }}>
                         <Menu menus={this.state.menus} userRole={this.state.userRole} expanded={this.state.expanded} toggle={this.toggle} logOut={this.logOut} />
                         <Switch>
-                            <Route exact path="/" name="Landing Page" component={() => <Landing updateRole={this.updateRole} fetch={this.state.fetch} />} />
+                            <Route exact path="/" name="Landing Page" component={() => <Landing updateRole={this.updateRole} fetch={this.state.fetch} lastPath={this.state.lastPath} />} />
                             <PrivateRoute role={this.state.userRole} roles={[{ id: 1 }, { id: 2 }, { id: 4 }]} path="/dashboard" component={() => <Dashboard updateRole={this.updateRole} userRole={this.state.userRole} />} />
                             <Route exact path="/ded" name="Ded" component={() => <Ded loggedIn={this.state.loggedIn} />} />
                             {routes}
@@ -99,7 +99,7 @@ class Root extends React.Component {
                         </Switch>
                     </div> :
                         <Switch>
-                            <Route exact path="/" name="Landing Page" component={() => <Landing updateRole={this.updateRole} fetch={this.state.fetch} />} />
+                            <Route exact path="/" name="Landing Page" component={() => <Landing updateRole={this.updateRole} fetch={this.state.fetch} lastPath={this.state.lastPath} />} />
                             <PrivateRoute role={this.state.userRole} roles={[{ id: 1 }, { id: 2 }]} path="/dashboard" component={() => <Dashboard updateRole={this.updateRole} userRole={this.state.userRole} />} />
                             <Route exact path="/ded" name="Ded" component={() => <Ded loggedIn={this.state.loggedIn} />} />
                             {routes}
@@ -124,8 +124,8 @@ class Root extends React.Component {
     }
 
     // log-in/out
-    updateRole = (role, loggedIn) => {
-        this.setState({ userRole: role, loggedIn: loggedIn })
+    updateRole = (role, loggedIn, lastPath) => {
+        this.setState({ userRole: role, loggedIn: loggedIn, lastPath: lastPath })
     }
 
 }
