@@ -2,53 +2,29 @@
 
 use Illuminate\Http\Request;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
- */
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+//jwt
+Route::group(['middleware' => ['jwt-auth']], function () {
+    // mapel
+    Route::apiResource('mapel', 'Api\MapelController');
 });
 
-//Route::group(['middleware' => ['jwt.auth', 'api-header']], function () {
-//all routes to protected resources are registered here
-//    Route::get('usesrs/list', function () {
-//        $users = App\User::all();
-//        $response = ['success' => true, 'data' => $users];
-//        return response()->json($response, 201);
-//    });
-//});
+// kategori
+Route::get('kategori', function () {return App\MapelKategori::get();});
 
-//Route::group(['middleware' => 'api-header'], function () {
-// The registration and login requests doesn't come with tokens
-// as users at that point have not been authenticated yet
-// Therefore the jwtMiddleware will be exclusive of them
-//Route::post('user/login', 'UserController@login');
-//Route::post('user/register', 'UserController@register');
-//});
-
-Route::get('/tesdata', function () {
-    $data = App\RoleMenu::with(['role', 'menu'])
-        ->where('role', 1)
-        ->get();
-    return $data;
-});
-
+// uer
 Route::post('user/register', 'AuthController@register');
 Route::post('user/login', 'AuthController@login');
-
-Route::apiResource('tesres', 'TabelTesController');
+Route::get('user/logout', 'AuthController@logout');
 
 // menus
 Route::get('app/menus', function () {
     //sleep(5);
     return App\Menu::with(['roles' => function ($query) {
         $query->get(['id']);
-    }])->get();
+    }])->orderBy('order', 'asc')->orderBy('name', 'asc')->get();
+});
+
+Route::apiResource('tesres', 'TabelTesController');
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
 });

@@ -42,7 +42,7 @@ class UserController extends Controller
                 'data' => ['id' => $user->id,
                     'auth_token' => $user->auth_token,
                     'name' => $user->name,
-                    'email'=>$user->email,
+                    'email' => $user->email,
                 ],
             ];
         } else {
@@ -82,5 +82,11 @@ class UserController extends Controller
             $response = ['success' => false, 'data' => 'Registrasi gagal'];
         }
         return response()->json($response, 201);
+    }
+
+    public function logout()
+    {
+        
+        return response()->json('x', 500);
     }
 }

@@ -11,11 +11,11 @@
     },
     "devDependencies": {
         "@babel/preset-react": "^7.0.0",
-        "axios": "^0.18.0",
+        "axios": "^0.19.0",
         "bootstrap": "^4.0.0",
         "cross-env": "^5.1",
-        "jquery": "^3.2",
-        "laravel-mix": "^4.0.7",
+        "jquery": "^3.4.1",
+        "laravel-mix": "^4.0.16",
         "lodash": "^4.17.5",
         "popper.js": "^1.12",
         "react": "^16.8.6",
@@ -30,6 +30,7 @@
         "@trendmicro/react-sidenav": "^0.4.5",
         "jwt-decode": "^2.2.0",
         "react-app-polyfill": "^0.2.2",
+        "react-paginate": "^6.3.0",
         "react-router-dom": "^5.0.0",
         "reactstrap": "^7.1.0"
     }

@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import jwtDecode from 'jwt-decode'
 import { Redirect, withRouter } from 'react-router-dom'
+import Token from './../Token'
 
-import {
-    Button,
-} from 'reactstrap';
+import { Button } from 'reactstrap';
 
 import TopNav from './web/TopNav'
 import FormLogin from './web/LoginForm'
@@ -21,34 +19,21 @@ class Landing extends Component {
     }
 
     componentDidMount() {
-        if (this.isLoggedIn()) {
-            const role = jwtDecode(JSON.parse(localStorage.getItem('token')).token).role
-            this.props.updateRole(role, true)
+        if (Token.getRole() !== 0) {
+            this.props.updateRole(Token.getRole(), true)
             this.props.history.push('/dashboard')
         }
-    }    
-
-    isLoggedIn() {
-        const st = localStorage.getItem('token')
-        if (st !== null) {
-            const token = JSON.parse(st).token
-            return jwtDecode(token).exp > Date.now() / 1000
-        }
-        return false
     }
 
     setLoggedIn(token) {
-        const data = { token: token }
-        localStorage["token"] = JSON.stringify(data);
-        this.props.updateRole(jwtDecode(data.token).role, true)
-        console.log('tendang ke dashbor')
+        Token.setToken(token)
+        this.props.updateRole(Token.getRole(), true)
         this.props.history.push('/dashboard')
     }
 
     formChange(form) { this.setState({ form: form }) }
 
     home(form) {
-        //console.log('rendering landing')
         if (form === 'login') return <FormLogin formChange={this.formChange} setLoggedIn={this.setLoggedIn} />
         else if (form === 'register') return <FormRegister formChange={this.formChange} setLoggedIn={this.setLoggedIn} />
         return (
@@ -68,7 +53,6 @@ class Landing extends Component {
     }
 
     render() {
-        //if (this.isLoggedIn()) return <Redirect to='/protected' />
         return (
             <div className="app">
                 <TopNav />
