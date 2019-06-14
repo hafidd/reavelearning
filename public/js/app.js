@@ -33496,6 +33496,9 @@ var Landing = Object(react__WEBPACK_IMPORTED_MODULE_0__["lazy"])(function () {
 var Dashboard = Object(react__WEBPACK_IMPORTED_MODULE_0__["lazy"])(function () {
   return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./components/Dashboard */ "./resources/js/components/Dashboard.js"));
 });
+var Profile = Object(react__WEBPACK_IMPORTED_MODULE_0__["lazy"])(function () {
+  return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./components/Profile */ "./resources/js/components/Profile.js"));
+});
 var TestAdmin = Object(react__WEBPACK_IMPORTED_MODULE_0__["lazy"])(function () {
   return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./components/admin/TestAdmin */ "./resources/js/components/admin/TestAdmin.js"));
 });
@@ -33556,17 +33559,10 @@ function (_React$Component) {
       _this.updateRole(0, false, lastPath);
     });
 
-    _defineProperty(_assertThisInitialized(_this), "components", function (a) {
-      var x = {
-        "TestAdmin": TestAdmin,
-        "Mapel": Mapel,
-        "TestAdmin2": TestAdmin2,
-        "TestSiswa": TestSiswa,
-        "Ded": Ded
-      };
-      var ComponentName = x[a];
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ComponentName, {
-        logOut: _this.logOut
+    _defineProperty(_assertThisInitialized(_this), "toggleSidebar", function () {
+      _this.setState({
+        sidebar: !_this.state.sidebar,
+        expanded: false
       });
     });
 
@@ -33591,8 +33587,17 @@ function (_React$Component) {
       userRole: _Token__WEBPACK_IMPORTED_MODULE_3__["default"].getRole(),
       exp: '',
       loggedIn: false,
-      fetch: true
+      fetch: true,
+      sidebar: true
     };
+    _this.components = {
+      TestAdmin: TestAdmin,
+      Mapel: Mapel,
+      TestAdmin2: TestAdmin2,
+      TestSiswa: TestSiswa,
+      Ded: Ded
+    };
+    console.log(_this.comments);
     _this.logOut = _this.logOut.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -33623,22 +33628,24 @@ function (_React$Component) {
           exact: true,
           path: route.path,
           name: route.name,
-          component: function component() {
-            return _this2.components(route.component);
-          }
+          component: _this2.components[route.component],
+          sidebar: _this2.state.sidebar,
+          toggleSidebar: _this2.toggleSidebar
         });
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Suspense"], {
         fallback: this.loading()
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["HashRouter"], null, this.state.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["HashRouter"], null, this.state.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         style: {
-          marginLeft: this.state.expanded ? 240 : 64
+          marginLeft: this.state.expanded ? 240 : this.state.sidebar ? 64 : 0
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_web_Menu__WEBPACK_IMPORTED_MODULE_6__["default"], {
         menus: this.state.menus,
         userRole: this.state.userRole,
         expanded: this.state.expanded,
         toggle: this.toggle,
+        show: this.state.sidebar,
+        toggleSidebar: this.toggleSidebar,
         logOut: this.logOut
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         exact: true,
@@ -33661,12 +33668,22 @@ function (_React$Component) {
           id: 4
         }],
         path: "/dashboard",
-        component: function component() {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Dashboard, {
-            updateRole: _this2.updateRole,
-            userRole: _this2.state.userRole
-          });
-        }
+        component: Dashboard,
+        sidebar: this.state.sidebar,
+        toggleSidebar: this.toggleSidebar
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(PrivateRoute, {
+        role: this.state.userRole,
+        roles: [{
+          id: 1
+        }, {
+          id: 2
+        }, {
+          id: 4
+        }],
+        path: "/profile",
+        component: Profile,
+        sidebar: this.state.sidebar,
+        toggleSidebar: this.toggleSidebar
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         exact: true,
         path: "/ded",
@@ -33683,7 +33700,7 @@ function (_React$Component) {
             fetch: _this2.state.fetch
           });
         }
-      }))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+      })))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         exact: true,
         path: "/",
         name: "Landing Page",
@@ -33769,7 +33786,7 @@ function PrivateRoute(_ref) {
   if (!ok) console.log('tendang');
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], _extends({}, rest, {
     render: function render(props) {
-      return ok ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Component, null) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
+      return ok ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Component, _extends({}, props, rest)) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
         to: {
           pathname: "/ded"
         }
@@ -33923,11 +33940,16 @@ function Menu(props) {
       key: menu.id,
       eventKey: menu.path
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2__["NavIcon"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "fa fa-fw fa-question-circle",
+      className: "fa fa-fw " + (menu.icon ? menu.icon : "fa-question-circle"),
       style: {
-        fontSize: '1.75em'
+        fontSize: '1.75em',
+        color: 'black'
       }
-    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2__["NavText"], null, menu.name), child);
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2__["NavText"], {
+      style: {
+        color: 'black'
+      }
+    }, menu.name), child);
   });
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2___default.a, {
     onSelect: function onSelect(selected) {
@@ -33937,26 +33959,75 @@ function Menu(props) {
     expanded: props.expanded,
     style: {
       position: "fixed",
-      background: 'rgb(174, 149, 155)'
+      background: 'rgb(174, 149, 155)',
+      display: props.show ? 'block' : 'none'
     }
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2___default.a.Toggle, null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2___default.a.Nav, {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2___default.a.Toggle, {
+    style: {
+      "float": 'right'
+    }
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2___default.a.Nav, {
     defaultSelected: ""
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2__["NavItem"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", {
+    style: {
+      borderColor: 'white',
+      borderRadius: '2px',
+      margin: 0
+    }
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2__["NavItem"], {
     eventKey: "dashboard",
     active: '/dashboard' === props.history.location.pathname ? true : false
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2__["NavIcon"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fa fa-fw fa-home",
     style: {
+      fontSize: '1.75em',
+      color: 'black'
+    }
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2__["NavText"], {
+    style: {
+      color: 'black'
+    }
+  }, "Dashboard")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2__["NavItem"], {
+    eventKey: "profile",
+    active: '/profile' === props.history.location.pathname ? true : false
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2__["NavIcon"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fa fa-fw fa-user",
+    style: {
+      fontSize: '1.75em',
+      color: 'black'
+    }
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2__["NavText"], {
+    style: {
+      color: 'black'
+    }
+  }, "Profil")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", {
+    style: {
+      borderColor: 'white',
+      borderRadius: '2px',
+      margin: 0
+    }
+  }), menus), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2___default.a.Nav, {
+    style: {
+      position: 'fixed',
+      bottom: 0,
+      width: '64px'
+    }
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2__["NavItem"], {
+    onClick: props.toggleSidebar
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2__["NavIcon"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fa fa-fw fa-angle-left",
+    style: {
       fontSize: '1.75em'
     }
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2__["NavText"], null, "Dashboard")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), menus, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2__["NavItem"], {
+  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2__["NavItem"], {
     onClick: props.logOut
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2__["NavIcon"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fa fa-fw fa-power-off",
     style: {
-      fontSize: '1.75em'
+      fontSize: '1.75em',
+      color: 'red'
     }
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_2__["NavText"], null, "Logout"))));
+  })))));
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Menu));

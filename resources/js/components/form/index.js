@@ -1,12 +1,12 @@
 import React from 'react'
 
 function TextForm(props) {
-    const { name, placeholder, handleChange, value, required, label, labelW, formW } = props
+    const { type, name, placeholder, handleChange, value, required, label, labelW, formW } = props
     return (
         <div className="form-group row">
             <label className={"col-md-" + (labelW || 2) + " col-form-label"}>{label}</label>
             <div className={"col-md-" + (formW || 6)}>
-                <input type="text" className="form-control" name={name} placeholder={placeholder} onChange={handleChange} value={value || ''} required={required} />
+                <input type={type || 'text'} className="form-control" name={name} placeholder={placeholder} onChange={handleChange} value={value || ''} required={required} />
             </div>
         </div>
     )
@@ -35,7 +35,7 @@ function RadioForm(props) {
             <div className={"col-md-" + (formW || 4)} style={{ marginTop: "0.4rem" }}>
                 {options.map(option => {
                     return (
-                        <div className="form-check form-check-inline">
+                        <div className="form-check form-check-inline" key={option[0]}>
                             <input className="form-check-input" type="radio" name={name} onChange={handleChange} value={option[0]} checked={value === option[0]} required={required} />
                             <label className="form-check-label">{option[1]}</label>
                         </div>

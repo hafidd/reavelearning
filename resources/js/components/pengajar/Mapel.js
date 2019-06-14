@@ -32,6 +32,7 @@ class Mapel extends React.Component {
     }
 
     loadData = (values = {}, page = this.state.page, test = "") => {
+        console.log('fetch')
         if (!Token.cek()) {
             this.props.logOut('mapel')
             return
@@ -90,8 +91,14 @@ class Mapel extends React.Component {
             <div className="container-fluid content bg-white">
                 <div className="row mt-3">
                     <div className="col-12">
-                        <h2 className="float-left">Mata Pelajaran</h2>
+                        <h2 className="float-left">
+                            <h2>
+                                {!this.props.sidebar && (<><button className="btn btn-sm btn-outline-dark" onClick={this.props.toggleSidebar}><i className="fas fa-bars"></i></button>{' '}</>)}
+                                Mata Pelajaran
+                            </h2>
+                        </h2>
                         {this.state.action === 'table' && <button onClick={() => this.toggle('add')} className="btn btn-primary float-right"><span className="fas fa-plus"></span></button>}
+                        {this.state.action !== 'table' && <button onClick={() => this.toggle('table')} className="btn btn-primary float-right"><span className="fas fa-arrow-left"></span></button>}
                     </div>
                 </div>
                 <hr />

@@ -99,7 +99,6 @@ const MapelForm = (props) => {
                 <div className="row">
                     <div className="col-md-12">
                         <h5 className="float-left"><b>{tipe === 'add' ? 'Tambah' : 'Ubah'} Data</b></h5>
-                        <button onClick={() => toggle('table')} className="btn btn-sm btn-outline-dark float-right"><span className="fas fa-arrow-left"></span> Kembali</button>
                     </div>
                 </div>
                 <div className="row" style={{ marginTop: '2%' }} >

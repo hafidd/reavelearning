@@ -8,6 +8,7 @@ import Menu from './components/web/Menu'
 
 const Landing = lazy(() => import('./components/Landing'))
 const Dashboard = lazy(() => import('./components/Dashboard'))
+const Profile = lazy(() => import('./components/Profile'))
 
 const TestAdmin = lazy(() => import('./components/admin/TestAdmin'));
 const TestSiswa = lazy(() => import('./components/siswa/TestSiswa'));
@@ -38,10 +39,19 @@ class Root extends React.Component {
             exp: '',
             loggedIn: false,
             fetch: true,
+            sidebar: true,
         }
+        this.components = {
+            TestAdmin,
+            Mapel,
+            TestAdmin2,
+            TestSiswa,
+            Ded,
+        }
+        console.log(this.comments)
         this.logOut = this.logOut.bind(this)
-
     }
+
 
     componentDidMount() {
         this.getMenus()
@@ -63,17 +73,7 @@ class Root extends React.Component {
         this.updateRole(0, false, lastPath)
     }
 
-    components = (a) => {
-        let x = {
-            "TestAdmin": TestAdmin,
-            "Mapel": Mapel,
-            "TestAdmin2": TestAdmin2,
-            "TestSiswa": TestSiswa,
-            "Ded": Ded,
-        }
-        const ComponentName = x[a]
-        return <ComponentName logOut={this.logOut} />;
-    }
+    toggleSidebar = () => { this.setState({ sidebar: !this.state.sidebar, expanded: false }) }
 
     render() {
         const routes = this.state.routes.map((route, i) =>
@@ -82,22 +82,29 @@ class Root extends React.Component {
                 roles={route.roles} key={i}
                 exact path={route.path}
                 name={route.name}
-                component={() => this.components(route.component)}
+                component={this.components[route.component]}
+                sidebar={this.state.sidebar}
+                toggleSidebar={this.toggleSidebar}
             />
         )
         return (
             <Suspense fallback={this.loading()}>
                 <HashRouter>
-                    {this.state.loggedIn ? <div style={{ marginLeft: this.state.expanded ? 240 : 64 }}>
-                        <Menu menus={this.state.menus} userRole={this.state.userRole} expanded={this.state.expanded} toggle={this.toggle} logOut={this.logOut} />
-                        <Switch>
-                            <Route exact path="/" name="Landing Page" component={() => <Landing updateRole={this.updateRole} fetch={this.state.fetch} lastPath={this.state.lastPath} />} />
-                            <PrivateRoute role={this.state.userRole} roles={[{ id: 1 }, { id: 2 }, { id: 4 }]} path="/dashboard" component={() => <Dashboard updateRole={this.updateRole} userRole={this.state.userRole} />} />
-                            <Route exact path="/ded" name="Ded" component={() => <Ded loggedIn={this.state.loggedIn} />} />
-                            {routes}
-                            <Route path="*" component={() => <ErrorNotFound fetch={this.state.fetch} />} />
-                        </Switch>
-                    </div> :
+                    {this.state.loggedIn ?
+                        <React.Fragment>
+                            <div style={{ marginLeft: this.state.expanded ? 240 : (this.state.sidebar ? 64 : 0) }}>
+                                <Menu menus={this.state.menus} userRole={this.state.userRole} expanded={this.state.expanded} toggle={this.toggle} show={this.state.sidebar} toggleSidebar={this.toggleSidebar} logOut={this.logOut} />
+                                <Switch>
+                                    <Route exact path="/" name="Landing Page" component={() => <Landing updateRole={this.updateRole} fetch={this.state.fetch} lastPath={this.state.lastPath} />} />
+                                    <PrivateRoute role={this.state.userRole} roles={[{ id: 1 }, { id: 2 }, { id: 4 }]} path="/dashboard" component={Dashboard} sidebar={this.state.sidebar} toggleSidebar={this.toggleSidebar} />
+                                    <PrivateRoute role={this.state.userRole} roles={[{ id: 1 }, { id: 2 }, { id: 4 }]} path="/profile" component={Profile} sidebar={this.state.sidebar} toggleSidebar={this.toggleSidebar} />
+                                    <Route exact path="/ded" name="Ded" component={() => <Ded loggedIn={this.state.loggedIn} />} />
+                                    {routes}
+                                    <Route path="*" component={() => <ErrorNotFound fetch={this.state.fetch} />} />
+                                </Switch>
+                            </div>
+                        </React.Fragment>
+                        :
                         <Switch>
                             <Route exact path="/" name="Landing Page" component={() => <Landing updateRole={this.updateRole} fetch={this.state.fetch} lastPath={this.state.lastPath} />} />
                             <PrivateRoute role={this.state.userRole} roles={[{ id: 1 }, { id: 2 }]} path="/dashboard" component={() => <Dashboard updateRole={this.updateRole} userRole={this.state.userRole} />} />
@@ -144,7 +151,7 @@ function PrivateRoute({ role, roles, component: Component, ...rest }) {
             {...rest}
             render={props =>
                 ok ? (
-                    <Component />
+                    <Component {...props} {...rest} />
                 ) : (
                         <Redirect to={{ pathname: "/ded" }} />
                     )

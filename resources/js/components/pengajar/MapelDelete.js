@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import Token from './../../Token'
 
 const MapelForm = (props) => {
     const { id, toggle, token } = props
@@ -9,14 +10,14 @@ const MapelForm = (props) => {
     const [message, setMessage] = useState();
 
     useEffect(() => {
-        if (!token()) {
-            setErrors(['terjadi kesalahan, mohon login ulang'])
+        if (!Token.cek()) {
+            toggle('table')
             return
         }
         setLoading(true)
         axios.get('/api/mapel/' + id, {
             headers: {
-                Authorization: 'Bearer ' + token()
+                Authorization: 'Bearer ' + Token.getToken()
             }
         }).then(res => {
             setData(res.data.data)
@@ -25,12 +26,15 @@ const MapelForm = (props) => {
     }, []);
 
     function submit() {
-        if (!token()) toggle('tabel')
+        if (!Token.cek()) {
+            toggle('table')
+            return
+        }
         if (!confirm('Hapus data?')) return
         setLoading(true)
         axios.delete('/api/mapel/' + id, {
             headers: {
-                Authorization: 'Bearer ' + token()
+                Authorization: 'Bearer ' + token.getToken()
             }
         })
             .then(() => toggle('table', '', 'data berhasil dihapus'))
@@ -46,7 +50,6 @@ const MapelForm = (props) => {
                 <div className="row">
                     <div className="col-md-12">
                         <h5 className="float-left"><b>Hapus Data</b></h5>
-                        <button onClick={() => toggle('table')} className="btn btn-sm btn-outline-dark float-right"><span className="fas fa-arrow-left"></span> Kembali</button>
                     </div>
                 </div>
                 <div className="row" style={{ marginTop: '2%' }} >

@@ -18,7 +18,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function TextForm(props) {
-  var name = props.name,
+  var type = props.type,
+      name = props.name,
       placeholder = props.placeholder,
       handleChange = props.handleChange,
       value = props.value,
@@ -33,7 +34,7 @@ function TextForm(props) {
   }, label), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-md-" + (formW || 6)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "text",
+    type: type || 'text',
     className: "form-control",
     name: name,
     placeholder: placeholder,
@@ -95,7 +96,8 @@ function RadioForm(props) {
     }
   }, options.map(function (option) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "form-check form-check-inline"
+      className: "form-check form-check-inline",
+      key: option[0]
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "form-check-input",
       type: "radio",
@@ -201,6 +203,7 @@ function (_React$Component) {
       var values = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _this.state.page;
       var test = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+      console.log('fetch');
 
       if (!_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) {
         _this.props.logOut('mapel');
@@ -316,13 +319,25 @@ function (_React$Component) {
         className: "col-12"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "float-left"
-      }, "Mata Pelajaran"), this.state.action === 'table' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, !this.props.sidebar && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-sm btn-outline-dark",
+        onClick: this.props.toggleSidebar
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-bars"
+      })), ' '), "Mata Pelajaran")), this.state.action === 'table' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
           return _this2.toggle('add');
         },
         className: "btn btn-primary float-right"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "fas fa-plus"
+      })), this.state.action !== 'table' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this2.toggle('table');
+        },
+        className: "btn btn-primary float-right"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "fas fa-arrow-left"
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.state.message !== '' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "alert alert-info",
         role: "alert"
@@ -411,6 +426,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Token__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../Token */ "./resources/js/Token.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -418,6 +434,7 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -448,15 +465,15 @@ var MapelForm = function MapelForm(props) {
       setMessage = _useState8[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (!token()) {
-      setErrors(['terjadi kesalahan, mohon login ulang']);
+    if (!_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) {
+      toggle('table');
       return;
     }
 
     setLoading(true);
     axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/mapel/' + id, {
       headers: {
-        Authorization: 'Bearer ' + token()
+        Authorization: 'Bearer ' + _Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()
       }
     }).then(function (res) {
       setData(res.data.data);
@@ -467,12 +484,16 @@ var MapelForm = function MapelForm(props) {
   }, []);
 
   function submit() {
-    if (!token()) toggle('tabel');
+    if (!_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) {
+      toggle('table');
+      return;
+    }
+
     if (!confirm('Hapus data?')) return;
     setLoading(true);
     axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]('/api/mapel/' + id, {
       headers: {
-        Authorization: 'Bearer ' + token()
+        Authorization: 'Bearer ' + token.getToken()
       }
     }).then(function () {
       return toggle('table', '', 'data berhasil dihapus');
@@ -495,14 +516,7 @@ var MapelForm = function MapelForm(props) {
     className: "col-md-12"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
     className: "float-left"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Hapus Data")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: function onClick() {
-      return toggle('table');
-    },
-    className: "btn btn-sm btn-outline-dark float-right"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "fas fa-arrow-left"
-  }), " Kembali"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Hapus Data")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "row",
     style: {
       marginTop: '2%'
@@ -686,14 +700,7 @@ var MapelForm = function MapelForm(props) {
     className: "col-md-12"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
     className: "float-left"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, tipe === 'add' ? 'Tambah' : 'Ubah', " Data")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: function onClick() {
-      return toggle('table');
-    },
-    className: "btn btn-sm btn-outline-dark float-right"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "fas fa-arrow-left"
-  }), " Kembali"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, tipe === 'add' ? 'Tambah' : 'Ubah', " Data")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "row",
     style: {
       marginTop: '2%'

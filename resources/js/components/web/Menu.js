@@ -20,9 +20,9 @@ function Menu(props) {
         return (
             <NavItem key={menu.id} eventKey={menu.path}>
                 <NavIcon>
-                    <i className="fa fa-fw fa-question-circle" style={{ fontSize: '1.75em' }} />
+                    <i className={"fa fa-fw " + (menu.icon ? menu.icon : "fa-question-circle")} style={{ fontSize: '1.75em', color: 'black' }} />
                 </NavIcon>
-                <NavText>{menu.name}</NavText>
+                <NavText style={{ color: 'black' }}>{menu.name}</NavText>
                 {child}
             </NavItem>
         )
@@ -35,27 +35,40 @@ function Menu(props) {
             }}
             onToggle={props.toggle}
             expanded={props.expanded}
-            style={{ position: "fixed", background: 'rgb(174, 149, 155)' }}
+            style={{ position: "fixed", background: 'rgb(174, 149, 155)', display: (props.show ? 'block' : 'none') }}
         >
-            <SideNav.Toggle />
+            <SideNav.Toggle style={{ float: 'right' }} />
             <SideNav.Nav defaultSelected="">
+                <hr style={{ borderColor: 'white', borderRadius: '2px', margin: 0 }} />
                 <NavItem eventKey='dashboard' active={'/dashboard' === props.history.location.pathname ? true : false}>
                     <NavIcon>
-                        <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
+                        <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em', color: 'black' }} />
                     </NavIcon>
-                    <NavText>Dashboard</NavText>
+                    <NavText style={{ color: 'black' }}>Dashboard</NavText>
                 </NavItem>
-                <hr />
+                <NavItem eventKey='profile' active={'/profile' === props.history.location.pathname ? true : false}>
+                    <NavIcon>
+                        <i className="fa fa-fw fa-user" style={{ fontSize: '1.75em', color: 'black' }} />
+                    </NavIcon>
+                    <NavText style={{ color: 'black' }}>Profil</NavText>
+                </NavItem>
+                <hr style={{ borderColor: 'white', borderRadius: '2px', margin: 0 }} />
                 {menus}
-                <hr />
+            </SideNav.Nav>
+
+            <SideNav.Nav style={{ position: 'fixed', bottom: 0, width: '64px' }}>
+                <NavItem onClick={props.toggleSidebar}>
+                    <NavIcon>
+                        <i className="fa fa-fw fa-angle-left" style={{ fontSize: '1.75em' }} />
+                    </NavIcon>
+                </NavItem>
                 <NavItem onClick={props.logOut}>
                     <NavIcon>
-                        <i className="fa fa-fw fa-power-off" style={{ fontSize: '1.75em' }} />
+                        <i className="fa fa-fw fa-power-off" style={{ fontSize: '1.75em', color: 'red' }} />
                     </NavIcon>
-                    <NavText>Logout</NavText>
                 </NavItem>
             </SideNav.Nav>
-        </SideNav>
+        </SideNav >
     )
 }
 
