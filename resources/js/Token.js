@@ -2,38 +2,41 @@ import jwtDecode from 'jwt-decode'
 
 export default class Token {
     static cek() {
-        const st = localStorage.getItem('token')
-        if (st !== null) {
-            const token = JSON.parse(st).token
-            return jwtDecode(token).exp > Date.now() / 1000
+        try {
+            const token = jwtDecode(JSON.parse(localStorage.getItem('token')))
+            return token.exp > Date.now() / 1000
+        } catch (e) {
+            return false
         }
-        return false
     }
 
     static setToken(token) {
-        const data = { token: token }
-        localStorage["token"] = JSON.stringify(data);
+        localStorage["token"] = JSON.stringify(token);
     }
 
-    static getToken(token) {
-        return JSON.parse(localStorage.getItem('token')).token
+    static getToken() {
+        if (this.cek())
+            return JSON.parse(localStorage.getItem('token'))
+        return false
     }
 
     static getRole() {
         if (this.cek()) {
-            return jwtDecode(JSON.parse(localStorage.getItem('token')).token).role
+            return jwtDecode(JSON.parse(localStorage.getItem('token'))).role
         }
         return 0
     }
 
+    static setUser(user) {
+        localStorage["user"] = JSON.stringify(user);
+    }
+
     static getUser() {
-        if (this.cek()) {
-            return jwtDecode(JSON.parse(localStorage.getItem('token')).token)
-        }
-        return false
+        return JSON.parse(localStorage.getItem('user'))
     }
 
     static del() {
         localStorage.removeItem('token')
+        localStorage.removeItem('user')
     }
 }

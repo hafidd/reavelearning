@@ -30,8 +30,10 @@
         "@trendmicro/react-sidenav": "^0.4.5",
         "jwt-decode": "^2.2.0",
         "react-app-polyfill": "^0.2.2",
+        "react-custom-scrollbars": "^4.2.1",
         "react-paginate": "^6.3.0",
         "react-router-dom": "^5.0.0",
-        "reactstrap": "^7.1.0"
+        "reactstrap": "^7.1.0",
+        "simplebar": "^4.0.0"
     }
 }

@@ -2,8 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 import MyArrayHelper from './helpers/MyArrayHelper'
 import Token from './Token'
-import axios from 'axios';
-import jwtDecode from 'jwt-decode'
+import axios from 'axios'
 import Menu from './components/web/Menu'
 
 const Landing = lazy(() => import('./components/Landing'))
@@ -35,6 +34,7 @@ class Root extends React.Component {
             routes: [],
             menus: [],
             expanded: false,
+            user: {},
             userRole: Token.getRole(),
             exp: '',
             loggedIn: false,
@@ -48,18 +48,21 @@ class Root extends React.Component {
             TestSiswa,
             Ded,
         }
-        console.log(this.comments)
         this.logOut = this.logOut.bind(this)
     }
-
 
     componentDidMount() {
         this.getMenus()
         if (!Token.cek()) {
-            this.logOut()
+            this.logOut
         } else {
-            this.setState({ loggedIn: true })
+            this.setState({ loggedIn: true, user: Token.getUser() })
         }
+    }
+
+    setState(newState) {
+        //console.log('set state', newState);
+        super.setState(newState);
     }
 
     toggle = () => {
@@ -68,25 +71,39 @@ class Root extends React.Component {
         }))
     }
 
-    logOut = (lastPath) => {
+    logOut = (lastPath, force = false) => {
+        console.log('logout')
+        if (!force) {
+            if (!confirm('Logout ?')) return
+        }
         Token.del()
         this.updateRole(0, false, lastPath)
     }
 
     toggleSidebar = () => { this.setState({ sidebar: !this.state.sidebar, expanded: false }) }
 
+    updateUser = (user) => {
+        Token.setUser({ id: Token.getUser().id, email: user.email, name: user.name, jk: user.jk })
+        this.setState({ user: Token.getUser() })
+    }
+
     render() {
-        const routes = this.state.routes.map((route, i) =>
-            <PrivateRoute
-                role={this.state.userRole}
-                roles={route.roles} key={i}
-                exact path={route.path}
-                name={route.name}
-                component={this.components[route.component]}
-                sidebar={this.state.sidebar}
-                toggleSidebar={this.toggleSidebar}
-            />
-        )
+        const routes = this.state.routes.map((route, i) => {
+            if (['#', 'profile'].indexOf(route.path) === -1) {
+                return (
+                    <PrivateRoute
+                        role={this.state.userRole}
+                        roles={route.roles} key={i}
+                        exact path={'/' + route.path}
+                        name={route.name}
+                        component={this.components[route.component]}
+                        logOut={this.logOut}
+                        sidebar={this.state.sidebar}
+                        toggleSidebar={this.toggleSidebar}
+                    />
+                )
+            }
+        })
         return (
             <Suspense fallback={this.loading()}>
                 <HashRouter>
@@ -96,8 +113,8 @@ class Root extends React.Component {
                                 <Menu menus={this.state.menus} userRole={this.state.userRole} expanded={this.state.expanded} toggle={this.toggle} show={this.state.sidebar} toggleSidebar={this.toggleSidebar} logOut={this.logOut} />
                                 <Switch>
                                     <Route exact path="/" name="Landing Page" component={() => <Landing updateRole={this.updateRole} fetch={this.state.fetch} lastPath={this.state.lastPath} />} />
-                                    <PrivateRoute role={this.state.userRole} roles={[{ id: 1 }, { id: 2 }, { id: 4 }]} path="/dashboard" component={Dashboard} sidebar={this.state.sidebar} toggleSidebar={this.toggleSidebar} />
-                                    <PrivateRoute role={this.state.userRole} roles={[{ id: 1 }, { id: 2 }, { id: 4 }]} path="/profile" component={Profile} sidebar={this.state.sidebar} toggleSidebar={this.toggleSidebar} />
+                                    <PrivateRoute role={this.state.userRole} allRoles={true} path="/dashboard" component={Dashboard} user={this.state.user} sidebar={this.state.sidebar} toggleSidebar={this.toggleSidebar} />
+                                    <PrivateRoute role={this.state.userRole} allRoles={true} path="/profile" component={Profile} user={this.state.user} updateUser={this.updateUser} sidebar={this.state.sidebar} toggleSidebar={this.toggleSidebar} />
                                     <Route exact path="/ded" name="Ded" component={() => <Ded loggedIn={this.state.loggedIn} />} />
                                     {routes}
                                     <Route path="*" component={() => <ErrorNotFound fetch={this.state.fetch} />} />
@@ -107,7 +124,8 @@ class Root extends React.Component {
                         :
                         <Switch>
                             <Route exact path="/" name="Landing Page" component={() => <Landing updateRole={this.updateRole} fetch={this.state.fetch} lastPath={this.state.lastPath} />} />
-                            <PrivateRoute role={this.state.userRole} roles={[{ id: 1 }, { id: 2 }]} path="/dashboard" component={() => <Dashboard updateRole={this.updateRole} userRole={this.state.userRole} />} />
+                            <PrivateRoute role={this.state.userRole} allRoles={true} path="/dashboard" component={Dashboard} sidebar={this.state.sidebar} toggleSidebar={this.toggleSidebar} />
+                            <PrivateRoute role={this.state.userRole} allRoles={true} path="/profile" component={Profile} sidebar={this.state.sidebar} toggleSidebar={this.toggleSidebar} />
                             <Route exact path="/ded" name="Ded" component={() => <Ded loggedIn={this.state.loggedIn} />} />
                             {routes}
                             <Route path="*" component={() => <ErrorNotFound fetch={this.state.fetch} />} />
@@ -120,32 +138,41 @@ class Root extends React.Component {
 
     loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
-    // fetch menu
     getMenus() {
         axios.get('/api/app/menus')
             .then(res => {
+                console.log(res.data)
                 const menus = MyArrayHelper.flatToHierarchy(res.data)
+                console.log(menus)
                 localStorage['menus'] = JSON.stringify(menus);
                 this.setState({ menus: menus, routes: res.data, fetch: false })
             })
     }
 
-    // log-in/out
-    updateRole = (role, loggedIn, lastPath) => {
-        this.setState({ userRole: role, loggedIn: loggedIn, lastPath: lastPath })
+    updateRole = (role, loggedIn, lastPath, user) => {
+        if (loggedIn) {
+            this.setState({
+                userRole: role, loggedIn: loggedIn, lastPath: lastPath, user: user
+            })
+        } else {
+            this.setState({
+                userRole: role, loggedIn: loggedIn, lastPath: lastPath,
+            })
+        }
     }
 
 }
 export default Root
 
-// private route
-function PrivateRoute({ role, roles, component: Component, ...rest }) {
+function PrivateRoute({ role, roles = [], allRoles, component: Component, ...rest }) {
     let ok = false;
-    const allowed = roles.map(a => { return a.id })
-    if (allowed.indexOf(role) !== -1) {
+    if (allRoles && role != 0) {
         ok = true;
+    } else {
+        const allowed = roles.map(a => { return a.id })
+        if (allowed.indexOf(role) !== -1)
+            ok = true;
     }
-    if (!ok) console.log('tendang')
     return (
         <Route
             {...rest}

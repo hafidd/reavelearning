@@ -39,14 +39,13 @@ class UserController extends Controller
             $user->save();
             $response = [
                 'success' => true,
-                'data' => ['id' => $user->id,
+                'data' => [
+                    'user' => $user,
                     'auth_token' => $user->auth_token,
-                    'name' => $user->name,
-                    'email' => $user->email,
                 ],
             ];
         } else {
-            $response = ['success' => false, 'data' => 'Email atau password tidak terdaftar'];
+            $response = ['success' => false, 'data' => 'Emaixl atau password tidak terdaftar'];
         }
         return response()->json($response, 201);
     }
@@ -86,7 +85,7 @@ class UserController extends Controller
 
     public function logout()
     {
-        
+
         return response()->json('x', 500);
     }
 }

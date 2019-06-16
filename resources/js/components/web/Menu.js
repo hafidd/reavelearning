@@ -7,11 +7,12 @@ function Menu(props) {
     const menus = props.menus.map(menu => {
         const allowed = menu.roles.map(a => { return a.id })
         if (allowed.indexOf(props.userRole) === -1) return
+        if (['profile'].indexOf(menu.path) !== -1) return
         let child = []
         if (menu.child !== undefined) {
             child = menu.child.map(c => {
                 return (
-                    <NavItem key={c.id} eventKey={c.path.substr(1)} active={c.path === props.history.location.pathname ? true : false}>
+                    <NavItem key={c.id} eventKey={c.path} active={('/' + c.path) === props.history.location.pathname ? true : false}>
                         <NavText style={{ marginLeft: 20 }}>{c.name}</NavText>
                     </NavItem>
                 )
@@ -35,10 +36,10 @@ function Menu(props) {
             }}
             onToggle={props.toggle}
             expanded={props.expanded}
-            style={{ position: "fixed", background: 'rgb(174, 149, 155)', display: (props.show ? 'block' : 'none') }}
+            style={{ position: "fixed", marginBottom: 100, background: 'rgb(174, 149, 155)', display: (props.show ? 'block' : 'none') }}
         >
             <SideNav.Toggle style={{ float: 'right' }} />
-            <SideNav.Nav defaultSelected="">
+            <SideNav.Nav>
                 <hr style={{ borderColor: 'white', borderRadius: '2px', margin: 0 }} />
                 <NavItem eventKey='dashboard' active={'/dashboard' === props.history.location.pathname ? true : false}>
                     <NavIcon>
@@ -56,19 +57,19 @@ function Menu(props) {
                 {menus}
             </SideNav.Nav>
 
-            <SideNav.Nav style={{ position: 'fixed', bottom: 0, width: '64px' }}>
+            <SideNav.Nav style={{ width: (props.expanded ? 240 : 64), paddingTop: 70, zIndex: -1, position: 'fixed', bottom: 0, background: 'rgb(174, 149, 155)', }}>
                 <NavItem onClick={props.toggleSidebar}>
-                    <NavIcon>
+                    <NavIcon style={{ float: (props.expanded ? 'right' : 'none') }}>
                         <i className="fa fa-fw fa-angle-left" style={{ fontSize: '1.75em' }} />
                     </NavIcon>
                 </NavItem>
                 <NavItem onClick={props.logOut}>
-                    <NavIcon>
+                    <NavIcon style={{ float: (props.expanded ? 'right' : 'none') }}>
                         <i className="fa fa-fw fa-power-off" style={{ fontSize: '1.75em', color: 'red' }} />
                     </NavIcon>
                 </NavItem>
             </SideNav.Nav>
-        </SideNav >
+        </SideNav>
     )
 }
 

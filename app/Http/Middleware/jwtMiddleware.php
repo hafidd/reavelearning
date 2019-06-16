@@ -10,6 +10,7 @@ class jwtMiddleware
 {
     public function handle($request, Closure $next)
     {
+       
         //return response()->json(['error' => 'unauthorized '], 401);
         try {
             $user = JWTAuth::parseToken()->authenticate();
@@ -22,13 +23,14 @@ class jwtMiddleware
                 return response()->json(['error' => 'no token no party'], 401);
             }
         }
-        $path = '/' . explode('/', $request->getPathInfo())[2];
+        $path = explode('/', $request->getPathInfo())[2];
         // get roles by path
         $roles = DB::table('menu_role')
             ->join('menus', 'menus.id', '=', 'menu')
             ->join('roles', 'roles.id', '=', 'role')
             ->select('role')
             ->where('path', '=', $path)
+            ->orWhereJsonContains('paths', $path)
             ->pluck('role')
             ->toArray();
         // cek

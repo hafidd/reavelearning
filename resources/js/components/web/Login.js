@@ -27,7 +27,7 @@ export default class Login extends React.Component {
         axios.post('/api/user/login', this.state)
             .then(response => {
                 if (!response.data.err) {
-                    this.props.setLoggedIn(response.data.access_token)
+                    this.props.setLoggedIn(response.data)
                 } else {
                     this.setState({
                         err: 'email / password salah',

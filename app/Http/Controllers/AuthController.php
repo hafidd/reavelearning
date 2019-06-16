@@ -23,23 +23,23 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only(['email', 'password']);
-
         if (!$token = auth()->attempt($credentials)) {
-            //return response()->json(['error' => 'Unauthorized'], 401);
-            return $this->respondWithToken($token, true);
+            return $this->respondWithToken($token, null, true);
         }
-
-        return $this->respondWithToken($token);
+        $user = User::select('id', 'name', 'email', 'jk')->where('email', $request->email)->first();
+        return $this->respondWithToken($token, $user);
     }
 
-    public function logout(){
+    public function logout()
+    {
         auth()->logout();
     }
 
-    protected function respondWithToken($token, $err = false)
+    protected function respondWithToken($token, $user, $err = false)
     {
         return response()->json([
             'access_token' => $token,
+            'user' => $user,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
             'err' => $err,

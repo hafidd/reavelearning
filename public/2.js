@@ -66,15 +66,16 @@ function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       if (_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getRole() !== 0) {
-        this.props.updateRole(_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getRole(), true);
+        this.props.updateRole(_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getRole(), true, '', _Token__WEBPACK_IMPORTED_MODULE_2__["default"].getUser());
         this.props.history.push('/dashboard');
       }
     }
   }, {
     key: "setLoggedIn",
-    value: function setLoggedIn(token) {
-      _Token__WEBPACK_IMPORTED_MODULE_2__["default"].setToken(token);
-      this.props.updateRole(_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getRole(), true);
+    value: function setLoggedIn(data) {
+      _Token__WEBPACK_IMPORTED_MODULE_2__["default"].setToken(data.access_token);
+      _Token__WEBPACK_IMPORTED_MODULE_2__["default"].setUser(data.user);
+      this.props.updateRole(_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getRole(), true, this.props.lastPath, data.user);
 
       if (this.props.lastPath) {
         this.props.history.push(this.props.lastPath);
@@ -297,7 +298,7 @@ function (_React$Component) {
       });
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/user/login', this.state).then(function (response) {
         if (!response.data.err) {
-          _this2.props.setLoggedIn(response.data.access_token);
+          _this2.props.setLoggedIn(response.data);
         } else {
           _this2.setState({
             err: 'email / password salah',

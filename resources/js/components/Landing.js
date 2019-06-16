@@ -20,14 +20,15 @@ class Landing extends Component {
 
     componentDidMount() {
         if (Token.getRole() !== 0) {
-            this.props.updateRole(Token.getRole(), true)
+            this.props.updateRole(Token.getRole(), true, '', Token.getUser())
             this.props.history.push('/dashboard')
         }
     }
 
-    setLoggedIn(token) {
-        Token.setToken(token)
-        this.props.updateRole(Token.getRole(), true)
+    setLoggedIn(data) {
+        Token.setToken(data.access_token)
+        Token.setUser(data.user)
+        this.props.updateRole(Token.getRole(), true, this.props.lastPath, data.user)
         if (this.props.lastPath) {
             this.props.history.push(this.props.lastPath)
         } else {

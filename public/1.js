@@ -26,7 +26,8 @@ function TextForm(props) {
       required = props.required,
       label = props.label,
       labelW = props.labelW,
-      formW = props.formW;
+      formW = props.formW,
+      formtext = props.formtext;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-group row"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -41,7 +42,9 @@ function TextForm(props) {
     onChange: handleChange,
     value: value || '',
     required: required
-  })));
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", {
+    className: "form-text text-muted"
+  }, formtext)));
 }
 
 function SelectForm(props) {
@@ -203,10 +206,9 @@ function (_React$Component) {
       var values = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _this.state.page;
       var test = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
-      console.log('fetch');
 
       if (!_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) {
-        _this.props.logOut('mapel');
+        _this.props.logOut('mapel', true);
 
         return;
       }
@@ -244,7 +246,7 @@ function (_React$Component) {
       })["catch"](function (err) {
         if (err.response.status === 401) {
           //this.setState({ error: 'mohon login ulang', fetch: false })
-          _this.props.logOut('mapel');
+          _this.props.logOut('mapel', true);
         } else {
           _this.setState({
             error: 'server error',
@@ -319,12 +321,12 @@ function (_React$Component) {
         className: "col-12"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "float-left"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, !this.props.sidebar && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, !this.props.sidebar && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "btn btn-sm btn-outline-dark",
         onClick: this.props.toggleSidebar
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-bars"
-      })), ' '), "Mata Pelajaran")), this.state.action === 'table' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      })), ' '), "Mata Pelajaran"), this.state.action === 'table' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
           return _this2.toggle('add');
         },

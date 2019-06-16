@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 Route::group(['middleware' => ['jwt-auth']], function () {
     // mapel
     Route::apiResource('mapel', 'Api\MapelController');
+    //profile
+    Route::post('update-profile', 'API\UserController@updateProfile');
+    Route::post('update-pp', 'API\UserController@updatePp');
 });
 
 // kategori

@@ -1,12 +1,13 @@
 import React from 'react'
 
 function TextForm(props) {
-    const { type, name, placeholder, handleChange, value, required, label, labelW, formW } = props
+    const { type, name, placeholder, handleChange, value, required, label, labelW, formW, formtext } = props
     return (
         <div className="form-group row">
             <label className={"col-md-" + (labelW || 2) + " col-form-label"}>{label}</label>
             <div className={"col-md-" + (formW || 6)}>
                 <input type={type || 'text'} className="form-control" name={name} placeholder={placeholder} onChange={handleChange} value={value || ''} required={required} />
+                <small className="form-text text-muted">{formtext}</small>
             </div>
         </div>
     )
