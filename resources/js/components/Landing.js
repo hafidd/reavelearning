@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect, withRouter } from 'react-router-dom'
-import Token from './../Token'
+import Token from '../utils/Token'
 
 import { Button } from 'reactstrap';
 

@@ -13,11 +13,22 @@ const useForm = (callback, fields = {}) => {
         setValues(values => ({ ...values, [event.target.name]: event.target.value }));
     };
 
+    function getErrors(msg = []) {
+        let errMsg = []
+        errMsg = Object.keys(msg).map((key) => {
+            return msg[key].map(item => {
+                return item;
+            })
+        })
+        return errMsg
+    }
+
     return {
         handleChange,
         handleSubmit,
         setValues,
         values,
+        getErrors,
     }
 };
 

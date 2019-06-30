@@ -15,7 +15,7 @@ export default class Dashboard extends React.Component {
 
     render() {
         return (
-            <div className="container-fluid content">
+            <React.Fragment>
                 <div className="row">
                     <div className="col-12 mt-3">
                         <h2>Dashboard</h2>
@@ -27,27 +27,29 @@ export default class Dashboard extends React.Component {
                         <div className="card">
                             <div className="card-body">
                                 <h5 className="card-title">Mata Pelajaran</h5>
-                                <table className="table">
-                                    <thead>
-                                        <tr>
-                                            <th className="text-center" width="10%">Kode</th>
-                                            <th className="text-center" width="">Nama</th>
-                                            <th className="text-center" width="10%" width="">Siswa</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td className="text-center">MP01S2018</td>
-                                            <td>Pemrograman php dasar / k1</td>
-                                            <td className="text-center">25</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="text-center">MP02S2018</td>
-                                            <td>Pemrograman php dasar / k2</td>
-                                            <td className="text-center">30</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div className="table-responsive">
+                                    <table className="table">
+                                        <thead>
+                                            <tr>
+                                                <th className="text-center" width="10%">Kode</th>
+                                                <th className="text-center" width="">Nama</th>
+                                                <th className="text-center" width="10%" width="">Siswa</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td className="text-center">MP01S2018</td>
+                                                <td>Pemrograman php dasar / k1</td>
+                                                <td className="text-center">25</td>
+                                            </tr>
+                                            <tr>
+                                                <td className="text-center">MP02S2018</td>
+                                                <td>Pemrograman php dasar / k2</td>
+                                                <td className="text-center">30</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -64,7 +66,7 @@ export default class Dashboard extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </React.Fragment>
         )
     }
 

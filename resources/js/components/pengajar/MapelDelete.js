@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import Token from './../../Token'
+import Token from '../../utils/Token'
 
 const MapelForm = (props) => {
-    const { id, toggle, token } = props
+    const { id, toggle } = props
     const [data, setData] = useState({})
     const [mapel, SetMapel] = useState({})
     const [loading, setLoading] = useState(false);
@@ -34,7 +34,7 @@ const MapelForm = (props) => {
         setLoading(true)
         axios.delete('/api/mapel/' + id, {
             headers: {
-                Authorization: 'Bearer ' + token.getToken()
+                Authorization: 'Bearer ' + Token.getToken()
             }
         })
             .then(() => toggle('table', '', 'data berhasil dihapus'))

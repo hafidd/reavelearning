@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\User;
 use Illuminate\Http\Request;
+use Image;
 use JWTAuth;
 
 class UserController extends Controller
@@ -45,15 +46,15 @@ class UserController extends Controller
     public function updatePp(Request $request)
     {
         $data = User::findOrFail($this->user->id);
-        // cek password
-        if ($data && !\Hash::check($request->password, $data->password)) {
-            return response()->json(['error' => 'password salah'], 401);
-        }
-        $this->validate($request, ['img' => 'required|image|mimes:jpg,jpeg,png|max:500'], $this->errMsg());
 
-        $imageName = $this->user->id . '.' . request()->img->getClientOriginalExtension();
-        $request->img->move(public_path('images/users'), $imageName);
+        $this->validate($request, ['img' => 'required|image64:jpg,jpeg,png'], $this->errMsg());
 
+        $imageName = $this->user->id . '.jpg';
+        Image::make($request->img)
+            ->resize(300, 300)
+            ->encode('jpg', 100)
+            ->save(public_path('images/users/') . $imageName);
+            
         return response()->json(['message' => 'foto berhasil diperbaharui'], 200);
 
         //$data->update();

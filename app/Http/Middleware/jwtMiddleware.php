@@ -24,13 +24,12 @@ class jwtMiddleware
             }
         }
         $path = explode('/', $request->getPathInfo())[2];
-        // get roles by path
+        // get roles by endpoints
         $roles = DB::table('menu_role')
             ->join('menus', 'menus.id', '=', 'menu')
             ->join('roles', 'roles.id', '=', 'role')
             ->select('role')
-            ->where('path', '=', $path)
-            ->orWhereJsonContains('paths', $path)
+            ->whereJsonContains('apiendpoints', $path)
             ->pluck('role')
             ->toArray();
         // cek

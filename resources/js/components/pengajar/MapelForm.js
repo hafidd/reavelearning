@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import Token from './../../Token'
 
-import useForm from './../../hooks/useForm'
+import Token from '../../utils/Token'
+import useForm from '../../utils/useForm'
 
-import { TextForm, SelectForm, RadioForm, TextAreaForm } from './../form'
+import { TextForm, SelectForm, RadioForm, TextAreaForm } from '../html/BasicForm'
 
 const MapelForm = (props) => {
     const { tipe, id, toggle, kategori } = props
+    const [groups, setGroups] = useState([]);
     const fields = {
         id: (tipe === 'update') ? id : 0,
         akses: 'public',
         status: 'aktif'
     }
-    const { values, setValues, handleChange, handleSubmit } = useForm(submit, fields)
+    const { values, setValues, getErrors, handleChange, handleSubmit } = useForm(submit, fields)
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [errors, setErrors] = useState([]);
@@ -40,6 +41,7 @@ const MapelForm = (props) => {
                     status: data.status,
                     keterangan: data.keterangan
                 }))
+                setGroups(JSON.parse(data.groups))
                 setLoading(false)
             }).catch(() => toggle('table', ''))
         }
@@ -53,7 +55,7 @@ const MapelForm = (props) => {
         setLoading(true)
         setSuccess(false)
         const m = tipe === 'add' ? 'post' : 'put';
-        axios[m]('/api/mapel/' + (id ? id : ''), values, {
+        axios[m]('/api/mapel/' + (id ? id : ''), { ...values, groups: JSON.stringify(groups) }, {
             headers: {
                 Authorization: 'Bearer ' + Token.getToken()
             }
@@ -66,7 +68,7 @@ const MapelForm = (props) => {
             }).catch(err => {
                 if (err.response) {
                     if (err.response.request.status === 422) {
-                        setNotif(err.response.data.errors)
+                        setErrors(getErrors(err.response.data.errors))
                     } else if (err.response.request.status === 401) {
                         setErrors(['mohon login ulang'])
                     } else {
@@ -79,18 +81,8 @@ const MapelForm = (props) => {
             })
     }
 
-    function setNotif(msg = []) {
-        let errMsg = []
-        errMsg = Object.keys(msg).map((key) => {
-            return msg[key].map(item => {
-                return item;
-            })
-        })
-        setErrors(errMsg)
-    }
-
-    function errorMessages() {
-        return (<ul>{errors.map((item, key) => <li key={key}>{item}</li>)}</ul>);
+    function errorMessages(err) {
+        return (<ul>{err.map((item, key) => <li key={key}>{item}</li>)}</ul>);
     }
 
     return (
@@ -98,7 +90,7 @@ const MapelForm = (props) => {
             <div className="col-md-12">
                 <div className="row">
                     <div className="col-md-12">
-                        <h5 className="float-left"><b>{tipe === 'add' ? 'Tambah' : 'Ubah'} Data</b></h5>
+                        <h5 className="float-left"><b>{tipe === 'add' ? 'Tambahsss' : 'Ubah'} Data</b></h5>
                     </div>
                 </div>
                 <div className="row" style={{ marginTop: '2%' }} >
@@ -121,7 +113,31 @@ const MapelForm = (props) => {
                                     ['nonaktif', 'Nonaktif']
                                 ]}
                             />
-                            <TextAreaForm name="keterangan" label="Keterangan" handleChange={handleChange} value={values.keterangan} />
+                            <div className="form-group row">
+                                <label className="col-md-2 col-form-label">Kelompok</label>
+                                <div className="col-md-8">
+                                    <table className="table table-sm table-bordered mb-0" style={{ display: (groups.length ? 'block' : 'none') }}>
+                                        <thead><tr><th>nama</th><th width="37%">kode</th><th width="5%"></th></tr></thead>
+                                        <tbody>
+                                            {groups.map((group, key) => (
+                                                <tr key={key}>
+                                                    <td className="p-0">
+                                                        <input name={`${key}-nama`} value={group.nama} onChange={handleGroupChange} placeholder="nama" className="form-control form-control-sm" />
+                                                    </td>
+                                                    <td className="p-0">
+                                                        <input name={`${key}-kode`} value={group.kode} onChange={handleGroupChange} placeholder="kode" className="form-control form-control-sm" />
+                                                    </td>
+                                                    <td className="p-0">
+                                                        <button type="button" className="btn btn-sm" onClick={() => delGroup(group)}><i className="fas fa-times"></i></button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                    <button type="button" className="btn btn-xs btn-primary" onClick={newGroup}><i className="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                            <TextAreaForm formW="8" name="keterangan" label="Keterangan" handleChange={handleChange} value={values.keterangan} />
                             <div className="form-group row">
                                 <div className="col-md-2"></div>
                                 <div className="col-md-8">
@@ -129,11 +145,12 @@ const MapelForm = (props) => {
                                 </div>
                             </div>
                         </form>
+
                     </div>
                     <div className="col-md-4">
                         {(errors.constructor === Array && errors.length > 0) && (
                             <div className="bg-warning" style={{ padding: '5%', margin: '5%' }}>
-                                {errorMessages()}
+                                {errorMessages(errors)}
                             </div>
                         )}
                         {success && (
@@ -153,6 +170,24 @@ const MapelForm = (props) => {
             </div>
         </div>
     )
+
+    function delGroup(group) {
+        const filteredGroups = groups.filter(g => { return (g.kode !== group.kode || g.nama !== group.nama) })
+        setGroups(filteredGroups)
+    }
+
+    function handleGroupChange(e) {
+        const v = e.target.name.split("-");
+        let items = [...groups]
+        items[v[0]][v[1]] = e.target.value
+        setGroups(items)
+    }
+
+    function newGroup() {
+        let items = [...groups]
+        items.push({ kode: '', nama: '' })
+        setGroups(items)
+    }
 }
 
 export default MapelForm

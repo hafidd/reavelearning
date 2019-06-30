@@ -1,6 +1,8 @@
 html, body, #app, .app {
     height: 100%;
     background-color: #fff;
+    font-family: medium-content-sans-serif-font, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;
+    color: rgba(0, 0, 0, 0.75);
 }
 
 .navbar {
@@ -22,7 +24,7 @@ html, body, #app, .app {
     margin-top: auto;
     margin-bottom: auto;
     color: #fff;
-    text-shadow: #000000 0px 0px 15px;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     background-color: rgba(0,0,0,0.02);
     padding: 2%;
 }
@@ -32,13 +34,13 @@ html, body, #app, .app {
 }
 
 .btn-landing {
-    background-color: rgba(255,255,255,0.2);     
-    color: #000;
-    text-shadow: #fff 0px 0px 5px;
-    font-weight: bold;
-    padding: 10px 30px 10px 30px;
-    margin-top: 2%;
-    margin-bottom: 2%;
+    background-color: rgba(255,255,255,0.2) !important;     
+    color: #000 !important;     
+    text-shadow: #fff 0px 0px 5px !important;     
+    font-weight: bold !important;     
+    padding: 10px 30px 10px 30px !important;     
+    margin-top: 2% !important;     
+    margin-bottom: 2% !important;     
 }
 
 .btn-landing:hover {
@@ -141,9 +143,9 @@ input:focus{
 }
 
 .login_btn{
-    color: black;
-    background-color: #FFC312;
-    width: 100px;
+    color: black !important;     
+    background-color: #FFC312 !important;     
+    width: 100px !important;     
 }
 
 .login_btn:hover{
@@ -169,6 +171,20 @@ input:focus{
 
 .bg-white {
     background-color: #fff !important;
+}
+
+.hover1 {
+    opacity: 0.8;
+}
+
+.hover1:hover {
+    opacity: 1;
+}
+
+button.active, button.btnnav:hover {
+    border-top: 2px solid rgb(31, 29, 29);
+    border-bottom: 2px solid rgb(31, 29, 29);
+    border-radius: 0;
 }
 
 @media (min-width: 1025px) {
@@ -213,10 +229,17 @@ input:focus{
 
 
 .btn-group-xs > .btn, .btn-xs {
-    padding: .25rem .4rem;
-    font-size: .875rem;
-    line-height: .5;
-    border-radius: .2rem;
+    padding: .25rem .4rem !important;
+    font-size: .875rem !important;
+    line-height: .5 !important;
+    border-radius: .2rem !important;
+  }
+
+  .btn-group-xxs > .btn, .btn-xxs {
+    padding: .15rem .3rem !important;
+    font-size: .675rem !important;
+    line-height: .3 !important;
+    border-radius: .07rem !important;
   }
 
 

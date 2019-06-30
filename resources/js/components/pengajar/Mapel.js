@@ -1,13 +1,17 @@
 import React from 'react'
 import axios from 'axios'
-import Token from './../../Token'
+import Token from '../../utils/Token'
 
 import MapelTable from './MapelTable'
-import MapelSearch from './MapelSearch'
+import MapelSearch from '../mapel/MapelSearch'
 import MapelForm from './MapelForm'
 import MapelDelete from './MapelDelete'
+import UsersModal from './UsersModal'
 
-import Pagination from './../web/Pagination'
+import Pagination from './../html/Pagination'
+import { PageTitle, Alert } from './../html/Template'
+
+import { hot } from 'react-hot-loader/root'
 
 class Mapel extends React.Component {
     constructor(props) {
@@ -37,6 +41,7 @@ class Mapel extends React.Component {
             return
         }
         this.setState({ fetch: true })
+        values = { ...values, type: this.state.action }
         axios.get('/api/mapel?page=' + page, {
             params: values,
             headers: {
@@ -83,28 +88,33 @@ class Mapel extends React.Component {
         });
     };
 
-    toggle(action = 'table', id = '', msg = '') { this.setState({ action: action, id: id, message: msg }) }
+    toggle(action = 'table', id = '', msg = '') {
+        this.setState({ action: action, mapels: [], id: id, message: msg }, () => {
+            if (action === "waiting") this.loadData()
+        })
+    }
+
+    setId = (e) => {
+        this.setState({ id: e ? e.target.value : '' });
+    }
+
+    remAlert = () => {
+        this.setState({ message: '' });
+    }
 
     render() {
         return (
-            <div className="container-fluid content bg-white">
-                <div className="row mt-3">
-                    <div className="col-12">
-                        <h2 className="float-left">
-                            {!this.props.sidebar && (<React.Fragment><button className="btn btn-sm btn-outline-dark" onClick={this.props.toggleSidebar}><i className="fas fa-bars"></i></button>{' '}</React.Fragment>)}
-                            Mata Pelajaran
-                        </h2>
-                        {this.state.action === 'table' && <button onClick={() => this.toggle('add')} className="btn btn-primary float-right"><span className="fas fa-plus"></span></button>}
-                        {this.state.action !== 'table' && <button onClick={() => this.toggle('table')} className="btn btn-primary float-right"><span className="fas fa-arrow-left"></span></button>}
-                    </div>
-                </div>
-                <hr />
-                {this.state.message !== '' && (
-                    <div className="alert alert-info" role="alert">
-                        {this.state.message}
-                        <button className="btn btn-xs float-right" onClick={() => this.toggle()}><i className="fas fa-times"></i></button>
-                    </div>
-                )}
+            <React.Fragment>
+                <PageTitle
+                    title="Mata Pelajaran"
+                    navs={[
+                        { show: this.state.action === 'table', clickHandle: () => this.toggle('add') },
+                        { show: this.state.action !== 'table', clickHandle: () => this.toggle('table'), icon: "fa-arrow-left" },
+                        { show: this.state.action === 'table', clickHandle: () => this.toggle('waiting'), icon: "fa-clock", className: "btn-warning" },
+                    ]}
+                />
+                <hr className="mt-1" />
+                {this.state.message !== '' && <Alert message={this.state.message} clickHandle={this.remAlert} />}
                 <div className="row">
                     {
                         this.state.error === '' ? (
@@ -136,7 +146,6 @@ class Mapel extends React.Component {
                                             <MapelForm
                                                 tipe={'add'}
                                                 toggle={this.toggle}
-                                                token={this.token}
                                                 kategori={this.state.kategori}
                                             />
                                         )
@@ -145,7 +154,6 @@ class Mapel extends React.Component {
                                                 tipe={'update'}
                                                 id={this.state.id}
                                                 toggle={this.toggle}
-                                                token={this.token}
                                                 kategori={this.state.kategori}
                                             />
                                         )
@@ -155,6 +163,22 @@ class Mapel extends React.Component {
                                                 toggle={this.toggle}
                                                 token={this.token}
                                             />
+                                        )
+                                        case "waiting": return (
+                                            <React.Fragment>
+                                                <h4>Menunggu Konfirmasi</h4>
+                                                <MapelTable
+                                                    mapels={this.state.mapels}
+                                                    waiting={true}
+                                                    from={this.state.pageData.from}
+                                                    loading={this.state.fetch}
+                                                    toggle={this.toggle}
+                                                    handlePageClick={this.handlePageClick}
+                                                    page={this.state.page}
+                                                    setId={this.setId}
+                                                />
+                                                {this.state.id !== "" && <UsersModal id={this.state.id} setId={this.setId} toggle={this.toggle} />}
+                                            </React.Fragment>
                                         )
                                         default: return '';
                                     }
@@ -166,9 +190,9 @@ class Mapel extends React.Component {
                             </div>
                     }
                 </div>
-            </div>
+            </React.Fragment>
         )
     }
 }
 
-export default Mapel
+export default hot(Mapel)
