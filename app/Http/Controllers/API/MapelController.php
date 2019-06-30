@@ -358,6 +358,86 @@ class MapelController extends Controller
         return JsonResource::collection($data);
     }
 
+    // hapus siswa dari mapel
+    public function removeSiswa($id)
+    {
+        try {
+            DB::beginTransaction();
+            //get data
+            $data = MapelUser::whereHas('mapel', function ($q) {
+                $q->where('user_id', $this->user->id);
+            })->findOrFail($id);
+            //update log
+            $log = MapelUserLog::whereHas('mapel', function ($q) {
+                $q->where('user_id', $this->user->id);
+            })->where([
+                'status' => 1,
+                //'action' => 2,
+                'user_id' => $data->user_id,
+                'mapel_id' => $data->mapel_id,
+                'group' => $data->group,
+            ])->update(['status' => 0]);
+            //new log
+            $new_log = MapelUserLog::create([
+                'status' => 1,
+                'action' => 6, //ditendang
+                'user_id' => $data->user_id,
+                'mapel_id' => $data->mapel_id,
+                'group' => $data->group,
+                'time' => Carbon::now()->toDateTimeString(),
+            ]);
+            //delete data
+            $data->delete();
+            DB::commit();
+            return response()->json(null, 204);
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json('gagal menghapus', 422);
+        }
+    }
+
+    // pindahkan kelmpok
+    public function moveSiswa(Request $request)
+    {
+        // validasi
+        $this->validate($request, [
+            'group' => 'required',
+        ], $this->errMsg());
+        try {
+            DB::beginTransaction();
+            //get data
+            $data = MapelUser::whereHas('mapel', function ($q) {
+                $q->where('user_id', $this->user->id);
+            })->findOrFail($request->dataId);
+            //update log
+            $log = MapelUserLog::whereHas('mapel', function ($q) {
+                $q->where('user_id', $this->user->id);
+            })->where([
+                'status' => 1,
+                //'action' => 2,
+                'user_id' => $data->user_id,
+                'mapel_id' => $data->mapel_id,
+                'group' => $data->group,
+            ])->update(['status' => 0]);
+            //new log
+            $new_log = MapelUserLog::create([
+                'status' => 1,
+                'action' => 4, //ubah group
+                'user_id' => $data->user_id,
+                'mapel_id' => $data->mapel_id,
+                'group' => $request->group !== "umum" ? $request->group : null,
+                'time' => Carbon::now()->toDateTimeString(),
+            ]);
+            //update data
+            $data->update(['group' => $request->group !== "umum" ? $request->group : null]);
+            DB::commit();
+            return response()->json(null, 201);
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json('gagal menghapus', 422);
+        }
+    }
+
     public function pesertaByMapel(Request $request, $id)
     {
         $data = MapelUser::with('user')->where(['mapel_id' => $id]);

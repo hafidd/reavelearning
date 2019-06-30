@@ -9,6 +9,7 @@ import Draft, { TextForm, RadioForm, TextAreaForm } from '../html/BasicForm'
 
 const MateriForm = (props) => {
     const { tipe, id, toggle, mapelId, dirId } = props
+    console.log(mapelId)
     const fields = {
         id: (tipe === 'update') ? id : 0,
         type: 'text',
@@ -87,7 +88,7 @@ const MateriForm = (props) => {
             }
         })
             .then(res => {
-                if (mapelId !== '') {
+                if (mapelId !== undefined) {
                     props.history.push({
                         pathname: `/mapel/${mapelId}`,
                         state: {

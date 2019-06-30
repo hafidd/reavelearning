@@ -23,6 +23,8 @@ Route::group(['middleware' => ['jwt-auth']], function () {
     Route::get('materi/mapel/{id}', 'Api\MapelController@materiByMapel');
     // materi-peserta (p)
     Route::get('materi/peserta/{id}', 'Api\MapelController@pesertaByMapel');
+    Route::put('mov-siswa', 'Api\MapelController@moveSiswa');
+    Route::delete('rem-siswa/{id}', 'Api\MapelController@removeSiswa');
     // download file materi
     Route::get('get-materi-file/{type}/{name}', 'Api\MateriController@downloadFile');
 });

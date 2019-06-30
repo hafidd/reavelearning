@@ -76,7 +76,7 @@ class MapelSetting extends React.Component {
                             <button className={`nav-link ${this.state.action === 'materi' && 'active'}`} onClick={this.setAction} value="materi">Materi</button>
                         </li>
                         <li className="nav-item">
-                            <button className={`nav-link ${this.state.action === 'peserta' && 'active'}`} onClick={this.setAction} value="peserta">Peserta/Murid</button>
+                            <button className={`nav-link ${this.state.action === 'peserta' && 'active'}`} onClick={this.setAction} value="peserta">Siswa</button>
                         </li>
                         <li className="nav-item">
                             <button className={`nav-link ${this.state.action === 'quis' && 'active'}`} onClick={this.setAction} value="quis">Ujian/Kuis</button>
