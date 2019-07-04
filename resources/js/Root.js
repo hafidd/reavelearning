@@ -20,6 +20,7 @@ const TestAdmin2 = () => <h1>TestAdmin2</h1>
 const Mapel = lazy(() => import('./components/pengajar/Mapel'));
 const MapelSetting = lazy(() => import('./components/pengajar/MapelSetting'));
 const Materi = lazy(() => import('./components/pengajar/Materi'));
+const Kuis = lazy(() => import('./components/pengajar/Kuis'));
 
 const ErrorNotFound = (props) => props.fetch ? <span><i className="fa fa-spinner fa-spin"></i> Loading menu...</span> : <h1>Not found</h1>
 const Ded = (props) => {
@@ -54,6 +55,7 @@ class Root extends React.Component {
             Materi,
             TestAdmin2,
             MapelSiswa,
+            Kuis,
             Ded,
 
         }

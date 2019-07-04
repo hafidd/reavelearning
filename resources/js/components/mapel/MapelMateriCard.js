@@ -5,6 +5,8 @@ import useForm from '../../utils/useForm'
 import Token from '../../utils/Token'
 import { flatToHierarchy } from '../../utils/Array'
 
+import { List } from 'react-content-loader'
+
 import { Loading, NotifMessage } from "../html/Template"
 import { RadioForm, TextForm } from "../html/BasicForm"
 
@@ -176,7 +178,7 @@ const MapelMateriCard = props => {
 
     const renderMateri = (data = [], root = true, level = 1) => {
         if (data.length === 0 && root) {
-            return loading ? <Loading loading={true} /> : <span><i className="fas fa-exclamation"></i> Belum ada data</span>
+            return loading ? <List width={300} height={80} /> : <span><i className="fas fa-exclamation"></i> Belum ada data</span>
         }
         else return (
             <ul className={root ? "list-group" : ''}>
@@ -218,22 +220,27 @@ const MapelMateriCard = props => {
                         <div className="modal-content">
                             <form onSubmit={handleSubmit} id="form-1"></form>
                             <div className="modal-body">
-                                <button type="button" className="close" onClick={closeAndReset}>
-                                    <span>&times;</span>
-                                </button>
                                 <div className="row">
-                                    <div className="col-12 pr-0">
-                                        <RadioForm
-                                            label="Jenis" name="type" handleChange={handleChange} value={values.type}
-                                            options={[
-                                                ['1', 'Direktori'],
-                                                ['2', 'Materi']
-                                            ]}
-                                            labelClass="btn btn-primary"
-                                            formW="5"
-                                            form="form-1"
-                                        />
-                                        {values.type == '1' && <TextForm form="form-1" formW="4" label="Nama" name="dirName" value={values.dirName} handleChange={handleChange} />}
+                                    <div className="col-12">
+                                        <span className="float-left" style={{ width: '80%' }}>
+                                            <RadioForm
+                                                name="type" handleChange={handleChange} value={values.type}
+                                                options={[
+                                                    ['1', 'Direktori'],
+                                                    ['2', 'Materi']
+                                                ]}
+                                                labelClass="btn btn-primary btn-sm"
+                                                formW="5"
+                                                labelW="0"
+                                                form="form-1"
+                                            />
+                                        </span>
+                                        <button type="button" className="close" onClick={closeAndReset}>
+                                            <span>&times;</span>
+                                        </button>
+                                    </div>
+                                    <div className="col-12">
+                                        {values.type == '1' && <TextForm form="form-1" formW="5" labelW="0" placeholder="Nama Direktori" name="dirName" value={values.dirName} handleChange={handleChange} />}
                                         {values.type == '2' && (
                                             <React.Fragment>
                                                 <MateriSearch loadData={setSearch} />

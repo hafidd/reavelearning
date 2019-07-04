@@ -17,6 +17,9 @@ Route::group(['middleware' => ['jwt-auth']], function () {
     Route::post('mapel-action', 'Api\MapelController@mapelAction');
     // materi
     Route::apiResource('materi', 'Api\MateriController');
+    //kuis - soal
+    Route::apiResource('kuis', 'Api\KuisController');
+    Route::apiResource('soal', 'Api\SoalController');
     // materi-mapel (p)
     Route::post('add-materi', 'Api\MapelController@addMateri');
     Route::delete('rem-materi/{id}', 'Api\MapelController@removeMateri');

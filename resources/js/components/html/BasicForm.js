@@ -51,12 +51,12 @@ function RadioForm(props) {
 
 
 function TextAreaForm(props) {
-    const { name, handleChange, value, required, label, labelW, formW } = props
+    const { name, handleChange, value, placeholder, required, label, labelW, formW } = props
     return (
         <div className="form-group row">
             <label className={"col-md-" + (labelW || 2) + " col-form-label"}>{label}</label>
             <div className={"col-md-" + (formW || 4)}>
-                <textarea className="form-control" name={name} onChange={handleChange} value={value || ''} required={required} ></textarea>
+                <textarea style={{ width: '100%' }} className="form-control" name={name} onChange={handleChange} value={value || ''} placeholder={placeholder} required={required} ></textarea>
             </div>
         </div>
     )
