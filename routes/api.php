@@ -20,6 +20,10 @@ Route::group(['middleware' => ['jwt-auth']], function () {
     //kuis - soal
     Route::apiResource('kuis', 'Api\KuisController');
     Route::apiResource('soal', 'Api\SoalController');
+    Route::apiResource('kuis-soal', 'Api\KuisSoalController');
+    Route::get('soal/kuis/{id}', 'Api\SoalController@soalByKuis');
+    Route::post('add-soal', 'Api\KuisController@addSoal');
+    Route::delete('rem-soal/{id}', 'Api\KuisController@removeSoal');
     // materi-mapel (p)
     Route::post('add-materi', 'Api\MapelController@addMateri');
     Route::delete('rem-materi/{id}', 'Api\MapelController@removeMateri');

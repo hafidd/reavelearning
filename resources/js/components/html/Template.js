@@ -54,6 +54,18 @@ function NotifMessage(props) {
     return <span><i className={`fas ${!success ? 'fa-exclamation text-danger' : 'fa-check text-success'}`}></i> {text}</span>
 }
 
+function ModalWarpper(props) {
+    return (
+        <div className="modal" style={{ display: 'block', overflow: 'auto', }}>
+            <div className="modal-dialog modal-lg" role="document">
+                <div className="modal-content">
+                    {props.children}
+                </div>
+            </div>
+        </div>
+    )
+}
+
 export {
     PageTitle,
     Alert,

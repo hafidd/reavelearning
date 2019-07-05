@@ -5,15 +5,14 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Kuis;
 use App\KuisSoal;
-//use App\Soal;
-//use Carbon\Carbon;
+////use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 //use Illuminate\Support\Facades\DB;
 //use Illuminate\Support\Facades\Storage;
 use JWTAuth;
 
-class KuisController extends Controller
+class KuisSoalController extends Controller
 {
     private $user;
 
@@ -24,12 +23,7 @@ class KuisController extends Controller
 
     public function index(Request $request)
     {
-        $data = Kuis::where('user_id', $this->user->id);
-        //$data = $request->type === "waiting" ? $data->whereHas("waitings")->withCount('waitings') : $data;
-        // filter
-        $data = $request->judul ? $data->where('judul', 'ilike', '%' . $request->judul . '%') : $data;
-        $data = $request->kode ? $data->where('kode', 'ilike', '%' . $request->kode . '%') : $data;
-        $data = $data->paginate(15);
+        $data = KuisSoal::with('kuis');
         return JsonResource::collection($data);
     }
 
@@ -52,29 +46,42 @@ class KuisController extends Controller
 
     public function show($id)
     {
-        $data = Kuis::where([
-            'id' => $id,
-            'user_id' => $this->user->id,
-        ])->firstOrFail();
+        $data = KuisSoal::with(['kuis' => function ($q) {
+            $q->where('user_id', $this->user->id);
+        }])->findOrFail($id);
         return new JsonResource($data);
     }
 
     public function update(Request $request, $id)
     {
-        $data = Kuis::where([
-            'id' => $id,
-            'user_id' => $this->user->id,
-        ])->firstOrFail();
-        // validasi
+        $data = KuisSoal::with(['kuis' => function ($q) {
+            $q->where('user_id', $this->user->id);
+        }])->findOrFail($id);
+
+        // validasi 1
         $this->validate($request, [
-            'judul' => 'required|min:3|max:100',
-            'kode' => 'max:20',
+            'type' => 'required|in:1,2',
+            'nama' => 'required_if:type,1',
+            'settings.bobot' => 'required|integer',
         ], $this->errMsg());
+
+        // type
+        if ($request->type == 1) {
+            $settings = [
+                'keterangan' => isset($request->settings['keterangan']) ? $request->settings['keterangan'] : '',
+                'bobotPerSoal' => isset($request->settings['bobotPerSoal']) ? $request->settings['bobotPerSoal'] : false,
+                'acakSoal' => isset($request->settings['acakSoal']) ? $request->settings['acakSoal'] : false,
+                'bobot' => $request->settings['bobot'],
+            ];
+        } else {
+            $settings = [
+                'bobot' => $request->settings['bobot'],
+            ];
+        }
         // update
         $data->update([
-            'judul' => $request->judul,
-            'kode' => $request->kode,
-            'keterangan' => $request->keterangan,
+            'nama' => $request->nama,
+            'settings' => json_encode($settings),
         ]);
         return new JsonResource($data);
     }
@@ -108,14 +115,7 @@ class KuisController extends Controller
 
         // type
         if ($request->type == "1") {
-            $settings = [
-                'keterangan' => '',
-                'bobotPerSoal' => false,
-                'acakSoal' => false,
-                'bobot' => 1,
-            ];
             $insert["nama"] = $request->dirName;
-            $insert["settings"] = json_encode($settings);
             $data = KuisSoal::create($insert);
             return new JsonResource($data);
         } else {
@@ -126,9 +126,7 @@ class KuisController extends Controller
                     array_push($records, $insert);
                 }
                 foreach ($records as $record) {
-                    $new = KuisSoal::firstOrNew($record);
-                    $new->settings = json_encode(["bobot" => 1]);
-                    $new->save();
+                    KuisSoal::firstOrCreate($record);
                 }
                 return response()->json('sukses', 201);
             } catch (Exception $e) {

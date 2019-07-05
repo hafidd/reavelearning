@@ -50,10 +50,10 @@ const SoalForm = (props) => {
 
                 setValues({
                     ...values,
-                    ...dt,
                     type: data.type,
                     kode: data.kode,
                     q: JSON.parse(data.pertanyaan).q,
+                    ...dt,
                 })
 
                 setLoading(false)

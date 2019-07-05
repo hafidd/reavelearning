@@ -8,11 +8,14 @@ import KuisList from '../kuis/KuisList'
 import KuisSearch from '../kuis/KuisSearch'
 import KuisForm from '../kuis/KuisForm'
 import KuisDelete from '../kuis/KuisDelete'
+import KuisDetail from '../kuis/KuisDetail'
 
 import SoalList from '../soal/SoalList'
 import SoalSearch from '../soal/SoalSearch'
 import SoalForm from '../soal/SoalForm'
 import SoalDelete from '../soal/SoalDelete'
+
+import ErrorBoundary from '../../ErrorBoundary'
 
 class Kuis extends React.Component {
     constructor(props) {
@@ -150,7 +153,7 @@ class Kuis extends React.Component {
                         title="...."
                         navs={[
                             { show: this.state.action === '', clickHandle: () => this.setAction('', { action: 'kuisAdd' }) },
-                            { show: (['kuisAdd', 'kuisUpdate', 'kuisDelete'].indexOf(this.state.action) !== -1), clickHandle: () => this.setAction('', { action: '' }, true), icon: "fa-arrow-left" },
+                            { show: (['kuisAdd', 'kuisUpdate', 'kuisDelete', 'kuisDetail'].indexOf(this.state.action) !== -1), clickHandle: () => this.setAction('', { action: '' }, true), icon: "fa-arrow-left" },
                             { show: (['soalAdd', 'soalUpdate', 'soalDelete'].indexOf(this.state.action) !== -1), clickHandle: () => this.setAction('', { action: 'soal' }, true), icon: "fa-arrow-left" },
                             { show: this.state.action === 'soal', clickHandle: () => this.setAction('', { action: 'soalAdd' }) },
                         ]}
@@ -172,40 +175,45 @@ class Kuis extends React.Component {
                     </div>
                 }
                 <div className="col-md-12">
-                    {(() => {
-                        switch (this.state.action) {
-                            case "": return (
-                                <React.Fragment>
-                                    <KuisSearch setSearch={this.setSearch} defaultValues={this.state.search.kuis} />
-                                    <KuisList kuises={this.state.kuises} from={this.state.pageDataKuis.from} loading={this.fetch} setAction={this.setAction} />
-                                </React.Fragment>
-                            )
-                            case "kuisAdd": return (
-                                <KuisForm tipe="add" id="" />
-                            )
-                            case "kuisUpdate": return (
-                                <KuisForm tipe="update" id={this.state.kuisId} setAction={this.setAction} />
-                            )
-                            case "kuisDelete": return (
-                                <KuisDelete id={this.state.kuisId} setAction={this.setAction} notif={this.notif} />
-                            )
-                            case "soal": return (
-                                <React.Fragment>
-                                    <SoalSearch setSearch={this.setSearch} defaultValues={this.state.search.soal} />
-                                    <SoalList soals={this.state.soals} from={this.state.pageDataSoal.from} loading={this.fetch} setAction={this.setAction} showType={this.state.search.soal.type ? false : true} />
-                                </React.Fragment>
-                            )
-                            case "soalAdd": return (
-                                <SoalForm tipe="add" id="" />
-                            )
-                            case "soalUpdate": return (
-                                <SoalForm tipe="update" id={this.state.soalId} setAction={this.setAction} />
-                            )
-                            default: return (
-                                "nonono"
-                            )
-                        }
-                    })()}
+                    <ErrorBoundary>
+                        {(() => {
+                            switch (this.state.action) {
+                                case "": return (
+                                    <React.Fragment>
+                                        <KuisSearch setSearch={this.setSearch} defaultValues={this.state.search.kuis} />
+                                        <KuisList kuises={this.state.kuises} from={this.state.pageDataKuis.from} loading={this.fetch} setAction={this.setAction} />
+                                    </React.Fragment>
+                                )
+                                case "kuisAdd": return (
+                                    <KuisForm tipe="add" id="" />
+                                )
+                                case "kuisUpdate": return (
+                                    <KuisForm tipe="update" id={this.state.kuisId} setAction={this.setAction} />
+                                )
+                                case "kuisDelete": return (
+                                    <KuisDelete id={this.state.kuisId} setAction={this.setAction} notif={this.notif} />
+                                )
+                                case "kuisDetail": return (
+                                    <KuisDetail id={this.state.kuisId} setAction={this.setAction} notif={this.notif} />
+                                )
+                                case "soal": return (
+                                    <React.Fragment>
+                                        <SoalSearch setSearch={this.setSearch} defaultValues={this.state.search.soal} />
+                                        <SoalList soals={this.state.soals} from={this.state.pageDataSoal.from} loading={this.fetch} setAction={this.setAction} showType={this.state.search.soal.type ? false : true} />
+                                    </React.Fragment>
+                                )
+                                case "soalAdd": return (
+                                    <SoalForm tipe="add" id="" />
+                                )
+                                case "soalUpdate": return (
+                                    <SoalForm tipe="update" id={this.state.soalId} setAction={this.setAction} />
+                                )
+                                default: return (
+                                    "nonono"
+                                )
+                            }
+                        })()}
+                    </ErrorBoundary>
                 </div>
             </div>
         )

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\KuisSoal;
 use App\Soal;
 //use App\Soal;
 //use Carbon\Carbon;
@@ -274,6 +275,12 @@ class SoalController extends Controller
         ])->firstOrFail();
         $data->delete();
         return response()->json(null, 204);
+    }
+
+    public function soalByKuis($id)
+    {
+        $data = KuisSoal::with('soal')->where('kuis_id', $id)->get();
+        return JsonResource::collection($data);
     }
 
     private function errMsg()
