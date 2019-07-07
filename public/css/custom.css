@@ -1,8 +1,10 @@
 html, body, #app, .app {
     height: 100%;
     background-color: #fff;
-    font-family: medium-content-sans-serif-font, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;
-    color: rgba(0, 0, 0, 0.75);
+    font-family: Helvetica, Arial, sans-serif;
+    color: rgb(85, 85, 85);
+    font-size: 16px;
+    background: rgb(252,252,252);
 }
 
 .navbar {

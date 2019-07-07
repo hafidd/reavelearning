@@ -32,8 +32,22 @@ Route::group(['middleware' => ['jwt-auth']], function () {
     Route::get('materi/peserta/{id}', 'Api\MapelController@pesertaByMapel');
     Route::put('mov-siswa', 'Api\MapelController@moveSiswa');
     Route::delete('rem-siswa/{id}', 'Api\MapelController@removeSiswa');
+    //materi-kuis
+    Route::get('materi/kuis/{id}', 'Api\MapelController@kuisByMapel');
+    Route::put('materi/kuis/{id}', 'Api\MapelController@pengaturanKuis');
+    Route::get('materi/kuis-detail/{id}', 'Api\MapelController@kuisMapelDetail');
+    Route::post('add-kuis', 'Api\MapelController@addKuis');
+    Route::delete('rem-kuis/{id}', 'Api\MapelController@removeKuis');
     // download file materi
     Route::get('get-materi-file/{type}/{name}', 'Api\MateriController@downloadFile');
+    
+    // materi-mapel (s)
+    Route::get('materi-siswa/mapel/{id}', 'Api\MapelController@materiByMapelSiswa');
+    // materi-kuis (s)
+    Route::get('materi-siswa/kuis/{id}', 'Api\MapelController@kuisByMapelSiswa');
+    // materi (s)
+    Route::get('materi-siswa/{id}', 'Api\MateriController@materiSiswaDetail');
+
 });
 Route::get('get-materi-file-test/{type}/{name}', 'Api\MateriController@downloadFile');
 

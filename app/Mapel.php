@@ -29,8 +29,19 @@ class Mapel extends Model
             ->where(['action' => 1, 'status' => 1]);
     }
 
+    public function waiting()
+    {
+        return $this->hasOne('App\MapelUserLog', 'mapel_id', 'id')
+            ->where(['action' => 1, 'status' => 1]);
+    }
+
     public function joinedUsers()
     {
         return $this->hasMany('App\MapelUser', 'mapel_id', 'id');
+    }
+    
+    public function joinedUser()
+    {
+        return $this->hasOne('App\MapelUser', 'mapel_id', 'id');
     }
 }

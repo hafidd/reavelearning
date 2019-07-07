@@ -240,6 +240,25 @@ class MateriController extends Controller
         return response()->json(null, 204);
     }
 
+    /** SISWA */
+    public function materiSiswaDetail($id)
+    {
+
+        $data = Materi::
+            where(['id' => $id,
+        ])->first();
+
+        if ($data) {
+            $content = json_decode($data->isi);
+            if ($content->type === "file") {
+                $data["file"] = Storage::disk('local')->exists('files/materi/' . $content->name) ? url("api/get-materi-file-test/file/{$content->name}") : false;
+            } else if ($content->type === "video") {
+                $data["file"] = Storage::disk('local')->exists('files/materi/vid/' . $content->name) ? url("api/get-materi-file-test/video/{$content->name}") : false;
+            }
+        }
+        return new JsonResource($data);
+    }
+
     public function downloadFile($type = 'file', $filename)
     {
         $path = $type === "video" ? "files/materi/vid/" . $filename : "files/materi/" . $filename;

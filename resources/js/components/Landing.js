@@ -46,7 +46,7 @@ class Landing extends Component {
                 <div className="landing-text">
                     <h1>SKRIPSI SI</h1>
                     <h4>
-                        Pengembangan E-Learning Berbasis Web Menggunakan <br />
+                        Pengembangan E-Learning Menggunakan <br />
                         <span className="laravel-color"><strong>Laravel</strong>
                         </span> dan <span className="react-color"><strong>React</strong></span>
                     </h4>

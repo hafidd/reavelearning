@@ -13,8 +13,10 @@ import { RadioForm, TextForm } from "../html/BasicForm"
 import MateriList from '../pengajar/MateriList'
 import MateriSearch from '../pengajar/MateriSearch'
 
+import FileSaver from 'file-saver';
+
 const MapelMateriCard = props => {
-    const { id, notif } = props
+    const { id, notif, isSiswa = false } = props
     const token = Token.getToken()
     const fields = {
         mapel_id: id,
@@ -43,13 +45,14 @@ const MapelMateriCard = props => {
     }, [])
 
     useEffect(() => {
-        getMateriList()
+        if (!isSiswa) getMateriList()
     }, [materiList.search])
 
     const loadMateri = () => {
         if (!Token.getToken()) { notif(<NotifMessage text={`mohon login ulang`} success={false} />); return }
         setLoading(true)
-        axios.get('/api/materi/mapel/' + id, {
+        const ep = !isSiswa ? '/api/materi/mapel/' : '/api/materi-siswa/mapel/';
+        axios.get(ep + id, {
             params: {},
             headers: {
                 Authorization: 'Bearer ' + Token.getToken()
@@ -176,6 +179,43 @@ const MapelMateriCard = props => {
             return <i className="fas fa-file"></i>
     }
 
+    const getAction = (isi, id) => {
+        const ar = JSON.parse(isi)
+        if (ar.type == 'text')
+            return <button className="btn btn-xxs btn-outline-primary" onClick={() => toMateri(id)}><i className="fas fa-expand"></i></button>
+        else if (ar.type == 'video')
+            return <button className="btn btn-xxs btn-outline-primary" onClick={() => toMateri(id)}><i className="fas fa-play"></i></button>
+        else if (ar.type == 'file')
+            return <button className="btn btn-xxs btn-outline-primary" onClick={() => downloadFile('api/get-materi-file-test/file/' + ar.name, ar.name)}><i className="fas fa-download"></i></button>
+    }
+
+    function toMateri(materiId) {
+        const path = !isSiswa ? `/mapel/${id}/${materiId}` : `/mapel_siswa/${id}/${materiId}`
+        props.history.push({
+            pathname: path,
+            state: {
+                isSiswa: isSiswa
+            }
+        })
+    }
+
+    const downloadFile = (link, name) => {
+        const token = Token.getToken()
+        if (!token) {
+            setErrors(['mohon login ulang'])
+            return
+        }
+        axios.get(link, {
+            responseType: 'arraybuffer',
+            headers: {
+                Authorization: 'Bearer ' + Token.getToken()
+            }
+        }).then((res) => {
+            var blob = new Blob([res.data], { type: res.headers['content-type'] })
+            FileSaver.saveAs(blob, name)
+        }).catch(() => { console.log('err') })
+    }
+
     const renderMateri = (data = [], root = true, level = 1) => {
         if (data.length === 0 && root) {
             return loading ? <List width={300} height={80} /> : <span><i className="fas fa-exclamation"></i> Belum ada data</span>
@@ -187,10 +227,13 @@ const MapelMateriCard = props => {
                         {materi.type == 1 && <i className="fas fa-folder"></i>}
                         {materi.type == 2 && getIcon(materi.materi.isi)}
                         {' '}{materi.type == 1 ? materi.nama : materi.materi.judul}{' '}
-                        <span>
-                            {(materi.type == 1 && level < 3) && <button className="btn btn-xxs btn-outline-dark mr-1" value={materi.id} onClick={openForm}><i className="fas fa-plus"></i></button>}
-                            {<button className="btn btn-xxs btn-outline-danger" value={materi.id} onClick={() => delMateri(materi.id, materi.type == 1 ? materi.nama : materi.materi.judul)}><i className="fas fa-times"></i></button>}
-                        </span>
+                        {materi.type == 2 && <span className="mr-2">{getAction(materi.materi.isi, materi.materi.id)}</span>}
+                        {!isSiswa &&
+                            <span>
+                                {(materi.type == 1 && level < 3) && <button className="btn btn-xxs btn-outline-dark mr-1" value={materi.id} onClick={openForm}><i className="fas fa-plus"></i></button>}
+                                {<button className="btn btn-xxs btn-outline-danger" value={materi.id} onClick={() => delMateri(materi.id, materi.type == 1 ? materi.nama : materi.materi.judul)}><i className="fas fa-times"></i></button>}
+                            </span>
+                        }
                         {renderMateri(materi.child, false, (level + 1))}
                     </li>
                 ))}
@@ -205,7 +248,9 @@ const MapelMateriCard = props => {
                     <div className="col-12">
                         <div className="pb-1">
                             <strong className="card-title">Materi</strong>
-                            <button className="btn btn-xxs btn-primary ml-1" value={0} onClick={openForm}><i className="fas fa-plus"></i></button>
+                            {!isSiswa &&
+                                <button className="btn btn-xxs btn-primary ml-1" value={0} onClick={openForm}><i className="fas fa-plus"></i></button>
+                            }
                         </div>
                         <ul className="list-group">
                             {renderMateri(materis)}
@@ -214,7 +259,7 @@ const MapelMateriCard = props => {
                     </div>
                 </div>
             </div>
-            {formOpen &&
+            {formOpen && !isSiswa &&
                 <div className="modal" style={{ display: 'block', overflow: 'auto', }}>
                     <div className="modal-dialog modal-lg" role="document">
                         <div className="modal-content">

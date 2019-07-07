@@ -39,7 +39,7 @@ function RadioForm(props) {
                     return (
                         <div className="form-check form-check-inline" key={option[0]}>
                             <label className={`form-check-label ${labelC}`}>
-                                <input form={form} className="form-check-input" type="radio" name={name} onChange={handleChange} value={option[0]} checked={value === option[0]} required={required} /> {option[1]}
+                                <input form={form} className="form-check-input" type="radio" name={name} onChange={handleChange} value={option[0]} checked={value == option[0]} required={required} /> {option[1]}
                             </label>
                         </div>
                     )

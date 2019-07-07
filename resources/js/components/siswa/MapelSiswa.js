@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import ErrorBoundary from '../../ErrorBoundary'
+import { Link } from 'react-router-dom'
 
 import Token from '../../utils/Token'
 
@@ -9,9 +10,10 @@ import MapelCard from '../mapel/MapelCard'
 
 import { PageTitle, Loading, Alert } from '../html/Template'
 
-export default class MapelSiswa extends React.Component {
+class MapelSiswa extends React.Component {
     constructor(props) {
         super(props)
+        console.log(props.history.params)
         this.state = {
             action: 'joined',
             mapels: [],
@@ -193,7 +195,7 @@ export default class MapelSiswa extends React.Component {
                         <span className="float-right">
                             <ul className="nav float-right mt-2 mb-1">
                                 <li className="nav-item">
-                                    <button className={`btn btnnav ${this.state.action === '' && 'active'}`} onClick={this.changeData} value="">ss</button>
+                                    <button className={`btn btnnav ${this.state.action === '' && 'active'}`} onClick={this.changeData} value="">Tersedia</button>
                                 </li>
                                 <li className="nav-item">
                                     <button className={`btn btnnav ${this.state.action === 'waiting' && 'active'}`} onClick={this.changeData} value="waiting">Menunggu ({this.state.menungguCount})</button>
@@ -268,16 +270,29 @@ export default class MapelSiswa extends React.Component {
                                             <div className="col-md-2"><b>Keterangan</b></div>
                                             <div className="col-md-10">{this.state.mapel.keterangan}</div>
                                         </div>
-                                        <hr />
-                                        <div className="row">
-                                            <div className="col-md-2"><b>Kelompok</b></div>
-                                            <div className="col-md-10">
+                                        {this.state.action == '' ?
+                                            <React.Fragment>
+                                                <hr />
                                                 <div className="row">
-                                                    <div className="col-12"><input type="radio" name="group" value="" onChange={this.changeGroup} defaultChecked /> Umum</div>
-                                                    {JSON.parse(this.state.mapel.groups).map(g => <div key={g.nama} className="col-12"><input type="radio" name="group" value={g.nama} onChange={this.changeGroup} disabled={this.state.action !== "" ? true : false} /> {g.nama}</div>)}
+                                                    <div className="col-md-2"><b>Kelompok</b></div>
+                                                    <div className="col-md-10">
+                                                        <div className="row">
+                                                            <div className="col-12"><input type="radio" name="group" value="" onChange={this.changeGroup} defaultChecked /> Umum</div>
+                                                            {JSON.parse(this.state.mapel.groups).map(g => <div key={g.nama} className="col-12"><input type="radio" name="group" value={g.nama} onChange={this.changeGroup} disabled={this.state.action !== "" ? true : false} /> {g.nama}</div>)}
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            </React.Fragment>
+                                            : this.state.action == "waiting" ?
+                                                <div className="row">
+                                                    <div className="col-md-2"><b>Kelompok</b></div>
+                                                    <div className="col-md-10">{this.state.mapel.waiting && this.state.mapel.waiting.group}</div>
+                                                </div>
+                                                : <div className="row">
+                                                    <div className="col-md-2"><b>Kelompok</b></div>
+                                                    <div className="col-md-10">{this.state.mapel.joined_user && this.state.mapel.joined_user.group}</div>
+                                                </div>
+                                        }
                                     </React.Fragment>
                                 }
                             </div>
@@ -303,3 +318,7 @@ export default class MapelSiswa extends React.Component {
         )
     }
 }
+
+import { hot } from 'react-hot-loader/root'
+
+export default hot(MapelSiswa)

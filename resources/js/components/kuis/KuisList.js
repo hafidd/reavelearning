@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 function KuisList(props) {
     const { kuises, from, loading, setAction, action = "default", select } = props
-    let no = from | 0
+    let no = from | 1
     return (
         <React.Fragment>
             <ul className="list-group">

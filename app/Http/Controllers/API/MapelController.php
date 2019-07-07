@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MapelResource;
 use App\Mapel;
+use App\MapelKuis;
 use App\MapelMateri;
 use App\MapelUser;
 use App\MapelUserLog;
@@ -215,13 +216,14 @@ class MapelController extends Controller
     public function detailAktif($id)
     {
         $data = Mapel::with([
-            'kategori',
-            'user',
+            'kategori', 'user',
+            'waiting' => function ($q) {$q->select('mapel_id', 'group')->where('user_id', $this->user->id)->get();},
+            'joinedUser' => function ($q) {$q->select('mapel_id', 'group')->where('user_id', $this->user->id)->get();},
         ])
-            ->where([
-                'id' => $id,
-                'status' => 'aktif',
-            ])->first();
+        //->whereHas('waiting', function ($query) {$query->where('user_id', $this->user->id);
+        //})->orWhereHas('joinedUser', function ($query) {$query->where('user_id', $this->user->id);
+        //})
+            ->where(['id' => $id, 'status' => 'aktif'])->firstOrFail();
         return new MapelResource($data);
     }
 
@@ -358,6 +360,17 @@ class MapelController extends Controller
         return JsonResource::collection($data);
     }
 
+    public function materiByMapelSiswa($id)
+    {
+        $data = MapelMateri::with(['materi'])
+            ->whereHas(
+                'mapel', function ($q) {
+                    $q->whereHas('joinedUser', function ($q) {$q->where('user_id', $this->user->id);});
+                }
+            )->where('mapel_id', $id)->get();
+        return JsonResource::collection($data);
+    }
+
     // hapus siswa dari mapel
     public function removeSiswa($id)
     {
@@ -446,6 +459,118 @@ class MapelController extends Controller
         return JsonResource::collection($data);
     }
 
+    /** MAPEL KUIS */
+
+    public function kuisByMapel(Request $request, $id)
+    {
+        $data = MapelKuis::with('kuis')->where(['mapel_id' => $id]);
+        $data = $request->group ? $data->where('group', $request->group !== "umum" ? $request->group : null) : $data;
+        $data = $data->get();
+        return JsonResource::collection($data);
+    }
+
+    public function kuisByMapelSiswa(Request $request, $id)
+    {
+        $data = MapelKuis::with(['kuis', 'mapel'])
+            ->whereHas('mapel', function ($q) {
+                $q->whereHas('joinedUser', function ($q) {
+                    $q->where('user_id', $this->user->id)
+                        ->whereRaw('coalesce("mapel_kuis"."group", ' . "''" . ') = coalesce("mapel_user"."group", ' . "''" . ')');
+                });
+            })
+            ->where(['mapel_id' => $id, 'published' => true])->get();
+        return JsonResource::collection($data);
+    }
+
+    public function kuisMapelDetail(Request $request, $id)
+    {
+        $data = MapelKuis::with('kuis')->findOrFail($id);
+        return new JsonResource($data);
+    }
+
+    public function pengaturanKuis(Request $request, $id)
+    {
+        $data = MapelKuis::with('kuis')->findOrFail($id);
+        // validasi 1
+        $this->validate($request, [
+            'type' => 'required|in:1,2',
+        ], $this->errMsg());
+        // data
+        $settings = [
+            'type' => $request->type,
+            'keterangan' => $request->keterangan,
+        ];
+        // ujian?
+        if ($request->type == 2) {
+            $this->validate($request, [
+                'waktu' => 'required|integer',
+                'mulai' => 'required|in:1,2',
+            ], $this->errMsg());
+            $settings["waktu"] = $request->waktu;
+            $settings["mulai"] = $request->mulai;
+            // mulai manual?
+            if ($request->mulai == 2) {
+                $this->validate($request, [
+                    'start' => 'required|date|date_format:Y-m-d H:i:s',
+                ], $this->errMsg());
+                $settings["start"] = $request->start;
+            }
+        }
+        //print_r($request->published); exit;
+        // update
+        $data->update([
+            'settings' => json_encode($settings),
+            'published' => $request->published,
+        ]);
+        return new JsonResource($data);
+    }
+
+    // tambah kuis ke mapel
+    public function addKuis(Request $request)
+    {
+        //validasi
+        $this->validate($request, [
+            'group' => 'required',
+            'mapelId' => 'required',
+            'kuises' => 'required',
+        ], $this->errMsg());
+
+        $insert = [
+            'group' => $request->group == 'umum' ? null : $request->group,
+            'mapel_id' => $request->mapelId,
+            'published' => false,
+            'settings' => '{}',
+        ];
+        // insert
+        try {
+            $records = [];
+            foreach ($request->kuises as $kuis) {
+                $insert["kuis_id"] = $kuis;
+                array_push($records, $insert);
+            }
+            foreach ($records as $record) {
+                MapelKuis::create($record);
+            }
+            return response()->json('sukses', 201);
+        } catch (Exception $e) {
+            return response()->json('gagal menambahkan', 500);
+        }
+    }
+
+    // hapus materi dari mapel
+    public function removeKuis($id)
+    {
+        $data = MapelMateri::with(['mapel' => function ($q) {
+            $q->where('user_id', $this->user->id)->get();
+        }])->withCount('childs')->where('id', $id)->firstOrFail();
+        if ($data->childs_count > 0) {
+            return response()->json('ono isine', 422);
+        }
+        $data->delete();
+        return response()->json(null, 204);
+    }
+
+    /** FU */
     private function errMsg()
     {
         return [

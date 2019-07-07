@@ -8,7 +8,7 @@ import MapelMateriCard from '../mapel/MapelMateriCard'
 import MapelPesertaCard from '../mapel/MapelPesertaCard'
 import MapelKuisCard from '../mapel/MapelKuisCard'
 
-class MapelSetting extends React.Component {
+class MapelSiswaDetail extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -27,7 +27,7 @@ class MapelSetting extends React.Component {
         const token = Token.getToken()
         if (!token) { this.props.logOut('mapel', true); return }
         this.setState({ fetch: true })
-        axios.get('api/mapel/' + this.state.id, {
+        axios.get('api/mapel-detail/' + this.state.id, {
             headers: {
                 Authorization: 'Bearer ' + token
             }
@@ -76,9 +76,11 @@ class MapelSetting extends React.Component {
                         <li className="nav-item">
                             <button className={`nav-link ${this.state.action === 'materi' && 'active'}`} onClick={this.setAction} value="materi">Materi</button>
                         </li>
+                        {/** 
                         <li className="nav-item">
                             <button className={`nav-link ${this.state.action === 'peserta' && 'active'}`} onClick={this.setAction} value="peserta">Siswa</button>
                         </li>
+                        */}
                         <li className="nav-item">
                             <button className={`nav-link ${this.state.action === 'quis' && 'active'}`} onClick={this.setAction} value="quis">Ujian/Kuis</button>
                         </li>
@@ -88,13 +90,13 @@ class MapelSetting extends React.Component {
                     {(() => {
                         switch (this.state.action) {
                             case "materi": return (
-                                <MapelMateriCard notif={this.notif} id={this.state.id} />
+                                <MapelMateriCard notif={this.notif} id={this.state.id} isSiswa={true} />
                             )
                             case "peserta": return (
-                                <MapelPesertaCard notif={this.notif} id={this.state.id} groups={groups} />
+                                ''
                             )
                             case "quis": return (
-                                <MapelKuisCard notif={this.notif} id={this.state.id} groups={groups} />
+                                <MapelKuisCard notif={this.notif} id={this.state.id} groups={groups} isSiswa={true} />
                             )
                             default: return (
                                 "nonono"
@@ -108,4 +110,4 @@ class MapelSetting extends React.Component {
 }
 
 import { hot } from 'react-hot-loader/root'
-export default hot(MapelSetting)
+export default hot(MapelSiswaDetail)
