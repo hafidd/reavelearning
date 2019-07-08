@@ -40,16 +40,22 @@ Route::group(['middleware' => ['jwt-auth']], function () {
     Route::delete('rem-kuis/{id}', 'Api\MapelController@removeKuis');
     // download file materi
     Route::get('get-materi-file/{type}/{name}', 'Api\MateriController@downloadFile');
-    
+
     // materi-mapel (s)
     Route::get('materi-siswa/mapel/{id}', 'Api\MapelController@materiByMapelSiswa');
     // materi-kuis (s)
-    Route::get('materi-siswa/kuis/{id}', 'Api\MapelController@kuisByMapelSiswa');
+    Route::get('materi-siswa/kuis/{id}', 'Api\MapelController@kuisTersedia');
     // materi (s)
     Route::get('materi-siswa/{id}', 'Api\MateriController@materiSiswaDetail');
 
+    // mengerjakan kuis
+    Route::post('mulai-kuis', 'Api\MulaiKuisController@start');
+    Route::put('update-jawaban', 'Api\MulaiKuisController@updateJawaban');
+
 });
 Route::get('get-materi-file-test/{type}/{name}', 'Api\MateriController@downloadFile');
+
+Route::get('mulai-kuis-test/{mkId}', 'Api\MulaiKuisController@start');
 
 Route::get('phpinfo', function () {
     $inipath = php_ini_loaded_file();

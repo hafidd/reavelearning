@@ -225,6 +225,16 @@ const MapelKuisCard = (props) => {
         return { start: start, end: end, status: status }
     }
 
+    function mulaiKuis(id) {
+        if (isSiswa) {
+            if (confirm(`Mulai Kuis?`)) {
+                props.history.push({
+                    pathname: '/mulai-kuis/' + id,
+                })
+            }
+        }
+    }
+
     return (
         <React.Fragment>
             <div className="card" style={{ width: "100%", borderTop: 'none' }}>
@@ -259,7 +269,7 @@ const MapelKuisCard = (props) => {
                                                 <small style={{}}>
                                                     {!isSiswa && selectedGroup == "" && <p className="mb-0">{`kelompok: ${kuis.group ? kuis.group : 'umum'}`}</p>}
                                                     {settings.keterangan && <p className="mb-0">{`keterangan: ${settings.keterangan}`}</p>}
-                                                    {settings.waktu == 2 && <p className="mb-0">{`waktu: ${settings.waktu}`}</p>}
+                                                    {settings.type == 2 && <p className="mb-0">{`waktu: ${settings.waktu} menit`}</p>}
                                                     {settings.mulai == 2 && <p className="mb-0">{`mulai: ${settings.start}`}</p>}
                                                     {!isSiswa && kuis.published && <span className="badge badge-success mr-1">published</span>}
                                                     {settings.type == 1 ? <span className="badge badge-info mr-1">latihan</span> : settings.type == 2 && <span className="badge badge-warning mr-1">ujian</span>}
@@ -267,10 +277,11 @@ const MapelKuisCard = (props) => {
                                                 </small>
                                             </div>
                                             <div className="col-md-4">
-                                                {kuis.published && settings.type == 2 && settings.mulai == 1 && true /*cek selesai?*/ && <button className="btn btn-outline-success float-right mr-1"> <i className="fas fa-play"></i></button>}
-                                                {(settings.type == 1 || false /** cak selesai? */) && <button className="btn btn-outline-primary float-right mr-1"> <i className="fas fa-table"></i>  </button>}
-                                                {kuis.published && settings.type == 2 && settings.mulai == 2 &&
-                                                    <span className="float-right">
+                                                {!isSiswa && kuis.published && settings.type == 2 && settings.mulai == 1 && true /*cek selesai?*/ && <button className="btn btn-outline-success float-right mr-1"><i className="fas fa-play"></i></button>}
+                                                {isSiswa && <button className="btn btn-outline-success float-right mr-1" onClick={() => mulaiKuis(kuis.id)}><i className="fas fa-play"></i></button>}
+                                                {(settings.type == 1 || false /** cak selesai? */) && <button className="btn btn-outline-primary float-right mr-1"> <i className="fas fa-table"></i></button>}
+                                                {kuis.published && settings.type == 2 && (settings.mulai == 2 || (settings.mulai == 1 && settings.started)) &&
+                                                    <span className="">
                                                         <Timer
                                                             initialTime={ms.start}
                                                             direction="backward"
@@ -309,7 +320,7 @@ const MapelKuisCard = (props) => {
                                                                         <Timer.Minutes />menit{' '}
                                                                         <strong style={{ fontSize: 20 }}><Timer.Seconds /></strong>
                                                                     </span>
-                                                                    {ms.status != 1 && <button className="btn btn-outline-primary float-right mr-1"> <i className="fas fa-table"></i></button>}
+                                                                    {!isSiswa && ms.status != 1 && <button className="btn btn-outline-primary float-right mr-1"> <i className="fas fa-table"></i></button>}
                                                                 </React.Fragment>
                                                             )}
                                                         </Timer>

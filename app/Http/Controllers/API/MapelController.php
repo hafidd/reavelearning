@@ -469,9 +469,9 @@ class MapelController extends Controller
         return JsonResource::collection($data);
     }
 
-    public function kuisByMapelSiswa(Request $request, $id)
+    public function kuisTersedia(Request $request, $id)
     {
-        $data = MapelKuis::with(['kuis', 'mapel'])
+        $data = MapelKuis::selectRaw("*")->with(['kuis', 'mapel'])
             ->whereHas('mapel', function ($q) {
                 $q->whereHas('joinedUser', function ($q) {
                     $q->where('user_id', $this->user->id)
@@ -479,7 +479,27 @@ class MapelController extends Controller
                 });
             })
             ->where(['mapel_id' => $id, 'published' => true])->get();
-        return JsonResource::collection($data);
+        // filter
+        $filtered_data = array_filter($data->toArray(), function ($d) {
+            $mk_settings = json_decode($d['settings']);
+            $ok = false;
+            if ($mk_settings->type == 1) {
+                // tipe latihan
+                $ok = true;
+            } else if ($mk_settings->mulai == 1
+                && (!$mk_settings->started || ($mk_settings->started && (date('Y-m-d H:i:s', strtotime("+{$mk_settings->waktu} minutes", strtotime($mk_settings->start))) > date('Y-m-d H:i:s'))))
+            ) {
+                // tipe mulai manual -> ( belum dimulai or (dimulai + waktu masih) )
+                $ok = true;
+            } else if ($mk_settings->mulai == 2
+                && ( (date($mk_settings->start) >= date('Y-m-d H:i:s')) || (date($mk_settings->start) <= date('Y-m-d H:i:s')) && (date('Y-m-d H:i:s', strtotime("+{$mk_settings->waktu} minutes", strtotime($mk_settings->start))) > date('Y-m-d H:i:s')))
+            ) {
+                // tipe terjadwal -> ( belum dimulai or (dimulai + waktu masih) )
+                $ok = true;
+            }
+            return $ok;
+        });
+        return new JsonResource($filtered_data);
     }
 
     public function kuisMapelDetail(Request $request, $id)

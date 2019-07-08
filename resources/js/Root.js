@@ -15,6 +15,7 @@ const TestAdmin = lazy(() => import('./components/admin/TestAdmin'));
 const MapelSiswa = lazy(() => import('./components/siswa/MapelSiswa'));
 const MapelSiswaDetail = lazy(() => import('./components/siswa/MapelSiswaDetail'));
 const ViewMateri = lazy(() => import('./components/materi/ViewMateri'));
+const MulaiKuis = lazy(() => import('./components/kuis/MulaiKuis'));
 
 const TestAdmin2 = () => <h1>TestAdmin2</h1>
 
@@ -60,6 +61,7 @@ class Root extends React.Component {
             MapelSiswa,
             MapelSiswaDetail,
             Kuis,
+            MulaiKuis,
             Ded,
 
         }
