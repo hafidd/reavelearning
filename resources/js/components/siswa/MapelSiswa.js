@@ -223,7 +223,7 @@ class MapelSiswa extends React.Component {
                                                 <React.Fragment>
                                                     <MapelSearch kategori={this.state.kategori} loadData={this.setSearch} user="siswa" />
                                                     <div className="mb-2"></div>
-                                                    <MapelCard mapels={this.state.mapels} toggleDetail={this.toggleDetail} />
+                                                    <MapelCard action={this.state.action} mapels={this.state.mapels} toggleDetail={this.toggleDetail} />
                                                 </React.Fragment>
                                             </ErrorBoundary>
                                         );

@@ -105,13 +105,21 @@ class MulaiKuisController extends Controller
 
     private function returnDataKuis($mapel_kuis, $hasil_id = "", $hasil_details = [])
     {
+        // daftar soal
         $soals = KuisSoal::with(['soal' => function ($q) {
             $q->select('id', 'type', 'pertanyaan', 'kode');
         }])->where(['kuis_id' => $mapel_kuis->kuis_id, 'type' => 2])->get();
-
+        // daftar jawaban
+        $data_jawaban = HasilDetail::select('soal_id', 'jawaban')
+            ->where(['hasil_id' => $hasil_id])->get();
+        $jawabans = [];
+        foreach ($data_jawaban->toArray() as $val) {
+            $jawabans[$val['soal_id']] = json_decode($val['jawaban']) ? json_decode($val['jawaban']) : [];
+        }
         $data = [
             "mapel_kuis" => $mapel_kuis,
             "soals" => $soals,
+            "jawabans" => json_encode($jawabans),
             "hasil_id" => $hasil_id,
         ];
         return new JsonResource($data);
@@ -123,6 +131,9 @@ class MulaiKuisController extends Controller
             'hasil_id' => $request->hId,
             'soal_id' => $request->sId,
         ])->firstOrFail();
+        if ($request->bs) {
+            $request->value = $request->value ? true : false;
+        }
         $jawaban->jawaban = json_encode($request->value);
         $jawaban->update();
         return new JsonResource($jawaban);

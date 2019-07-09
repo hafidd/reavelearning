@@ -492,7 +492,7 @@ class MapelController extends Controller
                 // tipe mulai manual -> ( belum dimulai or (dimulai + waktu masih) )
                 $ok = true;
             } else if ($mk_settings->mulai == 2
-                && ( (date($mk_settings->start) >= date('Y-m-d H:i:s')) || (date($mk_settings->start) <= date('Y-m-d H:i:s')) && (date('Y-m-d H:i:s', strtotime("+{$mk_settings->waktu} minutes", strtotime($mk_settings->start))) > date('Y-m-d H:i:s')))
+                && ((date($mk_settings->start) >= date('Y-m-d H:i:s')) || (date($mk_settings->start) <= date('Y-m-d H:i:s')) && (date('Y-m-d H:i:s', strtotime("+{$mk_settings->waktu} minutes", strtotime($mk_settings->start))) > date('Y-m-d H:i:s')))
             ) {
                 // tipe terjadwal -> ( belum dimulai or (dimulai + waktu masih) )
                 $ok = true;
@@ -528,8 +528,12 @@ class MapelController extends Controller
             ], $this->errMsg());
             $settings["waktu"] = $request->waktu;
             $settings["mulai"] = $request->mulai;
-            // mulai manual?
-            if ($request->mulai == 2) {
+            if ($request->mulai == 1) {
+                // mulai manual
+                $settings["started"] = false;
+                $settings["start"] = null;
+            } else if ($request->mulai == 2) {
+                // terjadwal
                 $this->validate($request, [
                     'start' => 'required|date|date_format:Y-m-d H:i:s',
                 ], $this->errMsg());
@@ -541,6 +545,24 @@ class MapelController extends Controller
         $data->update([
             'settings' => json_encode($settings),
             'published' => $request->published,
+        ]);
+        return new JsonResource($data);
+    }
+
+    // mulai kuis
+    public function startKuis(Request $request, $id)
+    {
+        $data = MapelKuis::with('kuis')
+            ->where([
+                'published' => true,
+                'settings->type' => 2,
+                'settings->mulai' => 1,
+            ])
+            ->findOrFail($id);
+        // update (mulai kuis)
+        $data->update([
+            'settings->started' => true,
+            'settings->start' => date('Y-m-d H:i:s'),
         ]);
         return new JsonResource($data);
     }

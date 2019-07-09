@@ -35,6 +35,7 @@ Route::group(['middleware' => ['jwt-auth']], function () {
     //materi-kuis
     Route::get('materi/kuis/{id}', 'Api\MapelController@kuisByMapel');
     Route::put('materi/kuis/{id}', 'Api\MapelController@pengaturanKuis');
+    Route::put('start-kuis/{id}', 'Api\MapelController@startKuis');
     Route::get('materi/kuis-detail/{id}', 'Api\MapelController@kuisMapelDetail');
     Route::post('add-kuis', 'Api\MapelController@addKuis');
     Route::delete('rem-kuis/{id}', 'Api\MapelController@removeKuis');
@@ -56,6 +57,19 @@ Route::group(['middleware' => ['jwt-auth']], function () {
 Route::get('get-materi-file-test/{type}/{name}', 'Api\MateriController@downloadFile');
 
 Route::get('mulai-kuis-test/{mkId}', 'Api\MulaiKuisController@start');
+Route::get('testxx', function () {
+    $data_jawaban = App\HasilDetail::select('soal_id', 'jawaban')
+        ->where([
+            'hasil_id' => 24,
+        ])->get();
+
+    $jawabans = [];
+    foreach ($data_jawaban->toArray() as $val) {
+        $jawabans[$val['soal_id']] = $val['jawaban'];
+    }
+
+    print_r($jawabans);
+});
 
 Route::get('phpinfo', function () {
     $inipath = php_ini_loaded_file();

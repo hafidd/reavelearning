@@ -41,28 +41,30 @@ class MulaiKuis extends React.Component {
                 kuis: data.mapel_kuis.kuis,
                 mapel: data.mapel_kuis.mapel,
                 soals: data.soals,
+                jawabans: JSON.parse(data.jawabans),
                 loading: false,
             })
         }).catch(err => {
             //this.setState({ fetch: false })
-            this.props.history.push('/dashboard')
+            //this.props.history.push('/dashboard')
+            console.log(err);
         })
     }
 
-    setJawaban = (value) => {
+    setJawaban = (value, bs = false) => {
         this.setState({ jawabans: { ...this.state.jawabans, ...value } })
 
         for (var property in value) {
-            this.updateJawaban(property, value[property])
+            this.updateJawaban(property, value[property], bs)
         }
 
     }
 
-    updateJawaban(sId, value) {
+    updateJawaban(sId, value, bs) {
         const token = Token.getToken()
         if (!token) { this.props.logOut('mapel', true); return }
         this.setState({ loading: true })
-        axios.put('api/update-jawaban/', { hId: this.state.hasilId, sId: sId, value: value }, {
+        axios.put('api/update-jawaban/', { hId: this.state.hasilId, sId: sId, value: value, bs: bs }, {
             headers: {
                 Authorization: 'Bearer ' + token
             }
@@ -72,11 +74,12 @@ class MulaiKuis extends React.Component {
             })
         }).catch(err => {
             //this.setState({ fetch: false })
-            //this.props.history.push('/dashboard')
+            //this.props.history.goBack()
         })
     }
 
     render() {
+        let nomor = 1;
         return (
             <React.Fragment>
                 <div className="row">
@@ -93,11 +96,16 @@ class MulaiKuis extends React.Component {
                             return (
                                 <div className="card mb-2" key={soal.id}>
                                     <div className="card-body">
-                                        {data.type == 1 && <PilihanGanda soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
-                                        {data.type == 2 && <BenarSalah soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
-                                        {data.type == 3 && <Menjodohkan soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
-                                        {data.type == 4 && <Isian soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
-                                        {data.type == 5 && <Essay soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
+                                        <span className="float-left">
+                                            <b>{nomor++} .</b>
+                                        </span>
+                                        <span className="">
+                                            {data.type == 1 && <PilihanGanda soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
+                                            {data.type == 2 && <BenarSalah soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
+                                            {data.type == 3 && <Menjodohkan soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
+                                            {data.type == 4 && <Isian soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
+                                            {data.type == 5 && <Essay soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
+                                        </span>
                                     </div>
                                 </div>
                             )
@@ -112,7 +120,8 @@ class MulaiKuis extends React.Component {
 
 const PilihanGanda = (props) => {
     const { pertanyaan, jawaban, setJawaban, soalId } = props
-    const jawab = jawaban !== undefined ? jawaban : [];
+    const jawab = jawaban ? jawaban : [];
+    console.log('jawab', jawab);
     const handleCheck = (e) => {
         if (pertanyaan.type == 1) setJawaban({ [soalId]: [parseInt(e.target.value) + 1] })
         else if (pertanyaan.type == 2) {
@@ -123,9 +132,16 @@ const PilihanGanda = (props) => {
             }
         }
     }
+    console.log(pertanyaan.q)
     return (
         <React.Fragment>
-            <p>{pertanyaan.q}</p>
+
+            <div>
+                {pertanyaan.q.split('\n').map((item, key) => {
+                    return <span key={key}>{item}<br /></span>
+                })}
+            </div>
+
             <div className="row">
                 <div className="col-md-12">
                     <ul className="list-group">
@@ -154,12 +170,16 @@ const BenarSalah = (props) => {
     const { pertanyaan, jawaban, setJawaban, soalId } = props
     return (
         <React.Fragment>
-            <p>{pertanyaan.q}</p>
+            <div>
+                {pertanyaan.q.split('\n').map((item, key) => {
+                    return <span key={key}>{item}<br /></span>
+                })}
+            </div>
             <RadioForm
-                labelW="0" name={`kunci${soalId}`} handleChange={(e) => setJawaban({ [soalId]: e.target.value })} value={jawaban}
+                labelW="0" name={`kunci${soalId}`} handleChange={(e) => setJawaban({ [soalId]: e.target.value }, true)} value={jawaban}
                 options={[
-                    ['1', 'BENAR'],
-                    ['0', 'SALAH'],
+                    [1, 'BENAR'],
+                    [0, 'SALAH'],
                 ]}
             />
         </React.Fragment>
@@ -170,7 +190,11 @@ const Essay = (props) => {
     const { pertanyaan, jawaban, setJawaban, soalId } = props
     return (
         <React.Fragment>
-            <p>{pertanyaan.q}</p>
+            <div>
+                {pertanyaan.q.split('\n').map((item, key) => {
+                    return <span key={key}>{item}<br /></span>
+                })}
+            </div>
             <TextAreaForm labelW="0" formW="5" name={`kunci${soalId}`} value={jawaban} placeholder={"Isikan jawaban anda"} handleChange={(e) => setJawaban({ [soalId]: e.target.value })} />
         </React.Fragment>
     )
@@ -197,7 +221,11 @@ const Menjodohkan = (props) => {
 
     return (
         <React.Fragment>
-            <p>{pertanyaan.q}</p>
+            <div>
+                {pertanyaan.q.split('\n').map((item, key) => {
+                    return <span key={key}>{item}<br /></span>
+                })}
+            </div>
             <div className="row">
                 <div className="col-5">
                     <ul className="list-group">
@@ -215,7 +243,7 @@ const Menjodohkan = (props) => {
                     </ul>
                 </div>
                 <div className="col-2 m-0">
-                    {jawaban && jawaban.constructor === Array && jawaban.map((line, i) => <LineTo key={i} from={`listq-${line.q}`} to={`lista-${line.a}`} />)}
+                    {jawaban.map((line, i) => <LineTo key={i} from={`listq-${line.q}`} to={`lista-${line.a}`} />)}
                 </div>
                 <div className="col-5">
                     <ul className="list-group">
@@ -234,6 +262,9 @@ const Menjodohkan = (props) => {
                             </React.Fragment>
                         ))}
                     </ul>
+                </div>
+                <div className="col-12">
+                    {JSON.stringify(jawaban)}
                 </div>
             </div>
         </React.Fragment>
@@ -259,7 +290,11 @@ const Isian = (props) => {
                     <div className="p-3 mb-2 bg-info text-white">Lengkapi kalimat</div>
                 </div>
             </div>
-            <p>{pertanyaan.q}</p>
+            <div>
+                {pertanyaan.q.split('\n').map((item, key) => {
+                    return <span key={key}>{item}<br /></span>
+                })}
+            </div>
         </React.Fragment>
     )
 }

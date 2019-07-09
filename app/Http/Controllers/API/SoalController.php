@@ -62,6 +62,7 @@ class SoalController extends Controller
             }
             //insert
             $pertanyaan = [
+                'type' => $request->aType,
                 'q' => $request->q,
                 'alist' => json_decode($request->jawabans),
             ];
@@ -185,6 +186,7 @@ class SoalController extends Controller
             }
             //insert
             $pertanyaan = [
+                'type' => $request->aType,
                 'q' => $request->q,
                 'alist' => json_decode($request->jawabans),
             ];

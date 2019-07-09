@@ -132,7 +132,7 @@ const MapelKuisCard = (props) => {
             notif(<NotifMessage text={`berhasil ditambahkan`} />)
             setLoading(false)
             closeAndReset()
-            loadMateri()
+            getKuis()
         }).catch((err) => {
             if (err.response) {
                 if (err.response.request.status === 422) {
@@ -155,6 +155,30 @@ const MapelKuisCard = (props) => {
         if (!Token.cek()) { notif('mohon login ulang'); return }
         setLoading(true)
         axios.put('/api/materi/kuis/' + values.dataId, { ...values }, {
+            headers: {
+                Authorization: 'Bearer ' + Token.getToken()
+            }
+        }).then(res => {
+            setLoading(false)
+            notif('sukses')
+            closeAndReset()
+            getKuis()
+        }).catch((err) => {
+            if (err.response) {
+                if (err.response.request.status === 422) {
+                    console.log(getErrors(err.response.data.errors))
+                    notif(getErrors(err.response.data.errors))
+                }
+            }
+            closeAndReset()
+        })
+    }
+
+    function startKuis(dataId) {
+        if (!confirm('mulai kuis ini')) return        
+        if (!Token.cek()) { notif('mohon login ulang'); return }
+        setLoading(true)
+        axios.put('/api/start-kuis/' + dataId, { ...values }, {
             headers: {
                 Authorization: 'Bearer ' + Token.getToken()
             }
@@ -277,8 +301,8 @@ const MapelKuisCard = (props) => {
                                                 </small>
                                             </div>
                                             <div className="col-md-4">
-                                                {!isSiswa && kuis.published && settings.type == 2 && settings.mulai == 1 && true /*cek selesai?*/ && <button className="btn btn-outline-success float-right mr-1"><i className="fas fa-play"></i></button>}
-                                                {isSiswa && <button className="btn btn-outline-success float-right mr-1" onClick={() => mulaiKuis(kuis.id)}><i className="fas fa-play"></i></button>}
+                                                {!isSiswa && kuis.published && settings.type == 2 && settings.mulai == 1 && !settings.started && <button onClick={() => startKuis(kuis.id)} className="btn btn-outline-success float-right mr-1"><i className="fas fa-play"></i></button>}
+                                                {isSiswa && (settings.type == 1 || (settings.type == 2 && (settings.mulai == 2 || (settings.mulai == 1 && settings.started)))) && <button className="btn btn-outline-success float-right mr-1" onClick={() => mulaiKuis(kuis.id)}><i className="fas fa-play"></i></button>}
                                                 {(settings.type == 1 || false /** cak selesai? */) && <button className="btn btn-outline-primary float-right mr-1"> <i className="fas fa-table"></i></button>}
                                                 {kuis.published && settings.type == 2 && (settings.mulai == 2 || (settings.mulai == 1 && settings.started)) &&
                                                     <span className="">

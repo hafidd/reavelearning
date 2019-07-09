@@ -8,7 +8,7 @@ class MapelKuis extends Model
 {
     protected $table = 'mapel_kuis';
     public $timestamps = false;
-    protected $fillable = ['kuis_id', 'mapel_id', 'group', 'settings', 'published'];
+    protected $fillable = ['kuis_id', 'mapel_id', 'group', 'settings', 'published', 'settings->started', 'settings->start'];
 
     public function mapel()
     {return $this->belongsTo('App\Mapel', 'mapel_id', 'id');}

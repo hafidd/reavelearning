@@ -1,20 +1,21 @@
 import React from 'react'
 import Tooltip from "react-simple-tooltip"
 import { DefaultImage } from "../html/Template"
+import { Link } from 'react-router-dom'
 
 const MapelCard = props => {
-    const { mapels, toggleDetail } = props
+    const { mapels, toggleDetail, action } = props
     return (
         <div className="container">
             <div className="row">
-                {mapels.map(mapel => <MapelCardItem key={mapel.id} mapel={mapel} toggleDetail={toggleDetail} />)}
+                {mapels.map(mapel => <MapelCardItem key={mapel.id} mapel={mapel} toggleDetail={toggleDetail} action={action} />)}
             </div>
         </div>
     )
 };
 
 const MapelCardItem = React.memo(props => {
-    const { mapel, toggleDetail } = props
+    const { mapel, toggleDetail, action } = props
     return (
         <div className="col-md-3 mb-3 p-1 hover1">
             <div className="card" style={{ width: "100%" }}>
@@ -41,6 +42,7 @@ const MapelCardItem = React.memo(props => {
                         {!mapel.keterangan && '-'}
                     </p>
                     <span className="float-right">
+                        {action == "joined" && <Link to={`/mapel_siswa/${mapel.id}`} > <button className="btn btn-success btn-sm"><i className="fas fa-expand"></i></button> </Link>}
                         <button value={mapel.id} onClick={toggleDetail} className={`btn btn-primary btn-sm mr-1`}>Detail</button>
                     </span>
                 </div>
