@@ -18,4 +18,7 @@ class KuisSoal extends Model
 
     public function childs()
     {return $this->hasMany('App\KuisSoal', 'parent', 'id');}
+
+    public function parent()
+    {return $this->belongsTo('App\KuisSoal', 'parent', 'id');}
 }

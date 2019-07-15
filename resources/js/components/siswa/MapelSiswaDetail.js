@@ -76,13 +76,11 @@ class MapelSiswaDetail extends React.Component {
                         <li className="nav-item">
                             <button className={`nav-link ${this.state.action === 'materi' && 'active'}`} onClick={this.setAction} value="materi">Materi</button>
                         </li>
-                        {/** 
-                        <li className="nav-item">
-                            <button className={`nav-link ${this.state.action === 'peserta' && 'active'}`} onClick={this.setAction} value="peserta">Siswa</button>
-                        </li>
-                        */}
                         <li className="nav-item">
                             <button className={`nav-link ${this.state.action === 'quis' && 'active'}`} onClick={this.setAction} value="quis">Ujian/Kuis</button>
+                        </li>
+                        <li className="nav-item">
+                            <button className={`nav-link ${this.state.action === 'hasil' && 'active'}`} onClick={this.setAction} value="hasil">Hasil</button>
                         </li>
                     </ul>
                 </div>
@@ -91,12 +89,12 @@ class MapelSiswaDetail extends React.Component {
                         switch (this.state.action) {
                             case "materi": return (
                                 <MapelMateriCard notif={this.notif} id={this.state.id} isSiswa={true} />
-                            )
-                            case "peserta": return (
-                                ''
-                            )
+                            )                           
                             case "quis": return (
                                 <MapelKuisCard notif={this.notif} id={this.state.id} groups={groups} isSiswa={true} />
+                            )
+                            case "hasil": return (
+                                <MapelKuisCard notif={this.notif} id={this.state.id} groups={groups} isSiswa={true} isHasil={true} />
                             )
                             default: return (
                                 "nonono"

@@ -53,10 +53,24 @@ Route::group(['middleware' => ['jwt-auth']], function () {
     Route::post('mulai-kuis', 'Api\MulaiKuisController@start');
     Route::put('update-jawaban', 'Api\MulaiKuisController@updateJawaban');
 
+    //kuis detail
+    Route::get('detail-kuis/{id}', 'Api\HasilController@getDetail');
+    Route::get('detail-hasil/{id}', 'Api\HasilController@getDetailHasil');
+    Route::put('koreksi/{id}', 'Api\HasilController@koreksiHasil');
+    Route::put('publish-hasil/{id}', 'Api\HasilController@publishHasil');
+    
+    //hasil kuis siswa
+    Route::get('kuis-selesai/{id}', 'Api\HasilController@hasilSiswa');
+    Route::get('detail-hasil-siswa/{id}', 'Api\HasilController@getDetailHasilSiswa');
+    
+
 });
+
+Route::get('detail-hasil-test/{id}', 'Api\HasilController@getDetailHasil');
+
 Route::get('get-materi-file-test/{type}/{name}', 'Api\MateriController@downloadFile');
 
-Route::get('mulai-kuis-test/{mkId}', 'Api\MulaiKuisController@start');
+//Route::get('mulai-kuis-test/{mkId}', 'Api\MulaiKuisController@start');
 Route::get('testxx', function () {
     $data_jawaban = App\HasilDetail::select('soal_id', 'jawaban')
         ->where([

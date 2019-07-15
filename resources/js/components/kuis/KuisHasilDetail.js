@@ -1,190 +1,155 @@
 import React from 'react'
 import axios from 'axios'
 import Token from '../../utils/Token'
-import { flatToHierarchy, shuffle } from '../../utils/Array'
-
-import Timer from 'react-compound-timer'
 
 import LineTo from 'react-lineto';
 
-import { PageTitle, Alert } from '../html/Template'
-
 import { TextForm, TextAreaForm, SelectForm, RadioForm } from '../html/BasicForm'
 
-class MulaiKuis extends React.Component {
+
+class KuisHasilDetail extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            id: props.match.params.kuisId,
-            hasilId: '',
+            id: props.id,
             hasil: {},
-            sisa: 0,
-            kuis: {},
-            mapel: {},
-            settings: {},
-            soals: [],
-            jawabans: {},
+            details: [],
+            jawabans: [],
+
+            points: [],
+
             loading: false,
+
+            idkWhy: true,
         }
     }
 
     componentDidMount() {
-        this.mulaiKuis()
+        window.addEventListener("resize", () => { this.setState({ idkWhy: !this.state.idkWhy }) });
+        this.getDetail()
     }
 
-    mulaiKuis() {
+    getDetail() {
         const token = Token.getToken()
         if (!token) { this.props.logOut('mapel', true); return }
         this.setState({ loading: true })
-        axios.post('api/mulai-kuis/', { mkId: this.state.id }, {
+        axios.get('api/detail-hasil/' + this.state.id, {
             headers: {
                 Authorization: 'Bearer ' + token
             }
         }).then(res => {
-            const data = res.data.data
-            const babs = flatToHierarchy(data.soals)
-            const soals = babs.map(bab => {
-                if (JSON.parse(bab.settings).acakSoal) shuffle(bab.child)
-                return bab
-            })
+            const data = res.data.data.hasil
             this.setState({
-                hasilId: data.hasil.id,
-                hasil: data.hasil,
-                sisa: data.sisa,
-                settings: JSON.parse(data.mapel_kuis.settings),
-                kuis: data.mapel_kuis.kuis,
-                mapel: data.mapel_kuis.mapel,
-                soals: soals,
-                jawabans: JSON.parse(data.jawabans),
-                loading: false,
+                hasil: data,
+                details: data.details,
+                points: data.details.map(detail => {
+                    return { id: detail.id, max_point: detail.max_point, point: detail.point, updated: false }
+                }),
+                loading: false
             })
         }).catch(err => {
-            //this.setState({ fetch: false })
-            //this.props.history.push('/dashboard')
             console.log(err);
+            this.setState({ loading: false })
         })
     }
 
-    setJawaban = (value, bs = false) => {
-        this.setState({ jawabans: { ...this.state.jawabans, ...value } })
-
-        for (var property in value) {
-            this.updateJawaban(property, value[property], bs)
-        }
-
+    updatePoints = e => {
+        this.setState({
+            points: this.state.points.map(point => {
+                if (point.id == e.target.name) {
+                    point.updated = true
+                    point.point = parseFloat(e.target.value) > parseFloat(point.max_point) ? point.max_point : e.target.value
+                }
+                return point
+            })
+        })
     }
 
-    updateJawaban(sId, value, bs) {
+    getPoint = id => {
+        const p = this.state.points.filter(point => { return point.id == id })
+        return p[0]['point']
+    }
+
+    savePoints = e => {
+        e.preventDefault()
         const token = Token.getToken()
         if (!token) { this.props.logOut('mapel', true); return }
         this.setState({ loading: true })
-        axios.put('api/update-jawaban/', { hId: this.state.hasilId, sId: sId, value: value, bs: bs }, {
+        const data = { points: this.state.points.filter(point => { return point.updated === true }) }
+        axios.put('api/koreksi/' + this.state.id, data, {
             headers: {
                 Authorization: 'Bearer ' + token
             }
         }).then(res => {
-            this.setState({
-                loading: false,
-            })
+            alert('sukses')
+            this.setState({ loading: false })
         }).catch(err => {
-            //this.setState({ fetch: false })
-            //this.props.history.goBack()
+            alert('gagal')
+            console.log(err);
+            this.setState({ loading: false })
         })
-    }
-
-    renderBab = bab => {
-        return (
-            <React.Fragment>
-
-            </React.Fragment>
-        )
     }
 
     render() {
         let nomor = 1;
         return (
             <React.Fragment>
-                <div className="row">
-                    <div className="col-12">
-                        <PageTitle title={this.state.kuis.judul} />
-                        <p>{this.state.mapel.nama}</p>
-                        {this.state.sisa &&
-                            <Timer
-                                initialTime={this.state.sisa - 10000}
-                                direction="backward"
-                                checkpoints={[
-                                    {
-                                        time: 0,
-                                        callback: () => alert('waktu habis!'),
-                                    },
-                                ]}
-                            >
-                                {() => (
-                                    <span style={{ display: this.state.settings.type == 2 ? 'block' : 'none' }}>
-                                        <Timer.Hours />jam{' '}
-                                        <Timer.Minutes />menit{' '}
-                                        <strong style={{ fontSize: 20 }}><Timer.Seconds /></strong>
-                                    </span>
-                                )}
-                            </Timer>
-                        }
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-12">
-                        {this.state.soals.map(bab => {
-                            return (
-                                <React.Fragment key={bab.id}>
-                                    <h5 className="text-center mt-4"><strong>{bab.nama.toUpperCase()}</strong></h5>
-                                    <p>{JSON.parse(bab.settings).keterangan}</p>
-                                    {bab.child.map(soal => {
-                                        const data = soal.soal
-                                        const pertanyaan = JSON.parse(data.pertanyaan)
-                                        return (
-                                            <div className="card mb-2" key={soal.id}>
-                                                <div className="card-body">
-                                                    <span className="float-left">
-                                                        <b>{nomor++} .</b>
-                                                    </span>
-                                                    <span className="">
-                                                        {data.type == 1 && <PilihanGanda soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
-                                                        {data.type == 2 && <BenarSalah soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
-                                                        {data.type == 3 && <Menjodohkan soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
-                                                        {data.type == 4 && <Isian soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
-                                                        {data.type == 5 && <Essay soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        )
-                                    })}
-                                </React.Fragment>
-                            )
-                        })}
-                    </div>
-                </div>
-                <div className="row">
+                {this.state.details.map(detail => {
+                    const data = detail.soal
+                    const pertanyaan = JSON.parse(data.pertanyaan)
+                    return (
+                        <div className="card mb-2" key={detail.id}>
+                            <div className={"card-body"}>
+                                <div className="row">
+                                    <div className="col-12">
+                                        <span className="float-left">
+                                            <b>{nomor++} .</b>
+                                        </span>
+                                        <span className="float-left">
+                                            {data.type == 1 && <PilihanGanda soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} setJawaban={() => { return false }} />}
+                                            {data.type == 2 && <BenarSalah soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} setJawaban={() => { return false }} />}
+                                            {data.type == 3 && <Menjodohkan soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} setJawaban={() => { return false }} idkWhy={() => { this.setState({ idkWhy: !this.state.idkWhy }) }} />}
+                                            {data.type == 4 && <Isian soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} setJawaban={() => { return false }} />}
+                                            {data.type == 5 && <Essay soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} setJawaban={() => { return false }} />}
+                                        </span>
+                                        <span className="float-right">
+                                            {detail.point == detail.max_point ?
+                                                <i className="fa fa-check text-success fa-2x"></i>
+                                                : detail.point == 0 ? <i className="fa fa-times text-danger fa-2x"></i>
+                                                    : detail.point == null ? <i className="fa fa-question text-warning fa-2x"></i>
+                                                        : <i className="fa fa-exclamation text-info fa-2x"></i>}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-12">
+                                        <hr />
+                                        <small className="text-primary">max point: {detail.max_point}</small>
+                                        <div className="form-inline float-right">
+                                            POINT : <input onChange={this.updatePoints} type="text" name={detail.id} value={this.getPoint(detail.id)} size="3" className="form-control form-control-sm ml-2" disabled={detail.point != null} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                })}
+                <div className="">
                     <div className="col-12 text-right">
-                        SISA WAKTU :
-
+                        <button onClick={this.savePoints} className="btn btn-success" disabled={this.state.loading}><i className="fas fa-save"></i> SIMPAN</button>
                     </div>
                 </div>
-            </React.Fragment >
+            </React.Fragment>
         )
     }
 }
+
 
 const PilihanGanda = (props) => {
     const { pertanyaan, jawaban, setJawaban, soalId } = props
     const jawab = jawaban ? jawaban : [];
     const handleCheck = (e) => {
-        if (pertanyaan.type == 1) setJawaban({ [soalId]: [parseInt(e.target.value) + 1] })
-        else if (pertanyaan.type == 2) {
-            if (e.target.checked) setJawaban({ [soalId]: [...jawab, parseInt(e.target.value) + 1] })
-            else {
-                const filteredKunci = jawab.filter(k => { return k !== parseInt(e.target.value) + 1 })
-                setJawaban({ [soalId]: filteredKunci })
-            }
-        }
+
     }
     return (
         <React.Fragment>
@@ -254,7 +219,7 @@ const Essay = (props) => {
 }
 
 const Menjodohkan = (props) => {
-    const { pertanyaan, jawaban = [], setJawaban, soalId } = props
+    const { pertanyaan, jawaban = [], setJawaban, soalId, idkWhy } = props
 
     const handleDragStart = data => event => {
         const newKunci = jawaban.filter(k => { return k.q !== data.id })
@@ -278,6 +243,7 @@ const Menjodohkan = (props) => {
                 {pertanyaan.q.split('\n').map((item, key) => {
                     return <span key={key}>{item}<br /></span>
                 })}
+                <button onClick={idkWhy} className="btn btn-xs btn-success mb-1"><i className="fas fa-retweet"></i></button>
             </div>
             <div className="row">
                 <div className="col-5">
@@ -296,7 +262,10 @@ const Menjodohkan = (props) => {
                     </ul>
                 </div>
                 <div className="col-2 m-0">
-                    {jawaban.map((line, i) => <LineTo key={i} from={`listq-${line.q}`} to={`lista-${line.a}`} />)}
+                    {jawaban.map((line, i) => {
+                        return <LineTo key={i} from={`listq-${line.q}`} to={`lista-${line.a}`} />
+                    })
+                    }
                 </div>
                 <div className="col-5">
                     <ul className="list-group">
@@ -353,4 +322,4 @@ const Isian = (props) => {
 }
 
 import { hot } from 'react-hot-loader/root'
-export default hot(MulaiKuis)
+export default hot(KuisHasilDetail)

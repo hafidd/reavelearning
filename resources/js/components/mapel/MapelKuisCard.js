@@ -4,6 +4,8 @@ import Token from '../../utils/Token'
 import useForm from '../../utils/useForm'
 import { withRouter } from 'react-router-dom'
 
+import { Link } from 'react-router-dom'
+
 import { Loading, NotifMessage } from '../html/Template'
 import { SelectForm, TextForm, RadioForm } from '../html/BasicForm'
 
@@ -14,7 +16,7 @@ import Timer from 'react-compound-timer'
 import { is } from 'immutable';
 
 const MapelKuisCard = (props) => {
-    const { id, notif, groups, isSiswa = false } = props
+    const { id, notif, groups, isSiswa = false, isHasil = false } = props
     const token = Token.getToken()
     const fields = {
         dataId: '',
@@ -41,7 +43,7 @@ const MapelKuisCard = (props) => {
 
     useEffect(() => {
         getKuis()
-    }, [selectedGroup])
+    }, [selectedGroup, isHasil])
 
     useEffect(() => {
         if (!isSiswa) getKuisList()
@@ -52,7 +54,7 @@ const MapelKuisCard = (props) => {
     const getKuis = () => {
         if (!token) { notif(<NotifMessage text="mohon login ulang" success={false} />); return }
         setLoading(true)
-        const ep = !isSiswa ? '/api/materi/kuis/' : '/api/materi-siswa/kuis/';
+        const ep = !isSiswa ? '/api/materi/kuis/' : !isHasil ? '/api/materi-siswa/kuis/' : '/api/kuis-selesai/';
         axios.get(ep + id, {
             params: { group: selectedGroup },
             headers: {
@@ -175,7 +177,7 @@ const MapelKuisCard = (props) => {
     }
 
     function startKuis(dataId) {
-        if (!confirm('mulai kuis ini')) return        
+        if (!confirm('mulai kuis ini')) return
         if (!Token.cek()) { notif('mohon login ulang'); return }
         setLoading(true)
         axios.put('/api/start-kuis/' + dataId, { ...values }, {
@@ -259,6 +261,20 @@ const MapelKuisCard = (props) => {
         }
     }
 
+    function hasilKuis(id) {
+        console.log(id)
+        if (!Token.getToken()) { notif(<NotifMessage text={`mohon login ulang`} success={false} />); return }
+        axios.get('/api/detail-hasil-siswa/' + id, {
+            headers: {
+                Authorization: 'Bearer ' + Token.getToken()
+            }
+        }).then((res) => {
+            console.log(res)
+        }).catch((err) => {
+            notif(JSON.stringify(err.message))
+        })
+    }
+
     return (
         <React.Fragment>
             <div className="card" style={{ width: "100%", borderTop: 'none' }}>
@@ -302,8 +318,8 @@ const MapelKuisCard = (props) => {
                                             </div>
                                             <div className="col-md-4">
                                                 {!isSiswa && kuis.published && settings.type == 2 && settings.mulai == 1 && !settings.started && <button onClick={() => startKuis(kuis.id)} className="btn btn-outline-success float-right mr-1"><i className="fas fa-play"></i></button>}
-                                                {isSiswa && (settings.type == 1 || (settings.type == 2 && (settings.mulai == 2 || (settings.mulai == 1 && settings.started)))) && <button className="btn btn-outline-success float-right mr-1" onClick={() => mulaiKuis(kuis.id)}><i className="fas fa-play"></i></button>}
-                                                {(settings.type == 1 || false /** cak selesai? */) && <button className="btn btn-outline-primary float-right mr-1"> <i className="fas fa-table"></i></button>}
+                                                {isSiswa && !isHasil && (settings.type == 1 || (settings.type == 2 && (settings.mulai == 2 || (settings.mulai == 1 && settings.started)))) && <button className="btn btn-outline-success float-right mr-1" onClick={() => mulaiKuis(kuis.id)}><i className="fas fa-play"></i></button>}
+                                                {isSiswa && isHasil && <button className="btn btn-outline-success float-right mr-1" onClick={() => hasilKuis(kuis.id)}><i className="fas fa-table"></i></button>}
                                                 {kuis.published && settings.type == 2 && (settings.mulai == 2 || (settings.mulai == 1 && settings.started)) &&
                                                     <span className="">
                                                         <Timer
@@ -344,7 +360,11 @@ const MapelKuisCard = (props) => {
                                                                         <Timer.Minutes />menit{' '}
                                                                         <strong style={{ fontSize: 20 }}><Timer.Seconds /></strong>
                                                                     </span>
-                                                                    {!isSiswa && ms.status != 1 && <button className="btn btn-outline-primary float-right mr-1"> <i className="fas fa-table"></i></button>}
+                                                                    {!isSiswa && ms.status != 1 &&
+                                                                        <Link to={`/hasil-kuis/${kuis.id}`}>
+                                                                            <button className="btn btn-outline-primary float-right mr-1"> <i className="fas fa-table"></i></button>
+                                                                        </Link>
+                                                                    }
                                                                 </React.Fragment>
                                                             )}
                                                         </Timer>

@@ -12,4 +12,8 @@ class HasilDetail extends Model
 
     public function hasil()
     {return $this->belongsTo('App\Hasil', 'id', 'hasil_id');}
+    public function soal()
+    {return $this->belongsTo('App\Soal', 'soal_id', 'id');}
+    public function kuis_soal()
+    {return $this->belongsTo('App\KuisSoal', 'kuis_soal_id', 'id');}
 }

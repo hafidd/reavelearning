@@ -15,10 +15,11 @@ html, body, #app, .app {
     height: 100%;
     padding-top: 5%;
     text-align: center;
-    background: url(/images/bg1.jpg);
+    /*background: url(/images/bg1.jpg);
     background-size: cover;
     background-position: center; 
-    background-repeat: no-repeat;
+    background-repeat: no-repeat;*/
+    background: rgb(177,177,177);
     align-content: center;
 }
 

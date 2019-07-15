@@ -56,7 +56,8 @@ class KuisSoalController extends Controller
     {
         $data = KuisSoal::with(['kuis' => function ($q) {
             $q->where('user_id', $this->user->id);
-        }])->findOrFail($id);
+        }])->withCount('childs')
+            ->findOrFail($id);
 
         // validasi 1
         $this->validate($request, [
@@ -73,6 +74,10 @@ class KuisSoalController extends Controller
                 'acakSoal' => isset($request->settings['acakSoal']) ? $request->settings['acakSoal'] : false,
                 'bobot' => $request->settings['bobot'],
             ];
+            // update child
+            if (!$settings['bobotPerSoal']) {
+               KuisSoal::where('parent', $id)->update(['settings->bobot' => ($settings['bobot'] / $data->childs_count)]);
+            }
         } else {
             $settings = [
                 'bobot' => $request->settings['bobot'],

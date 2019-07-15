@@ -66,7 +66,7 @@ class MulaiKuisController extends Controller
         // cek record
         $hasil = Hasil::where(["user_id" => $this->user->id, "mapel_kuis_id" => $request->mkId])->first();
         if ($hasil !== null) {
-            return $this->returnDataKuis($mapel_kuis, $hasil->id);
+            return $this->returnDataKuis($mapel_kuis, $hasil);
         }
         //transaction
         DB::beginTransaction();
@@ -76,11 +76,11 @@ class MulaiKuisController extends Controller
                 "user_id" => $this->user->id,
                 "mapel_kuis_id" => $request->mkId,
                 "start" => $mk_settings->type == 1 ? date('Y-m-d H:i:s') : $mk_settings->start,
-                "end" => $mk_settings->type == 2 ? date('Y-m-d H:i:s', strtotime("+{$mk_settings->waktu} minutes")) : null,
+                "end" => $mk_settings->type == 2 ? date('Y-m-d H:i:s', strtotime("{$mk_settings->start} + {$mk_settings->waktu} minutes")) : null,
             ]);
             /**hasil detail**/
             // get list soalnya
-            $soals = KuisSoal::select('id', 'soal_id')
+            $soals = KuisSoal::select('id', 'soal_id', 'settings->bobot AS bobot')
                 ->where(['kuis_id' => $mapel_kuis->kuis_id, 'type' => 2])->get();
             $records = array_map(function ($soal) use ($hasil) {
                 return [
@@ -89,13 +89,14 @@ class MulaiKuisController extends Controller
                     "soal_id" => $soal['soal_id'],
                     "jawaban" => null,
                     "point" => null,
+                    "max_point" => $soal['bobot'],
                 ];
             }, $soals->toArray());
             //insert detail
             $details = HasilDetail::insert($records);
             //commit
             DB::commit();
-            return $this->returnDataKuis($mapel_kuis, $hasil->id);
+            return $this->returnDataKuis($mapel_kuis, $hasil);
         } catch (\Illuminate\Database\QueryException $e) {
             //rollback
             DB::rollback();
@@ -103,24 +104,28 @@ class MulaiKuisController extends Controller
         }
     }
 
-    private function returnDataKuis($mapel_kuis, $hasil_id = "", $hasil_details = [])
+    private function returnDataKuis($mapel_kuis, $hasil = "", $hasil_details = [])
     {
         // daftar soal
         $soals = KuisSoal::with(['soal' => function ($q) {
             $q->select('id', 'type', 'pertanyaan', 'kode');
-        }])->where(['kuis_id' => $mapel_kuis->kuis_id, 'type' => 2])->get();
+        }])->where(['kuis_id' => $mapel_kuis->kuis_id])->get();
         // daftar jawaban
         $data_jawaban = HasilDetail::select('soal_id', 'jawaban')
-            ->where(['hasil_id' => $hasil_id])->get();
+            ->where(['hasil_id' => $hasil->id])->get();
         $jawabans = [];
         foreach ($data_jawaban->toArray() as $val) {
             $jawabans[$val['soal_id']] = json_decode($val['jawaban']) ? json_decode($val['jawaban']) : [];
         }
+        //sisa waktu
+        $sisa = $hasil->end ? (strtotime($hasil->end) - strtotime(date("Y-m-d H:i:s"))) * 1000 : null;
         $data = [
+            "TEST" => $hasil->end . ' ---- ' . date("Y-m-d H:i:s"),
             "mapel_kuis" => $mapel_kuis,
             "soals" => $soals,
             "jawabans" => json_encode($jawabans),
-            "hasil_id" => $hasil_id,
+            "hasil" => $hasil,
+            "sisa" => $sisa,
         ];
         return new JsonResource($data);
     }
@@ -130,12 +135,47 @@ class MulaiKuisController extends Controller
         $jawaban = HasilDetail::where([
             'hasil_id' => $request->hId,
             'soal_id' => $request->sId,
-        ])->firstOrFail();
+        ])->with(['soal' => function ($q) {
+            $q->select('id', 'type', 'jawaban');
+        }])->firstOrFail();
         if ($request->bs) {
             $request->value = $request->value ? true : false;
         }
         $jawaban->jawaban = json_encode($request->value);
-        $jawaban->update();
-        return new JsonResource($jawaban);
+
+        // cek
+        $type_soal = $jawaban->soal->type;
+        $kunci = json_decode($jawaban->soal->jawaban, true);
+        $jawaban->point = 0;
+        if ($type_soal == 1) {
+            if (count(array_diff($kunci['a'], $request->value)) == 0
+                && ($kunci['type'] == 1 || ($kunci['type'] == 2 && count($kunci['a']) == count($request->value)))) {
+                $jawaban->point = $jawaban->max_point;
+            }
+        } else if ($type_soal == 2) {
+            if ($kunci == $request->value) {
+                $jawaban->point = $jawaban->max_point;
+            }
+        } else if ($type_soal == 3) {            
+            $count_soal = count($kunci);
+            $tul = 0;
+            foreach ($kunci as $k) {
+                foreach ($request->value as $r) {
+                    if ($r['q'] == $k['q'] && $r['a'] == $k['a']) {
+                        $tul++;
+                    }
+                }
+            }
+            $jawaban->point = $tul / $count_soal * $jawaban->max_point;
+        } else {
+            $jawaban->point = null;
+        }
+
+        if($jawaban->update()){
+            return response()->json('', 204);
+        }  else {
+            return response()->json('gagal', 400);
+        }
+        
     }
 }

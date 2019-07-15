@@ -13,7 +13,7 @@ if (module.hot) {
 }
 window.addEventListener('message', e => {
     //if ('production' !== process.env.NODE_ENV) {
-        console.clear();
+        //console.clear();
     //}
 });
 //import 'react-app-polyfill/ie11';
