@@ -9,15 +9,26 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
+        // validasi
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'type' => 'required|in:siswa,pengajar',
+            'password' => 'required',
+        ]);
+        $role = $request->type == 'siswa' ? '2' : '4';
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'role' => $role,
             'password' => bcrypt($request->password),
         ]);
 
-        $token = auth()->login($user);
+        return response()->json('akun berhasil dibuat. silahkan login', '201');
 
-        return $this->respondWithToken($token);
+        //$token = auth()->login($user);
+
+        //return $this->respondWithToken($token);
     }
 
     public function login(Request $request)

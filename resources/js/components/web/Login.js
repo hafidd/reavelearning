@@ -67,9 +67,11 @@ export default class Login extends React.Component {
                         <div className="d-flex justify-content-center links">
                             Belum punya akun?<a href="#" onClick={() => this.props.formChange('register')}>Register</a>
                         </div>
+                       {/*
                         <div className="d-flex justify-content-center">
                             <a href="#">Lupa password?</a>
                         </div>
+                        */}
                     </div>
                 </div>
             </div>

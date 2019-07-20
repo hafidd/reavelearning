@@ -16,9 +16,6 @@ export default function LoginForm(props) {
                 </div>
                 <input type="password" placeholder="Password" name="password" value={password || ''} onChange={handleChange} className="form-control" disabled={disabled} />
             </div>
-            <div className="row align-items-center remember">
-                <input type="checkbox" />Remember Me
-			</div>
             <div className="form-group">
                 <button className="btn float-right login_btn" disabled={disabled}>{disabled && <span className="fa fa-spinner fa-pulse"></span>} Log In</button>
             </div>

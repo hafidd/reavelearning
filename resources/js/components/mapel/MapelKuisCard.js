@@ -13,10 +13,9 @@ import KuisList from '../kuis/KuisList'
 import KuisSearch from '../kuis/KuisSearch'
 
 import Timer from 'react-compound-timer'
-import { is } from 'immutable';
 
 const MapelKuisCard = (props) => {
-    const { id, notif, groups, isSiswa = false, isHasil = false } = props
+    const { id, notif, groups, isSiswa = false, isHasil = false, setHasil = () => { } } = props
     const token = Token.getToken()
     const fields = {
         dataId: '',
@@ -269,9 +268,9 @@ const MapelKuisCard = (props) => {
                 Authorization: 'Bearer ' + Token.getToken()
             }
         }).then((res) => {
-            console.log(res)
-        }).catch((err) => {
-            notif(JSON.stringify(err.message))
+            setHasil(res.data.data)
+        }).catch(() => {
+            setHasil(null)
         })
     }
 

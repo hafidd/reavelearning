@@ -117,7 +117,7 @@ class HasilController extends Controller
 
     public function getDetailHasilSiswa($id)
     {
-        
+
         $hasil = Hasil::with([
             'mapel_kuis',
             'details' => function ($q) {
@@ -126,10 +126,21 @@ class HasilController extends Controller
                     ->with(['soal'])
                     ->orderBy('parent', 'asc');
             },
-        ])->where([
-            'mapel_kuis_id' => $id,
-            'user_id' => $this->user->id,
-        ])->firstOrFail();
+        ])
+            ->withCount(['details as points' => function ($q) {
+                $q->select(DB::raw('sum(point)'));
+            }])
+            ->withCount(['details as max_points' => function ($q) {
+                $q->select(DB::raw('sum(max_point)'));
+            }])
+            ->where([
+                'mapel_kuis_id' => $id,
+                'user_id' => $this->user->id,
+            ])->firstOrFail();
+
+        if (!$hasil->published) {
+            return response()->json(null, 200);
+        }
         $data = [
             "hasil" => $hasil,
         ];
