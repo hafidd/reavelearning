@@ -534,9 +534,16 @@ class MapelController extends Controller
                 $settings["start"] = null;
             } else if ($request->mulai == 2) {
                 // terjadwal
-                $this->validate($request, [
-                    'start' => 'required|date|date_format:Y-m-d H:i:s',
-                ], $this->errMsg());
+                //$this->validate($request, [
+                //    'start' => 'required|date|date_format:Y-m-d H:i:s',
+                //], $this->errMsg());
+                $jsDateTS = strtotime($request->start);
+                if ($jsDateTS !== false) {
+                    $request->start = date('Y-m-d H:i:s', $jsDateTS);
+                } else {
+                    $validator->errors()->add('start', 'format waktu salah');
+                    throw new ValidationException($validator);
+                }
                 $settings["start"] = $request->start;
             }
         }

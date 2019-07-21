@@ -160,28 +160,41 @@ const Menjodohkan = (props) => {
 }
 
 const Isian = (props) => {
-    const { pertanyaan, jawaban, setJawaban, soalId } = props
+    const { pertanyaan, jawaban, setJawaban, soalId, kunci } = props
 
-    const handleText = e => {
-        const match = e.target.value.match(/\[\[.*?\]\]/g)
-        const kunci = match ? match.reduce((filtered, s) => {
-            if (s.replace(/\[|]/g, '') != "") filtered.push(s.replace(/\[|]/g, ''))
-            return filtered
-        }, []) : [];
-        setJawaban({ [soalId]: kunci })
+    const formStyle = {
+        border: 'none',
+        borderBottom: '1px solid black',
+        padding: 0
     }
-
+    var jawabanIndex = 0;
+    console.log(kunci)
     return (
         <React.Fragment>
             <div className="row">
-                <div className="col-md-8">
-                    <div className="p-3 mb-2 bg-info text-white">Lengkapi kalimat</div>
+                <div className="col-12">
+                    {pertanyaan.q.split('\n').map((item, key) => {
+                        return (
+                            <span key={key}>
+                                {item.split('[[]]').map((i, k) => {
+                                    return (
+                                        <React.Fragment key={k}>
+                                            {i}
+                                            {k + 1 != item.split('[[]]').length && <input name={jawabanIndex} style={formStyle} size="5" type="text" value={jawaban[jawabanIndex++]} onChange={(e) => setJawaban({ [soalId]: { ...jawaban, [e.target.name.toString()]: e.target.value } })} />}
+                                        </React.Fragment>
+                                    )
+                                })} <br />
+                            </span>
+                        )
+                    })}
                 </div>
             </div>
-            <div>
-                {pertanyaan.q.split('\n').map((item, key) => {
-                    return <span key={key}>{item}<br /></span>
-                })}
+            <div className="row">
+                <div className="col-12">
+                    <hr/>
+                    <strong>Kunci Jawaban</strong> <br/>
+                    {kunci.map((kk, i) => <span key={i}>{kk}{kunci.length !== i+1 && ', '}</span> )}
+                </div>
             </div>
         </React.Fragment>
     )

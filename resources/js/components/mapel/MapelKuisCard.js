@@ -6,6 +6,9 @@ import { withRouter } from 'react-router-dom'
 
 import { Link } from 'react-router-dom'
 
+import DatePicker from 'react-datepicker'
+import "react-datepicker/dist/react-datepicker.css";
+
 import { Loading, NotifMessage } from '../html/Template'
 import { SelectForm, TextForm, RadioForm } from '../html/BasicForm'
 
@@ -98,7 +101,7 @@ const MapelKuisCard = (props) => {
                 keterangan: settings.keterangan,
                 waktu: settings.waktu,
                 mulai: settings.mulai,
-                start: settings.start,
+                start: settings.start ? new Date(settings.start) : new Date(),
                 published: res.data.data.published,
             }
             setValues({ ...values, ...setArr, dataId: res.data.data.id })
@@ -272,6 +275,10 @@ const MapelKuisCard = (props) => {
         }).catch(() => {
             setHasil(null)
         })
+    }
+
+    function handleDateChange(date) {
+        setValues({ ...values, start: date })
     }
 
     return (
@@ -453,14 +460,27 @@ const MapelKuisCard = (props) => {
                                                     handleChange={handleChange}
                                                 />
                                                 {values.mulai == 2 &&
-                                                    <React.Fragment>
-                                                        <TextForm label="Waktu Mulai" name="start" formW="3" placeholder="DD/MM/YY H:i:s" value={values.start} handleChange={handleChange} />
-                                                    </React.Fragment>
+                                                    <div className="row mb-2">
+                                                        <div className="col-2">Waktu Mulai</div>
+                                                        <div className="col-5">
+                                                            <DatePicker
+                                                                selected={values.start}
+                                                                onChange={handleDateChange}
+                                                                showTimeSelect
+                                                                timeFormat="HH:mm"
+                                                                timeIntervals={15}
+                                                                dateFormat="d MMMM, yyyy HH:mm"
+                                                                timeCaption="waktu"
+                                                                className="form-control"
+                                                            />
+                                                        </div>
+
+                                                    </div>
                                                 }
                                             </React.Fragment>
                                         }
                                         <div className="ro2">
-                                            <div className="col-8 offset-md-2 p-0">
+                                            <div className="col-8 offset-md-2 p-0 pl-1">
                                                 <label><input type="checkbox" name="published" className="custom-cb" onChange={handleCheck} checked={values.published ? true : false} />  Terbitkan</label>
                                             </div>
                                         </div>

@@ -110,6 +110,13 @@ class MulaiKuisController extends Controller
         $soals = KuisSoal::with(['soal' => function ($q) {
             $q->select('id', 'type', 'pertanyaan', 'kode');
         }])->where(['kuis_id' => $mapel_kuis->kuis_id])->get();
+        $soals_r = array_map(function ($data) {
+            if ($data['soal']['type'] == 4) {
+                $q = preg_replace('/\[\[(.*?)\]\]/i', "[[]]", json_decode($data['soal']['pertanyaan'])->q);
+                $data['soal']['pertanyaan'] = json_encode(['q' => $q]);
+            }
+            return $data;
+        }, $soals->toArray());
         // daftar jawaban
         $data_jawaban = HasilDetail::select('soal_id', 'jawaban')
             ->where(['hasil_id' => $hasil->id])->get();
@@ -122,7 +129,7 @@ class MulaiKuisController extends Controller
         $data = [
             "TEST" => $hasil->end . ' ---- ' . date("Y-m-d H:i:s"),
             "mapel_kuis" => $mapel_kuis,
-            "soals" => $soals,
+            "soals" => $soals_r,
             "jawabans" => json_encode($jawabans),
             "hasil" => $hasil,
             "sisa" => $sisa,
@@ -156,7 +163,7 @@ class MulaiKuisController extends Controller
             if ($kunci == $request->value) {
                 $jawaban->point = $jawaban->max_point;
             }
-        } else if ($type_soal == 3) {            
+        } else if ($type_soal == 3) {
             $count_soal = count($kunci);
             $tul = 0;
             foreach ($kunci as $k) {
@@ -171,11 +178,11 @@ class MulaiKuisController extends Controller
             $jawaban->point = null;
         }
 
-        if($jawaban->update()){
+        if ($jawaban->update()) {
             return response()->json('', 204);
-        }  else {
+        } else {
             return response()->json('gagal', 400);
         }
-        
+
     }
 }

@@ -4,8 +4,9 @@ import Token from '../../utils/Token'
 
 import LineTo from 'react-lineto';
 
-import { TextForm, TextAreaForm, SelectForm, RadioForm } from '../html/BasicForm'
+//import { TextForm, TextAreaForm, SelectForm, RadioForm } from '../html/BasicForm'
 
+import { PilihanGanda, BenarSalah, Isian, Essay } from './KuisJawabForm'
 
 class KuisHasilDetail extends React.Component {
     constructor(props) {
@@ -97,6 +98,7 @@ class KuisHasilDetail extends React.Component {
                 {this.state.details.map(detail => {
                     const data = detail.soal
                     const pertanyaan = JSON.parse(data.pertanyaan)
+                    const jawaban = JSON.parse(data.jawaban)
                     return (
                         <div className="card mb-2" key={detail.id}>
                             <div className={"card-body"}>
@@ -106,11 +108,11 @@ class KuisHasilDetail extends React.Component {
                                             <b>{nomor++} .</b>
                                         </span>
                                         <span className="float-left">
-                                            {data.type == 1 && <PilihanGanda soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} setJawaban={() => { return false }} />}
-                                            {data.type == 2 && <BenarSalah soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} setJawaban={() => { return false }} />}
-                                            {data.type == 3 && <Menjodohkan soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} setJawaban={() => { return false }} idkWhy={() => { this.setState({ idkWhy: !this.state.idkWhy }) }} />}
-                                            {data.type == 4 && <Isian soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} setJawaban={() => { return false }} />}
-                                            {data.type == 5 && <Essay soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} setJawaban={() => { return false }} />}
+                                            {data.type == 1 && <PilihanGanda soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} kunci={jawaban} setJawaban={() => { return false }} />}
+                                            {data.type == 2 && <BenarSalah soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} kunci={jawaban} setJawaban={() => { return false }} />}
+                                            {data.type == 3 && <Menjodohkan soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} kunci={jawaban} setJawaban={() => { return false }} idkWhy={() => { this.setState({ idkWhy: !this.state.idkWhy }) }} />}
+                                            {data.type == 4 && <Isian soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} kunci={jawaban} setJawaban={() => { return false }} />}
+                                            {data.type == 5 && <Essay soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} kunci={jawaban} setJawaban={() => { return false }} />}
                                         </span>
                                         <span className="float-right">
                                             {detail.point == detail.max_point ?
@@ -144,7 +146,7 @@ class KuisHasilDetail extends React.Component {
     }
 }
 
-
+{/** 
 const PilihanGanda = (props) => {
     const { pertanyaan, jawaban, setJawaban, soalId } = props
     const jawab = jawaban ? jawaban : [];
@@ -218,6 +220,39 @@ const Essay = (props) => {
     )
 }
 
+const Isian = (props) => {
+    const { pertanyaan, jawaban, setJawaban, soalId } = props
+
+    const formStyle = {
+        border: 'none',
+        borderBottom: '1px solid black',
+        padding: 0
+    }
+    var jawabanIndex = 0;
+    return (
+        <React.Fragment>
+            <div className="row">
+                <div className="col-12">
+                    {pertanyaan.q.split('\n').map((item, key) => {
+                        return (
+                            <span key={key}>
+                                {item.split('[[]]').map((i, k) => {
+                                    return (
+                                        <React.Fragment key={k}>
+                                            {i}
+                                            {k + 1 != item.split('[[]]').length && <input name={jawabanIndex} style={formStyle} size="5" type="text" value={jawaban[jawabanIndex++]} onChange={(e) => setJawaban({ [soalId]: { ...jawaban, [e.target.name.toString()]: e.target.value } })} />}
+                                        </React.Fragment>
+                                    )
+                                })} <br />
+                            </span>
+                        )
+                    })}
+                </div>
+            </div>
+        </React.Fragment>
+    )
+}
+*/}
 const Menjodohkan = (props) => {
     const { pertanyaan, jawaban = [], setJawaban, soalId, idkWhy } = props
 
@@ -288,34 +323,6 @@ const Menjodohkan = (props) => {
                 <div className="col-12">
                     {JSON.stringify(jawaban)}
                 </div>
-            </div>
-        </React.Fragment>
-    )
-}
-
-const Isian = (props) => {
-    const { pertanyaan, jawaban, setJawaban, soalId } = props
-
-    const handleText = e => {
-        const match = e.target.value.match(/\[\[.*?\]\]/g)
-        const kunci = match ? match.reduce((filtered, s) => {
-            if (s.replace(/\[|]/g, '') != "") filtered.push(s.replace(/\[|]/g, ''))
-            return filtered
-        }, []) : [];
-        setJawaban({ [soalId]: kunci })
-    }
-
-    return (
-        <React.Fragment>
-            <div className="row">
-                <div className="col-md-8">
-                    <div className="p-3 mb-2 bg-info text-white">Lengkapi kalimat</div>
-                </div>
-            </div>
-            <div>
-                {pertanyaan.q.split('\n').map((item, key) => {
-                    return <span key={key}>{item}<br /></span>
-                })}
             </div>
         </React.Fragment>
     )

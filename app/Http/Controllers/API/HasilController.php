@@ -56,9 +56,18 @@ class HasilController extends Controller
                     ->orderBy('parent', 'asc');
             },
         ])->findOrFail($id);
-
+        $details = array_map(function ($data) {
+            if ($data['soal']['type'] == 4) {
+                $q = preg_replace('/\[\[(.*?)\]\]/i', "[[]]", json_decode($data['soal']['pertanyaan'])->q);
+                $data['soal']['pertanyaan'] = json_encode(['q' => $q]);
+            }
+            return $data;
+        }, $hasil->toArray()['details']);
+        $return_data = $hasil->toArray();
+        $return_data['details'] = $details;
+//        print_r($return_data);exit;
         $data = [
-            "hasil" => $hasil,
+            "hasil" => $return_data,
         ];
         return new JsonResource($data);
     }
@@ -141,8 +150,20 @@ class HasilController extends Controller
         if (!$hasil->published) {
             return response()->json(null, 200);
         }
+
+        //convert 
+        $details = array_map(function ($data) {
+            if ($data['soal']['type'] == 4) {
+                $q = preg_replace('/\[\[(.*?)\]\]/i', "[[]]", json_decode($data['soal']['pertanyaan'])->q);
+                $data['soal']['pertanyaan'] = json_encode(['q' => $q]);
+            }
+            return $data;
+        }, $hasil->toArray()['details']);
+        $return_data = $hasil->toArray();
+        $return_data['details'] = $details;
+
         $data = [
-            "hasil" => $hasil,
+            "hasil" => $return_data,
         ];
         return new JsonResource($data);
     }

@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import Token from '../../utils/Token'
+import { Redirect } from 'react-router-dom'
 import { flatToHierarchy, shuffle } from '../../utils/Array'
 
 import Timer from 'react-compound-timer'
@@ -75,6 +76,7 @@ class MulaiKuis extends React.Component {
     }
 
     updateJawaban(sId, value, bs) {
+        console.log(value)
         const token = Token.getToken()
         if (!token) { this.props.logOut('mapel', true); return }
         this.setState({ loading: true })
@@ -99,7 +101,6 @@ class MulaiKuis extends React.Component {
             </React.Fragment>
         )
     }
-
     render() {
         let nomor = 1;
         return (
@@ -115,7 +116,10 @@ class MulaiKuis extends React.Component {
                                 checkpoints={[
                                     {
                                         time: 0,
-                                        callback: () => alert('waktu habis!'),
+                                        callback: () => {
+                                            alert('waktu habis!')
+                                            return <Redirect to={"/mapel_siswa/" + this.state.mapel.id} />
+                                        },
                                     },
                                 ]}
                             >
@@ -335,18 +339,31 @@ const Isian = (props) => {
         }, []) : [];
         setJawaban({ [soalId]: kunci })
     }
-
+    const formStyle = {
+        border: 'none',
+        borderBottom: '1px solid black',
+        padding: 0
+    }
+    var jawabanIndex = 0;
     return (
         <React.Fragment>
             <div className="row">
-                <div className="col-md-8">
-                    <div className="p-3 mb-2 bg-info text-white">Lengkapi kalimat</div>
+                <div className="col-12">
+                    {pertanyaan.q.split('\n').map((item, key) => {
+                        return (
+                            <span key={key}>
+                                {item.split('[[]]').map((i, k) => {
+                                    return (
+                                        <React.Fragment key={k}>
+                                            {i}
+                                            {k + 1 != item.split('[[]]').length && <input name={jawabanIndex} style={formStyle} size="5" type="text" value={jawaban[jawabanIndex++]} onChange={(e) => setJawaban({ [soalId]: { ...jawaban, [e.target.name.toString()]: e.target.value } })} />}
+                                        </React.Fragment>
+                                    )
+                                })} <br />
+                            </span>
+                        )
+                    })}
                 </div>
-            </div>
-            <div>
-                {pertanyaan.q.split('\n').map((item, key) => {
-                    return <span key={key}>{item}<br /></span>
-                })}
             </div>
         </React.Fragment>
     )
