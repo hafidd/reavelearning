@@ -85,6 +85,10 @@ class HasilController extends Controller
 
     public function publishHasil(Request $request, $id)
     {
+        $data = Hasil::where(['mapel_kuis_id' => $id])->firstOrFail();
+        if ($data->end > date("Y-m-d H:i:s")) {
+            return response()->json('kuis belum selesai', 422);
+        }
         $data = Hasil::where(['mapel_kuis_id' => $id])
             ->update(['published' => true]);
         return response()->json('', 204);
@@ -151,7 +155,7 @@ class HasilController extends Controller
             return response()->json(null, 200);
         }
 
-        //convert 
+        //convert
         $details = array_map(function ($data) {
             if ($data['soal']['type'] == 4) {
                 $q = preg_replace('/\[\[(.*?)\]\]/i', "[[]]", json_decode($data['soal']['pertanyaan'])->q);

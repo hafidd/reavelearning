@@ -72,6 +72,9 @@ class KuisHasil extends React.Component {
             this.getKuis()
             this.setState({ loading: false })
         }).catch(err => {
+            if (err.response.status && err.response.status == '422') {
+                alert(err.response.data)
+            }
             alert('gagal')
             console.log(err);
             this.setState({ loading: false })
@@ -106,7 +109,7 @@ class KuisHasil extends React.Component {
                                     </thead>
                                     <tbody>
                                         {this.state.pesertas.map(peserta => {
-                                            this.nilai.push(parseInt(peserta.points / peserta.max_points * 100))
+                                            this.nilai.push(parseFloat(peserta.points / peserta.max_points * 100))
                                             return (
                                                 <tr style={{ lineHeight: 1 }} key={peserta.id} className={`${peserta.belum_dikoreksi > 0 ? 'bg-warning' : !peserta.published ? 'bg-info' : 'bg-success'}`}>
                                                     <td className="text-center">{nomor++}</td>
@@ -126,18 +129,20 @@ class KuisHasil extends React.Component {
                                 </table>
                                 <div>
                                     <table>
-                                        <tr>
-                                            <td className="pr-5">Tertinggi</td>
-                                            <td>{Math.max(...this.nilai)}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Terendah</td>
-                                            <td>{Math.min(...this.nilai)}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Rata - Rata</td>
-                                            <td>{this.nilai.reduce((a, b) => a + b, 0) / this.nilai.length}</td>
-                                        </tr>
+                                        <tbody>
+                                            <tr>
+                                                <td className="pr-5">Tertinggi</td>
+                                                <td>{this.nilai.length > 0 ? Math.max(...this.nilai) : '-'}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Terendah</td>
+                                                <td>{this.nilai.length > 0 ? Math.min(...this.nilai) : '-'}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Rata - Rata</td>
+                                                <td>{this.nilai.length > 0 ? this.nilai.reduce((a, b) => a + b, 0) / this.nilai.length : '-'}</td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                                 <div>
