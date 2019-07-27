@@ -9,6 +9,8 @@ import MateriDelete from './MateriDelete'
 
 import { PageTitle, Alert } from '../html/Template'
 
+import Pagination from './../html/Pagination'
+
 class Materi extends React.Component {
     constructor(props) {
         super(props)
@@ -34,7 +36,7 @@ class Materi extends React.Component {
         console.log(values);
         const token = Token.getToken()
         if (!token) this.props.logOut('materi', true)
-        axios.get('/api/materi/', {
+        axios.get('/api/materi?page=' + this.state.page, {
             params: values,
             headers: {
                 Authorization: 'Bearer ' + token
@@ -76,7 +78,11 @@ class Materi extends React.Component {
 
     remAlert = () => { this.setState({ message: '' }); }
 
-    handlePageClick = () => { }
+    handlePageClick = data => {
+        this.setState({ fetch: true, page: data.selected + 1 }, () => {
+            this.loadMateri()
+        });
+    };
 
     render() {
         return (
@@ -105,6 +111,12 @@ class Materi extends React.Component {
                                             toggle={this.toggle}
                                             handlePageClick={this.handlePageClick}
                                             page={this.state.page}
+                                        />
+                                        <div className="mb-2"></div>
+                                        <Pagination
+                                            pageData={this.state.pageData}
+                                            page={this.state.page}
+                                            handlePageClick={this.handlePageClick}
                                         />
                                     </React.Fragment>
                                 )

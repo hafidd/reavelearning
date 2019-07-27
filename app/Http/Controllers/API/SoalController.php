@@ -31,7 +31,7 @@ class SoalController extends Controller
         $data = $request->kode ? $data->where('kode', 'ilike', '%' . $request->kode . '%') : $data;
         $data = $request->type ? $data->where('type', $request->type) : $data;
         $data = $request->pertanyaan ? $data->where('pertanyaan->q', 'LIKE', '%' . $request->pertanyaan . '%') : $data;
-        $data = $data->paginate(20);
+        $data = $data->paginate(15);
         return JsonResource::collection($data);
     }
 

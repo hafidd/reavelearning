@@ -15,6 +15,8 @@ import MateriSearch from '../pengajar/MateriSearch'
 
 import FileSaver from 'file-saver';
 
+import Pagination from './../html/Pagination'
+
 const MapelMateriCard = props => {
     const { id, notif, isSiswa = false } = props
     const token = Token.getToken()
@@ -31,7 +33,7 @@ const MapelMateriCard = props => {
 
     //pilihan materi
     const [materiList, setMateriList] = useState({
-        materis: [], pageData: {}, search: {}
+        materis: [], pageData: {}, search: {}, page: 1
     })
     const [selectedMateris, setSelectedMateris] = useState([])
 
@@ -46,7 +48,7 @@ const MapelMateriCard = props => {
 
     useEffect(() => {
         if (!isSiswa) getMateriList()
-    }, [materiList.search])
+    }, [materiList.search, materiList.page])
 
     const loadMateri = () => {
         if (!Token.getToken()) { notif(<NotifMessage text={`mohon login ulang`} success={false} />); return }
@@ -68,13 +70,23 @@ const MapelMateriCard = props => {
 
     const getMateriList = () => {
         if (!Token.getToken()) { notif(<NotifMessage text={`mohon login ulang`} success={false} />); return }
-        axios.get('/api/materi/', {
+        axios.get('/api/materi?page=' + materiList.page, {
             params: materiList.search,
             headers: {
                 Authorization: 'Bearer ' + Token.getToken()
             }
         }).then((res) => {
-            setMateriList({ ...materiList, materis: res.data.data })
+            //console.log(res.data)
+            setMateriList({
+                ...materiList,
+                materis: res.data.data,
+                pageData: {
+                    from: res.data.meta.from,
+                    total: res.data.meta.total,
+                    per_page: res.data.meta.per_page,
+                    pageCount: Math.ceil(res.data.meta.total / res.data.meta.per_page),
+                },
+            })
         }).catch((err) => {
             notif(JSON.stringify(err.message))
         })
@@ -241,6 +253,10 @@ const MapelMateriCard = props => {
         )
     }
 
+    const handlePageClick = data => {
+        setMateriList({ ...materiList, page: data.selected + 1 })
+    };
+
     return (
         <React.Fragment>
             <div className="card" style={{ width: "100%", borderTop: 'none' }}>
@@ -290,7 +306,13 @@ const MapelMateriCard = props => {
                                             <React.Fragment>
                                                 <MateriSearch loadData={setSearch} />
                                                 <div className="mb-1"></div>
-                                                <MateriList materis={materiList.materis} action="select" select={handleSelectMateri} />
+                                                <MateriList materis={materiList.materis} from={materiList.pageData.from} action="select" select={handleSelectMateri} />
+                                                <div className="mb-1"></div>
+                                                <Pagination
+                                                    pageData={materiList.pageData}
+                                                    page={materiList.page}
+                                                    handlePageClick={handlePageClick}
+                                                />
                                             </React.Fragment>
                                         )}
                                     </div>

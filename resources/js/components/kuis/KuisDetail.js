@@ -14,6 +14,8 @@ import PengaturanKuisModal from './PengaturanKuisModal'
 
 import { List } from 'react-content-loader'
 
+import Pagination from './../html/Pagination'
+
 const KuisDetail = (props) => {
     const { id, notif, setAction } = props
     const [data, setData] = useState({})
@@ -27,7 +29,7 @@ const KuisDetail = (props) => {
     const token = Token.getToken();
     //pilihan soal
     const [soalList, setSoalList] = useState({
-        soals: [], pageData: {}, search: {}
+        soals: [], pageData: {}, search: {}, page: 1,
     })
     const [selectedSoals, setSelectedSoals] = useState([])
 
@@ -49,7 +51,7 @@ const KuisDetail = (props) => {
 
     useEffect(() => {
         getSoalList()
-    }, [soalList.search]);
+    }, [soalList.search, soalList.page]);
 
     const loadDetail = () => {
         if (!Token.cek()) { notif('mohon login ulang'); return }
@@ -85,13 +87,22 @@ const KuisDetail = (props) => {
 
     const getSoalList = () => {
         if (!Token.getToken()) { notif(<NotifMessage text={`mohon login ulang`} success={false} />); return }
-        axios.get('/api/soal/', {
+        axios.get('/api/soal?page=' + soalList.page, {
             params: soalList.search.soal,
             headers: {
                 Authorization: 'Bearer ' + Token.getToken()
             }
         }).then((res) => {
-            setSoalList({ ...soalList, soals: res.data.data })
+            setSoalList({
+                ...soalList,
+                soals: res.data.data,
+                pageData: {
+                    from: res.data.meta.from,
+                    total: res.data.meta.total,
+                    per_page: res.data.meta.per_page,
+                    pageCount: Math.ceil(res.data.meta.total / res.data.meta.per_page),
+                },
+            })
         }).catch((err) => {
             notif(JSON.stringify(err.message))
         })
@@ -100,9 +111,9 @@ const KuisDetail = (props) => {
     const openForm = (e, type = "") => {
         const pid = e.currentTarget.value
         setFormType(type)
-        setFormOpen(true)
         setDataId(pid)
-        setValues(values => ({ ...values, parent: pid }))
+        setValues(values => ({ ...values, parent: pid, type: pid == 0 ? 1 : 2 }))
+        setFormOpen(true)
     }
 
     const closeAndReset = () => {
@@ -218,7 +229,10 @@ const KuisDetail = (props) => {
         )
     }
 
-
+    const handlePageClick = data => {
+        console.log(data)
+        setSoalList({ ...soalList, page: data.selected + 1 })
+    }
 
     return (
         <React.Fragment>
@@ -254,6 +268,7 @@ const KuisDetail = (props) => {
                             <div className="modal-body">
                                 <div className="row">
                                     <div className="col-12">
+                                        {/** 
                                         <span className="float-left" style={{ width: '80%' }}>
                                             <RadioForm
                                                 name="type" handleChange={handleChange} value={values.type}
@@ -266,30 +281,40 @@ const KuisDetail = (props) => {
                                                 labelW="0"
                                                 form="form-1"
                                             />
+                                            
                                         </span>
+                                        */}
                                         <button type="button" className="close" onClick={closeAndReset}>
                                             <span>&times;</span>
                                         </button>
                                     </div>
                                     <div className="col-12">
-                                        {values.type == '1' && <TextForm form="form-1" formW="5" labelW="0" placeholder="Nama Direktori" name="dirName" value={values.dirName} handleChange={handleChange} />}
-                                        {values.type == '2' && (
+                                        {values.parent == '0' && <TextForm form="form-1" formW="5" labelW="0" placeholder="Nama Bab" name="dirName" value={values.dirName} handleChange={handleChange} />}
+                                        {values.parent != '0' && (
                                             <React.Fragment>
                                                 <SoalSearch setSearch={setSearch} defaultValues={{}} />
                                                 <div className="mb-1"></div>
                                                 <SoalList soals={soalList.soals} from={soalList.pageData.from} loading={loading} showType={soalList.search.type ? false : true} action="select" select={handleSelectSoal} />
+                                                <div className="mb-1"></div>
+                                                <Pagination
+                                                    pageData={soalList.pageData}
+                                                    page={soalList.page}
+                                                    handlePageClick={handlePageClick}
+                                                />
                                             </React.Fragment>
                                         )}
                                     </div>
                                 </div>
                             </div>
                             <div className="modal-footer">
+                                {/*
                                 <button type="button" className="btn btn-sm btn-outline-primary" onClick={() => {
                                     if (!confirm('Buat soal baru?')) return
                                     props.history.push(`/soal/kuis/${id}/${values.parent}`)
                                 }}>
                                     <i className="fas fa-plus"></i> Soal Baru
                                 </button>
+                                */}
                                 <button type="sumbit" form="form-1" className="btn btn-sm btn-success" disabled={loading}>
                                     <i className="fas fa-plus"></i>
                                     {' '}Tambahkan{' '}

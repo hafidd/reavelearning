@@ -6,6 +6,10 @@ import ReactPlayer from 'react-player'
 
 import { PageTitle, Alert } from '../html/Template'
 
+import 'react-quill/dist/quill.snow.css';
+
+import ReactHtmlParser from 'react-html-parser';
+
 class ViewMateri extends React.Component {
     constructor(props) {
         super(props)
@@ -38,7 +42,7 @@ class ViewMateri extends React.Component {
             this.setState({ fetch: false, materi: res.data.data, type: JSON.parse(res.data.data.isi).type })
         }).catch(err => {
             console.log(err)
-            this.notif(JSON.stringify(err.message))
+            //            this.notif(JSON.stringify(err.message))
             this.setState({ fetch: false })
         })
     }
@@ -65,10 +69,26 @@ class ViewMateri extends React.Component {
 
 const MateriText = props => {
     const { materi } = props
-    const content = materi.isi ? JSON.parse(materi.isi) : {};
+    const content = materi.isi ? JSON.parse(materi.isi) : { isi: '' };
+    const modules = {
+        toolbar: false
+    };
+
+    const formats = [
+        'header',
+        'bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block',
+        'list', 'bullet', 'indent',
+        'link', 'image',
+        'align',
+    ];
     return (
-        <p>{content.isi}</p>
+        <div class="ql-snow">
+            <div class="ql-editor">
+                {ReactHtmlParser(content.isi)}
+            </div>
+        </div>
     )
+
 }
 const MateriVideo = props => {
     const { materi } = props

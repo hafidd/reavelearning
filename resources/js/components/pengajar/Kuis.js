@@ -17,6 +17,8 @@ import SoalDelete from '../soal/SoalDelete'
 
 import ErrorBoundary from '../../ErrorBoundary'
 
+import Pagination from './../html/Pagination'
+
 class Kuis extends React.Component {
     constructor(props) {
         super(props)
@@ -54,7 +56,7 @@ class Kuis extends React.Component {
         const token = Token.getToken()
         if (!token) { this.props.logOut('kuis', true); return }
         this.setState({ fetch: true })
-        axios.get('api/kuis/', {
+        axios.get('api/kuis?page=' + this.state.kuisPage, {
             params: this.state.search.kuis,
             headers: {
                 Authorization: 'Bearer ' + token
@@ -80,7 +82,7 @@ class Kuis extends React.Component {
         const token = Token.getToken()
         if (!token) { this.props.logOut('kuis', true); return }
         this.setState({ fetch: true })
-        axios.get('api/soal/', {
+        axios.get('api/soal?page=' + this.state.soalPage, {
             params: this.state.search.soal,
             headers: {
                 Authorization: 'Bearer ' + token
@@ -145,6 +147,18 @@ class Kuis extends React.Component {
         })
     }
 
+    handlePageClick = (data, type = "kuis") => {
+        if (type == "kuis") {
+            this.setState({ fetch: true, kuisPage: data.selected + 1 }, () => {
+                this.loadKuis()
+            });
+        } else {
+            this.setState({ fetch: true, soalPage: data.selected + 1 }, () => {
+                this.loadSoal()
+            });
+        }
+    };
+
     render() {
         return (
             <div className="row">
@@ -182,6 +196,12 @@ class Kuis extends React.Component {
                                     <React.Fragment>
                                         <KuisSearch setSearch={this.setSearch} defaultValues={this.state.search.kuis} />
                                         <KuisList kuises={this.state.kuises} from={this.state.pageDataKuis.from} loading={this.fetch} setAction={this.setAction} />
+                                        <div className="mb-2"></div>
+                                        <Pagination
+                                            pageData={this.state.pageDataKuis}
+                                            page={this.state.kuisPage}
+                                            handlePageClick={this.handlePageClick}
+                                        />
                                     </React.Fragment>
                                 )
                                 case "kuisAdd": return (
@@ -200,6 +220,12 @@ class Kuis extends React.Component {
                                     <React.Fragment>
                                         <SoalSearch setSearch={this.setSearch} defaultValues={this.state.search.soal} />
                                         <SoalList soals={this.state.soals} from={this.state.pageDataSoal.from} loading={this.fetch} setAction={this.setAction} showType={this.state.search.soal.type ? false : true} />
+                                        <div className="mb-2"></div>
+                                        <Pagination
+                                            pageData={this.state.pageDataSoal}
+                                            page={this.state.soalPage}
+                                            handlePageClick={(data) => this.handlePageClick(data, "soal")}
+                                        />
                                     </React.Fragment>
                                 )
                                 case "soalAdd": return (

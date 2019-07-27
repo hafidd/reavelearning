@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Editor, EditorState, RichUtils, convertToRaw, ContentState } from 'draft-js';
 import FileSaver from 'file-saver';
 import Token from '../../utils/Token'
 import useForm from '../../utils/useForm'
 
-import Draft, { TextForm, RadioForm, TextAreaForm } from '../html/BasicForm'
+import { TextForm, RadioForm, TextAreaForm } from '../html/BasicForm'
+
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const MateriForm = (props) => {
     const { tipe, id, toggle, mapelId, dirId } = props
-    console.log(mapelId)
+    //console.log(mapelId)
     const fields = {
         id: (tipe === 'update') ? id : 0,
         type: 'text',
@@ -19,9 +21,12 @@ const MateriForm = (props) => {
     const [file, setFile] = useState(false);
     const [video, setVideo] = useState(false);
 
-    const [editorState, setEditorState] = React.useState(
-        EditorState.createEmpty()
-    );
+
+    const [isi, setIsi] = useState('');
+
+    //const [editorState, setEditorState] = React.useState(
+    //    EditorState.createEmpty()
+    //);
 
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -50,8 +55,8 @@ const MateriForm = (props) => {
                 if (data.file) {
                     setFileDownload({ link: data.file, name: JSON.parse(data.isi).name })
                 }
-                if (JSON.parse(data.isi).type === "text")
-                    setEditorState(EditorState.createWithContent(ContentState.createFromText(JSON.parse(data.isi).isi)))
+                if (JSON.parse(data.isi).type === "text") setIsi(JSON.parse(data.isi).isi)
+                if (JSON.parse(data.isi).type === "text") console.log(JSON.parse(data.isi).isi)
                 setLoading(false)
             }).catch(() => toggle)
         }
@@ -69,7 +74,7 @@ const MateriForm = (props) => {
         setSuccess(false)
 
         let data = {}
-        if (values.type === "text") data = { ...values, isi: editorState.getCurrentContent().getPlainText('\u0001') }
+        if (values.type === "text") data = { ...values, isi: isi }
         else if (values.type === "file") data = { ...values, file: file ? file : '' }
         else if (values.type === "video") data = { ...values, video: video ? video : '' }
 
@@ -124,8 +129,6 @@ const MateriForm = (props) => {
         return (<ul>{err.map((item, key) => <li key={key}>{item}</li>)}</ul>);
     }
 
-    const editor = React.useRef(null);
-
     const handleFile = (e) => {
         const uploadedFile = e.target.files[0]
         setFile(uploadedFile)
@@ -155,13 +158,34 @@ const MateriForm = (props) => {
 
     const contentForm = () => {
         if (values.type === 'text') {
+            const modules = {
+                toolbar: [
+                    [{ 'header': [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'],
+                    [{ syntax: true }, { 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+                    ['link', 'image'],
+                    [{ 'align': [] }],
+                    ['clean']
+                ],
+            };
+
+            const formats = [
+                'header',
+                'bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block',
+                'list', 'bullet', 'indent',
+                'link', 'image',
+                'align',
+            ];
             return (
-                <div style={{ border: '1px solid gray', minHeight: '6em' }} onClick={() => { editor.current.focus() }}>
-                    <Editor
-                        ref={editor}
-                        editorState={editorState}
-                        onChange={editorState => setEditorState(editorState)}
-                    />
+                <div style={{ height: 320 }}>
+                    <ReactQuill
+                        value={isi}
+                        onChange={(value) => setIsi(value)}
+                        style={{ height: 300 }}
+                        theme="snow"
+                        modules={modules}
+                        formats={formats}>
+                    </ReactQuill>
                 </div>
             )
         } else if (values.type === 'file') {
