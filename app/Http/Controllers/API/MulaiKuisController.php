@@ -122,7 +122,8 @@ class MulaiKuisController extends Controller
             ->where(['hasil_id' => $hasil->id])->get();
         $jawabans = [];
         foreach ($data_jawaban->toArray() as $val) {
-            $jawabans[$val['soal_id']] = json_decode($val['jawaban']) ? json_decode($val['jawaban']) : [];
+            //$jawabans[$val['soal_id']] = json_decode($val['jawaban']) ? json_decode($val['jawaban']) :  [];
+            $jawabans[$val['soal_id']] = json_decode($val['jawaban']);
         }
         //sisa waktu
         $sisa = $hasil->end ? (strtotime($hasil->end) - strtotime(date("Y-m-d H:i:s"))) * 1000 : null;

@@ -9,7 +9,7 @@ function PageTitle(props) {
                 {
                     navs.map((n, key) => {
                         if (n.show)
-                            return <button key={key} value={n.action} onClick={n.clickHandle} className={`btn ${n.className ? n.className : 'btn-primary'} float-right ml-1`}><span className={`fas ${n.icon ? n.icon : 'fa-plus'}`}></span></button>
+                            return <button key={key} value={n.action} onClick={n.clickHandle} className={`btn ${n.className ? n.className : 'btn-primary'} float-right ml-1`}><span className={`fas ${n.icon ? n.icon : 'fa-plus'}`}></span> <span>{n.text || ''}</span></button>
                     })
                 }
             </div>

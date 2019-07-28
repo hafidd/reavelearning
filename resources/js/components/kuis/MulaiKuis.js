@@ -12,13 +12,14 @@ import { PageTitle, Alert } from '../html/Template'
 
 import { TextForm, TextAreaForm, SelectForm, RadioForm } from '../html/BasicForm'
 
+import KuisHasilModal from './KuisHasilModal'
+
 class MulaiKuis extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             id: props.match.params.kuisId,
             hasilId: '',
-            hasil: {},
             sisa: 0,
             kuis: {},
             mapel: {},
@@ -26,6 +27,10 @@ class MulaiKuis extends React.Component {
             soals: [],
             jawabans: {},
             loading: false,
+
+            hasil: null,
+            hasilModal: false,
+
         }
     }
 
@@ -48,6 +53,7 @@ class MulaiKuis extends React.Component {
                 if (JSON.parse(bab.settings).acakSoal) shuffle(bab.child)
                 return bab
             })
+            console.log(data.jawabans)
             this.setState({
                 hasilId: data.hasil.id,
                 hasil: data.hasil,
@@ -101,13 +107,36 @@ class MulaiKuis extends React.Component {
             </React.Fragment>
         )
     }
+
+    showJawaban = () => {
+        this.setState({ hasilModal: true }, () => {
+            console.log(this.state.id)
+            if (!Token.getToken()) { alert('mohon login ulang'); return }
+            axios.get('/api/detail-hasil-siswa/' + this.state.id, {
+                headers: {
+                    Authorization: 'Bearer ' + Token.getToken()
+                }
+            }).then((res) => {
+                this.setState({ hasil: res.data.data })
+            }).catch(() => {
+                this.setState({ hasil: null })
+            })
+        })
+    }
+
     render() {
         let nomor = 1;
         return (
             <React.Fragment>
-                <div className="row">
+                <div className="row" style={{ position: "fixed", zIndex: 999, background: "white", width: "95%" }}>
                     <div className="col-12">
-                        <PageTitle title={this.state.kuis.judul} />
+                        <PageTitle
+                            title={this.state.kuis.judul}
+                            navs={[
+                                { show: this.state.settings.type == 1, clickHandle: this.showJawaban, icon: 'fa-question', text: "Jawaban" },
+                                { show: true, clickHandle: () => { this.props.history.goBack() }, icon: 'fa-arrow-left' },
+                            ]}
+                        />
                         <p>{this.state.mapel.nama}</p>
                         {this.state.sisa &&
                             <Timer
@@ -118,7 +147,7 @@ class MulaiKuis extends React.Component {
                                         time: 0,
                                         callback: () => {
                                             alert('waktu habis!')
-                                            return <Redirect to={"/mapel_siswa/" + this.state.mapel.id} />
+                                            //return <Redirect to={"/mapel_siswa/" + this.state.mapel.id} />
                                         },
                                     },
                                 ]}
@@ -134,7 +163,7 @@ class MulaiKuis extends React.Component {
                         }
                     </div>
                 </div>
-                <div className="row">
+                <div className="row" style={{ marginTop: "100px" }}>
                     <div className="col-12">
                         {this.state.soals.map(bab => {
                             return (
@@ -153,8 +182,8 @@ class MulaiKuis extends React.Component {
                                                     <span className="">
                                                         {data.type == 1 && <PilihanGanda soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
                                                         {data.type == 2 && <BenarSalah soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
-                                                        {data.type == 3 && <Menjodohkan soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
-                                                        {data.type == 4 && <Isian soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
+                                                        {data.type == 3 && <Menjodohkan soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id] ? this.state.jawabans[data.id] : []} setJawaban={this.setJawaban} />}
+                                                        {data.type == 4 && <Isian soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id] ? this.state.jawabans[data.id] : []} setJawaban={this.setJawaban} />}
                                                         {data.type == 5 && <Essay soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
                                                     </span>
                                                 </div>
@@ -166,13 +195,13 @@ class MulaiKuis extends React.Component {
                         })}
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-12 text-right">
-                        SISA WAKTU :
-
-                    </div>
-                </div>
-            </React.Fragment >
+                <KuisHasilModal
+                    show={this.state.hasilModal}
+                    nilai={false}
+                    hasil={this.state.hasil}
+                    toggle={() => { this.setState({ hasilModal: false }) }}
+                />
+            </React.Fragment>
         )
     }
 }
@@ -225,6 +254,7 @@ const PilihanGanda = (props) => {
 
 const BenarSalah = (props) => {
     const { pertanyaan, jawaban, setJawaban, soalId } = props
+    console.log("soal: " + soalId, "j: " + jawaban)
     return (
         <React.Fragment>
             <div>
@@ -232,6 +262,7 @@ const BenarSalah = (props) => {
                     return <span key={key}>{item}<br /></span>
                 })}
             </div>
+            {/*
             <RadioForm
                 labelW="0" name={`kunci${soalId}`} handleChange={(e) => setJawaban({ [soalId]: e.target.value }, true)} value={jawaban}
                 options={[
@@ -239,6 +270,12 @@ const BenarSalah = (props) => {
                     [0, 'SALAH'],
                 ]}
             />
+            */}
+            <div>
+                <input type="radio" name={`kunci${soalId}`} onChange={(e) => setJawaban({ [soalId]: e.target.value }, true)} value={1} checked={jawaban == 1 || jawaban == true} /> BENAR
+                <br />
+                <input type="radio" name={`kunci${soalId}`} onChange={(e) => setJawaban({ [soalId]: e.target.value }, true)} value={0} checked={jawaban == 0 || jawaban == false} /> SALAH
+            </div>
         </React.Fragment>
     )
 }

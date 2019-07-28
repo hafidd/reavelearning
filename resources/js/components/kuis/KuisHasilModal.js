@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { PilihanGanda, BenarSalah, Isian, Menjodohkan, Essay } from './KuisJawabForm'
 
 const KuisHasilModal = props => {
-    const { show, toggle, hasil } = props
+    const { show, toggle, hasil, nilai = true } = props
     const [tambalan, setTambalan] = useState(1)
 
     var nomor = 1;
@@ -12,7 +12,7 @@ const KuisHasilModal = props => {
                 <div className="modal-content">
                     <div className="modal-header row">
                         <div className="col-12">
-                            <strong>Hasil</strong>
+                            <strong>{nilai ? "Hasil" : "Jawaban"}</strong>
                             <button type="button" className="close" onClick={toggle}>
                                 <span>&times;</span>
                             </button>
@@ -23,8 +23,8 @@ const KuisHasilModal = props => {
                             !hasil ? 'Hasil ujian belum diterbitkan' :
                                 <div className="row">
                                     <div className="col-12">
-                                        Nilai Anda : {hasil.hasil && (parseFloat(hasil.hasil.points) / parseFloat(hasil.hasil.max_points) * 100)}
-                                        <hr />
+                                        {nilai && `Nilai : ${hasil.hasil && (parseFloat(hasil.hasil.points) / parseFloat(hasil.hasil.max_points) * 100)}`}
+                                        {nilai && <hr />}
                                         {hasil.hasil && hasil.hasil.details.map(detail => {
                                             const data = detail.soal
                                             const pertanyaan = JSON.parse(data.pertanyaan)
@@ -41,8 +41,8 @@ const KuisHasilModal = props => {
                                                                 <span className="float-left">
                                                                     {data.type == 1 && <PilihanGanda soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} kunci={jawaban} setJawaban={() => { return false }} />}
                                                                     {data.type == 2 && <BenarSalah soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} kunci={jawaban} setJawaban={() => { return false }} />}
-                                                                    {data.type == 3 && <Menjodohkan soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} kunci={jawaban} setJawaban={() => { return false }} idkWhy={() => { console.log(tambalan); setTambalan(!tambalan) }} />}
-                                                                    {data.type == 4 && <Isian soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} kunci={jawaban} setJawaban={() => { return false }} />}
+                                                                    {data.type == 3 && <Menjodohkan soalId={data.id} pertanyaan={pertanyaan} jawaban={detail.jawaban ? JSON.parse(detail.jawaban) : []} kunci={jawaban} setJawaban={() => { return false }} idkWhy={() => { console.log(tambalan); setTambalan(!tambalan) }} />}
+                                                                    {data.type == 4 && <Isian soalId={data.id} pertanyaan={pertanyaan} jawaban={detail.jawaban ? JSON.parse(detail.jawaban) : []} kunci={jawaban} setJawaban={() => { return false }} />}
                                                                     {data.type == 5 && <Essay soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} kunci={jawaban} setJawaban={() => { return false }} />}
                                                                 </span>
                                                                 <span className="float-right">
@@ -54,7 +54,7 @@ const KuisHasilModal = props => {
                                                                 </span>
                                                             </div>
                                                         </div>
-                                                        <div className="row">
+                                                        <div className="row" style={{ display: nilai ? "block" : "none" }}>
                                                             <div className="col-12">
                                                                 <hr />
                                                                 <small className="text-primary">

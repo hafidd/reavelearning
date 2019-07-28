@@ -49,6 +49,27 @@ function RadioForm(props) {
     )
 }
 
+function RadioForm2(props) {
+    const { name, options, handleChange, value, required, label, labelW, formW, form, labelClass = "" } = props
+    return (
+        <div className="form-group row">
+            <label className={"col-md-" + (labelW || 2) + " col-form-label"}>{label}</label>
+            <div className={"col-md-" + (formW || 4)} style={{ marginTop: "0.4rem" }}>
+                {options.map(option => {
+                    const labelC = option[2] ? option[2] : labelClass;
+                    return (
+                        <div className="form-check form-check-inline" key={option[0]}>
+                            <label className={`form-check-label ${labelC}`}>
+                                <input form={form} className="form-check-input" type="radio" name={name} onChange={handleChange} value={option[0]} checked={value === option[0]} required={required} /> {option[1]}
+                            </label>
+                        </div>
+                    )
+                })}
+            </div>
+        </div>
+    )
+}
+
 
 function TextAreaForm(props) {
     const { name, handleChange, value, placeholder, required, label, labelW, formW } = props
@@ -66,5 +87,6 @@ export {
     TextForm,
     SelectForm,
     RadioForm,
+    RadioForm2,
     TextAreaForm,
 }

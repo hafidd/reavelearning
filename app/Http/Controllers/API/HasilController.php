@@ -129,8 +129,7 @@ class HasilController extends Controller
     }
 
     public function getDetailHasilSiswa($id)
-    {
-
+    {         
         $hasil = Hasil::with([
             'mapel_kuis',
             'details' => function ($q) {
@@ -151,7 +150,7 @@ class HasilController extends Controller
                 'user_id' => $this->user->id,
             ])->firstOrFail();
 
-        if (!$hasil->published) {
+        if (!$hasil->published && $hasil->end !== NULL) {
             return response()->json(null, 200);
         }
 
