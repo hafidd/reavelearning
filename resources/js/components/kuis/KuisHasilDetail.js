@@ -110,8 +110,8 @@ class KuisHasilDetail extends React.Component {
                                         <span className="float-left">
                                             {data.type == 1 && <PilihanGanda soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} kunci={jawaban} setJawaban={() => { return false }} />}
                                             {data.type == 2 && <BenarSalah soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} kunci={jawaban} setJawaban={() => { return false }} />}
-                                            {data.type == 3 && <Menjodohkan soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} kunci={jawaban} setJawaban={() => { return false }} idkWhy={() => { this.setState({ idkWhy: !this.state.idkWhy }) }} />}
-                                            {data.type == 4 && <Isian soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} kunci={jawaban} setJawaban={() => { return false }} />}
+                                            {data.type == 3 && <Menjodohkan soalId={data.id} pertanyaan={pertanyaan} jawaban={detail.jawaban ? JSON.parse(detail.jawaban) : []} kunci={jawaban} setJawaban={() => { return false }} idkWhy={() => { this.setState({ idkWhy: !this.state.idkWhy }) }} />}
+                                            {data.type == 4 && <Isian soalId={data.id} pertanyaan={pertanyaan} jawaban={detail.jawaban ? JSON.parse(detail.jawaban) : []} kunci={jawaban} setJawaban={() => { return false }} />}
                                             {data.type == 5 && <Essay soalId={data.id} pertanyaan={pertanyaan} jawaban={JSON.parse(detail.jawaban)} kunci={jawaban} setJawaban={() => { return false }} />}
                                         </span>
                                         <span className="float-right">

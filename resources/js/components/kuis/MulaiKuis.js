@@ -31,6 +31,10 @@ class MulaiKuis extends React.Component {
             hasil: null,
             hasilModal: false,
 
+            babIndex: 0,
+            soalIndex: 0,
+
+            mode: 1,
         }
     }
 
@@ -53,7 +57,7 @@ class MulaiKuis extends React.Component {
                 if (JSON.parse(bab.settings).acakSoal) shuffle(bab.child)
                 return bab
             })
-            console.log(data.jawabans)
+            //console.log(data.jawabans)
             this.setState({
                 hasilId: data.hasil.id,
                 hasil: data.hasil,
@@ -124,6 +128,34 @@ class MulaiKuis extends React.Component {
         })
     }
 
+    pindahBab = (next = true) => {
+        if (next) {
+            if (this.state.babIndex + 1 !== this.state.soals.length)
+                this.setState({ babIndex: this.state.babIndex + 1, soalIndex: 0 })
+            else
+                this.setState({ babIndex: 0, soalIndex: 0 })
+        } else {
+            if (this.state.babIndex - 1 !== -1)
+                this.setState({ babIndex: this.state.babIndex - 1, soalIndex: 0 })
+            else
+                this.setState({ babIndex: this.state.soals.length - 1, soalIndex: 0 })
+        }
+    }
+
+    pindahSoal = (next = true) => {
+        if (next) {
+            if (this.state.soalIndex + 1 !== this.state.soals[this.state.babIndex].child.length)
+                this.setState({ soalIndex: this.state.soalIndex + 1 })
+            else
+                this.setState({ soalIndex: 0 })
+        } else {
+            if (this.state.soalIndex - 1 !== -1)
+                this.setState({ soalIndex: this.state.soalIndex - 1 })
+            else
+                this.setState({ soalIndex: this.state.soals[this.state.babIndex].child.length - 1 })
+        }
+    }
+
     render() {
         let nomor = 1;
         return (
@@ -134,6 +166,7 @@ class MulaiKuis extends React.Component {
                             title={this.state.kuis.judul}
                             navs={[
                                 { show: this.state.settings.type == 1, clickHandle: this.showJawaban, icon: 'fa-question', text: "Jawaban" },
+                                { show: true, clickHandle: () => { this.setState({ mode: this.state.mode == 1 ? 2 : 1 }) }, icon: 'fa-refresh', text: "Ubah Tampilan (" + this.state.mode + ")" },
                                 { show: true, clickHandle: () => { this.props.history.goBack() }, icon: 'fa-arrow-left' },
                             ]}
                         />
@@ -147,7 +180,7 @@ class MulaiKuis extends React.Component {
                                         time: 0,
                                         callback: () => {
                                             alert('waktu habis!')
-                                            //return <Redirect to={"/mapel_siswa/" + this.state.mapel.id} />
+                                            this.props.history.goBack()
                                         },
                                     },
                                 ]}
@@ -164,36 +197,140 @@ class MulaiKuis extends React.Component {
                     </div>
                 </div>
                 <div className="row" style={{ marginTop: "100px" }}>
-                    <div className="col-12">
-                        {this.state.soals.map(bab => {
-                            return (
-                                <React.Fragment key={bab.id}>
-                                    <h5 className="text-center mt-4"><strong>{bab.nama.toUpperCase()}</strong></h5>
-                                    <p>{JSON.parse(bab.settings).keterangan}</p>
-                                    {bab.child.map(soal => {
-                                        const data = soal.soal
-                                        const pertanyaan = JSON.parse(data.pertanyaan)
-                                        return (
-                                            <div className="card mb-2" key={soal.id}>
-                                                <div className="card-body">
-                                                    <span className="float-left">
-                                                        <b>{nomor++} .</b>
-                                                    </span>
-                                                    <span className="">
-                                                        {data.type == 1 && <PilihanGanda soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
-                                                        {data.type == 2 && <BenarSalah soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
-                                                        {data.type == 3 && <Menjodohkan soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id] ? this.state.jawabans[data.id] : []} setJawaban={this.setJawaban} />}
-                                                        {data.type == 4 && <Isian soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id] ? this.state.jawabans[data.id] : []} setJawaban={this.setJawaban} />}
-                                                        {data.type == 5 && <Essay soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
-                                                    </span>
+
+                    {this.state.mode == 1 && (
+                        <div className="col-12">
+                            <hr />
+                            {this.state.soals.length > 0 && (
+                                <div>
+                                    <h5 className="text-center mt-4"><strong>{this.state.soals[this.state.babIndex].nama}</strong></h5>
+                                    <div className="text-center">
+                                        <button onClick={() => this.pindahBab(false)} className="btn btn-sm btn-primary mr-1">&laquo;</button>
+                                        <button onClick={() => this.pindahBab(true)} className="btn btn-sm btn-primary mr-1">&raquo;</button>
+                                        {this.state.babIndex + 1} / {this.state.soals.length}
+                                    </div>
+                                    <p className="m-1 mb-0">{JSON.parse(this.state.soals[this.state.babIndex].settings).keterangan}</p>
+                                    <hr className="m-2" />
+                                    <div className="mb-2">
+                                        <button onClick={() => this.pindahSoal(false)} className="btn btn-sm btn-outline-primary mr-1">&laquo; kembali</button>
+                                        <button onClick={() => this.pindahSoal(true)} className="btn btn-sm btn-outline-primary mr-1">selanjutnya &raquo;</button>
+                                        {this.state.soalIndex + 1} / {this.state.soals[this.state.babIndex].child.length}
+                                    </div>
+                                    <div className="card mb-2">
+                                        <div className="card-body">
+                                            <span className="float-left">
+                                                <strong>{this.state.soalIndex + 1}. </strong>
+                                            </span>
+                                            <span className="">
+                                                {(() => {
+                                                    const data = this.state.soals[this.state.babIndex].child[this.state.soalIndex].soal
+                                                    const pertanyaan = JSON.parse(data.pertanyaan)
+                                                    return (
+                                                        <span className="">
+                                                            {data.type == 1 && <PilihanGanda soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
+                                                            {data.type == 2 && <BenarSalah soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
+                                                            {data.type == 3 && <Menjodohkan soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id] ? this.state.jawabans[data.id] : []} setJawaban={this.setJawaban} />}
+                                                            {data.type == 4 && <Isian soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id] ? this.state.jawabans[data.id] : []} setJawaban={this.setJawaban} />}
+                                                            {data.type == 5 && <Essay soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
+                                                        </span>
+                                                    )
+                                                })()}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div className="p-2">
+                                        <p className="text-center">Daftar BAB/Soal:</p>
+                                        {this.state.soals.map((bab, bi) => {
+                                            return (
+                                                <div key={bab.id}>
+                                                    <span className="mr-2">{bi == this.state.babIndex ? <strong><u>{bab.nama}</u></strong> : bab.nama}</span>
+                                                    {bab.child.map((soal, si) => {
+                                                        const data = soal.soal
+                                                        const pertanyaan = JSON.parse(data.pertanyaan)
+                                                        const classWarna = () => {
+                                                            //console.log(this.state.jawabans[data.id])
+                                                            if (data.type == 3) {
+                                                                //tipe menjodohkan
+                                                                if (!Array.isArray(this.state.jawabans[data.id])
+                                                                    || this.state.jawabans[data.id].length < pertanyaan.qlist.length) {
+                                                                    return ' btn-outline-warning text-dark'
+                                                                }
+                                                            } else if (data.type == 4) {
+                                                                //tipe isian
+                                                                if (this.state.jawabans[data.id] == null) return ' btn-outline-warning text-dark'
+                                                                const soal = pertanyaan.q.match(/\[\[.*?\]\]/g).length
+                                                                let jawab = 0
+                                                                if (Object.prototype.toString.call(this.state.jawabans[data.id]) === '[object Object]') {
+                                                                    //if object
+                                                                    for (let key in this.state.jawabans[data.id]) {
+                                                                        if (this.state.jawabans[data.id][key] != "" && this.state.jawabans[data.id][key] != null) jawab++
+                                                                    }
+                                                                } else if (Array.isArray(this.state.jawabans[data.id])) {
+                                                                    //if array
+                                                                    this.state.jawabans[data.id].forEach(el => {
+                                                                        if (el != "" && el != null) jawab++
+                                                                    })
+                                                                }
+                                                                if (soal > jawab) return ' btn-outline-warning text-dark'
+                                                            } else if (Array.isArray(this.state.jawabans[data.id]) && this.state.jawabans[data.id].length === 0) {
+                                                                return ' btn-outline-warning text-dark'
+                                                            } else if (this.state.jawabans[data.id] === null
+                                                                || this.state.jawabans[data.id] === '') {
+                                                                return ' btn-outline-warning text-dark'
+                                                            }
+                                                            return ' btn-outline-dark'
+                                                        }
+                                                        return (
+                                                            <button onClick={() => { this.setState({ babIndex: bi, soalIndex: si }) }} className={"mr-1 mb-1 btn btn-sm " + classWarna()} key={soal.id}>
+                                                                {bi == this.state.babIndex && si == this.state.soalIndex ? <strong><u>{si + 1}</u></strong> : (si + 1)}
+                                                            </button>
+                                                        )
+                                                    })}
                                                 </div>
-                                            </div>
-                                        )
-                                    })}
-                                </React.Fragment>
-                            )
-                        })}
-                    </div>
+                                            )
+                                        })}
+                                        keterangan : <br />
+                                        <span className="bg-warning p-1 pl-5 mr-1"></span> Belum dikerjakan / belum selesai
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {this.state.mode == 2 &&
+                        <div className="col-12">
+                            {this.state.soals.map(bab => {
+                                return (
+                                    <React.Fragment key={bab.id}>
+                                        <h5 className="text-center mt-4"><strong>{bab.nama.toUpperCase()}</strong></h5>
+                                        <p>{JSON.parse(bab.settings).keterangan}</p>
+                                        {bab.child.map(soal => {
+                                            const data = soal.soal
+                                            const pertanyaan = JSON.parse(data.pertanyaan)
+                                            return (
+                                                <div className="card mb-2" key={soal.id}>
+                                                    <div className="card-body">
+                                                        <span className="float-left">
+                                                            <b>{nomor++} .</b>
+                                                        </span>
+                                                        <span className="">
+                                                            {data.type == 1 && <PilihanGanda soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
+                                                            {data.type == 2 && <BenarSalah soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
+                                                            {data.type == 3 && <Menjodohkan soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id] ? this.state.jawabans[data.id] : []} setJawaban={this.setJawaban} />}
+                                                            {data.type == 4 && <Isian soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id] ? this.state.jawabans[data.id] : []} setJawaban={this.setJawaban} />}
+                                                            {data.type == 5 && <Essay soalId={data.id} pertanyaan={pertanyaan} jawaban={this.state.jawabans[data.id]} setJawaban={this.setJawaban} />}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
+                                    </React.Fragment>
+                                )
+                            })}
+                        </div>
+                    }
+
                 </div>
                 <KuisHasilModal
                     show={this.state.hasilModal}
@@ -254,7 +391,7 @@ const PilihanGanda = (props) => {
 
 const BenarSalah = (props) => {
     const { pertanyaan, jawaban, setJawaban, soalId } = props
-    console.log("soal: " + soalId, "j: " + jawaban)
+    //console.log("soal: " + soalId, "j: " + jawaban)
     return (
         <React.Fragment>
             <div>
@@ -393,7 +530,7 @@ const Isian = (props) => {
                                     return (
                                         <React.Fragment key={k}>
                                             {i}
-                                            {k + 1 != item.split('[[]]').length && <input name={jawabanIndex} style={formStyle} size="5" type="text" value={jawaban[jawabanIndex++]} onChange={(e) => setJawaban({ [soalId]: { ...jawaban, [e.target.name.toString()]: e.target.value } })} />}
+                                            {k + 1 != item.split('[[]]').length && <input name={jawabanIndex} style={formStyle} size="5" type="text" value={jawaban[jawabanIndex++] || ''} onChange={(e) => setJawaban({ [soalId]: { ...jawaban, [e.target.name.toString()]: e.target.value } })} />}
                                         </React.Fragment>
                                     )
                                 })} <br />

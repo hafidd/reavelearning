@@ -80,7 +80,10 @@ class MulaiKuisController extends Controller
             ]);
             /**hasil detail**/
             // get list soalnya
-            $soals = KuisSoal::select('id', 'soal_id', 'settings->bobot AS bobot')
+            $soals = KuisSoal::select('id', 'type', 'soal_id', 'settings->bobot AS bobot')
+                ->with(['soal' => function ($q) {
+                    $q->select('id', 'type AS soalType');
+                }])
                 ->where(['kuis_id' => $mapel_kuis->kuis_id, 'type' => 2])->get();
             $records = array_map(function ($soal) use ($hasil) {
                 return [
@@ -88,7 +91,7 @@ class MulaiKuisController extends Controller
                     "kuis_soal_id" => $soal['id'],
                     "soal_id" => $soal['soal_id'],
                     "jawaban" => null,
-                    "point" => null,
+                    "point" => in_array($soal['soal']['soalType'], [1, 2, 3]) ? 0 : null,
                     "max_point" => $soal['bobot'],
                 ];
             }, $soals->toArray());

@@ -109,7 +109,7 @@ class KuisHasil extends React.Component {
                                     </thead>
                                     <tbody>
                                         {this.state.pesertas.map(peserta => {
-                                            this.nilai.push(parseFloat(peserta.points / peserta.max_points * 100))
+                                            this.nilai.push(parseFloat(peserta.points / peserta.max_points * 100).toFixed(2))
                                             return (
                                                 <tr style={{ lineHeight: 1 }} key={peserta.id} className={`${peserta.belum_dikoreksi > 0 ? 'bg-warning' : !peserta.published ? 'bg-info' : 'bg-success'}`}>
                                                     <td className="text-center">{nomor++}</td>
@@ -119,7 +119,7 @@ class KuisHasil extends React.Component {
                                                     </td>
                                                     <td className={`text-center`} >
 
-                                                        <p className="m-0 text-right">{peserta.points / peserta.max_points * 100}</p>
+                                                        <p className="m-0 text-right">{parseFloat(peserta.points / peserta.max_points * 100).toFixed(2)}</p>
                                                         <button className="btn btn-xs " onClick={() => this.detail(peserta.id)}>{peserta.belum_dikoreksi} Belum dikoreksi</button>
                                                     </td>
                                                 </tr>
@@ -140,7 +140,7 @@ class KuisHasil extends React.Component {
                                             </tr>
                                             <tr>
                                                 <td>Rata - Rata</td>
-                                                <td>{this.nilai.length > 0 ? this.nilai.reduce((a, b) => a + b, 0) / this.nilai.length : '-'}</td>
+                                                <td>{this.nilai.length > 0 ? this.nilai.reduce((a, b) => parseFloat(a) + parseFloat(b), 0) / this.nilai.length : '-'}</td>
                                             </tr>
                                         </tbody>
                                     </table>
