@@ -22,6 +22,8 @@ export default class Dashboard extends React.Component {
                     </div>
                 </div>
                 <hr />
+                <h3><strong>Selamat Datang!</strong></h3>
+{/*
                 <div className="row">
                     <div className="col-12 col-md-8">
                         <div className="card">
@@ -66,6 +68,8 @@ export default class Dashboard extends React.Component {
                         </div>
                     </div>
                 </div>
+
+                 */}
             </React.Fragment>
         )
     }

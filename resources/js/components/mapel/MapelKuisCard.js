@@ -308,7 +308,7 @@ const MapelKuisCard = (props) => {
                                                 {!isSiswa &&
                                                     <React.Fragment>
                                                         <button className="ml-2 btn btn-xxs btn-outline-info" value={kuis.id} onClick={() => openSettingForm(kuis.id)}><i className="fas fa-wrench"></i></button>
-                                                        <button className="ml-2 btn btn-xxs btn-outline-danger" value={kuis.id} onClick={() => delKuis(kuis.id, kuis.kuis.judul)}><i className="fas fa-times"></i></button>
+                                                        <button style={{display: 'none'}} className="ml-2 btn btn-xxs btn-outline-danger" value={kuis.id} onClick={() => delKuis(kuis.id, kuis.kuis.judul)}><i className="fas fa-times"></i></button>
                                                     </React.Fragment>
                                                 }
                                                 <br />
