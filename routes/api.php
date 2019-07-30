@@ -63,7 +63,8 @@ Route::group(['middleware' => ['jwt-auth']], function () {
     Route::get('kuis-selesai/{id}', 'Api\HasilController@hasilSiswa');
     Route::get('detail-hasil-siswa/{id}', 'Api\HasilController@getDetailHasilSiswa');
     
-
+    //kategori
+    Route::apiResource('kategori-admin', 'Api\KategoriController');
 });
 
 Route::get('detail-hasil-test/{id}', 'Api\HasilController@getDetailHasil');

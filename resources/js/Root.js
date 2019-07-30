@@ -26,6 +26,9 @@ const MapelSetting = lazy(() => import('./components/pengajar/MapelSetting'));
 const Materi = lazy(() => import('./components/pengajar/Materi'));
 const Kuis = lazy(() => import('./components/pengajar/Kuis'));
 
+//admin
+const Kategori = lazy(() => import('./components/kategori/Kategori'));
+
 const ErrorNotFound = (props) => props.fetch ? <span><i className="fa fa-spinner fa-spin"></i> Loading menu...</span> : <h1>Not found</h1>
 const Ded = (props) => {
     {
@@ -64,6 +67,7 @@ class Root extends React.Component {
             Kuis,
             MulaiKuis,
             KuisHasil,
+            Kategori,
             Ded,
 
         }
