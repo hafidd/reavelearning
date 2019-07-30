@@ -11,16 +11,16 @@
     <!--
     <link href="{{ mix('/css/custom.css') }}" rel="stylesheet">
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
-    -->
+    
     <link href="{{ secure_asset('/css/custom.css') }}" rel="stylesheet">
-    <link href="{{ secure_asset('/css/app.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('/css/app.css') }}" rel="stylesheet">-->
     <!-- fontawesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
 <body>
 <div id="app"></div>
-<!--<script src="{{ mix('/js/app.js') }}"></script>-->
-<script src="{{ secure_asset('/js/app.js') }}"></script>
+<!--<script src="{{ mix('/js/app.js') }}"></script>
+<script src="{{ secure_asset('/js/app.js') }}"></script>-->
 <!--<script src="http://192.168.43.65:8000/js/app.js"></script>-->
 </body>
 </html>
