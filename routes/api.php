@@ -58,14 +58,17 @@ Route::group(['middleware' => ['jwt-auth']], function () {
     Route::get('detail-hasil/{id}', 'Api\HasilController@getDetailHasil');
     Route::put('koreksi/{id}', 'Api\HasilController@koreksiHasil');
     Route::put('publish-hasil/{id}', 'Api\HasilController@publishHasil');
-    
+
     //hasil kuis siswa
     Route::get('kuis-selesai/{id}', 'Api\HasilController@hasilSiswa');
     Route::get('detail-hasil-siswa/{id}', 'Api\HasilController@getDetailHasilSiswa');
-    
+
     //kategori
     Route::apiResource('kategori-admin', 'Api\KategoriController');
+
+    //excel
 });
+Route::get('excel-mapel-siswa/{id}', 'Api\ExportController@excel_siswa_mapel');
 
 Route::get('detail-hasil-test/{id}', 'Api\HasilController@getDetailHasil');
 
@@ -130,7 +133,7 @@ Route::get('insert-test-materi', function () {
 });
 
 // kategori
-Route::get('kategori', function () {return App\MapelKategori::get();});
+Route::get('kategori', function () {return App\MapelKategori::orderBy('nama')->get();});
 
 // uer
 Route::post('user/register', 'AuthController@register');
@@ -149,3 +152,5 @@ Route::apiResource('tesres', 'TabelTesController');
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('export-test', 'Api\ExportController@export_test');

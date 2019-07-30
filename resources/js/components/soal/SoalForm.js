@@ -125,7 +125,7 @@ const SoalForm = (props) => {
             <div className="col-md-12">
                 <div className="row">
                     <div className="col-md-12">
-                        <h5 className="float-left"><b>{tipe === 'add' ? '...' : 'Ubah'} ... </b></h5>
+                        <h5 className="float-left"><b>{tipe === 'add' ? 'Tambah' : 'Ubah'} Soal </b></h5>
                     </div>
                 </div>
                 <div className="row" style={{ marginTop: '2%' }} >

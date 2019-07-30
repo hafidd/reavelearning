@@ -110,6 +110,9 @@ const MapelPesertaCard = (props) => {
                     <div className="col-12">
                         <div className="pb-1">
                             <strong className="card-title">Peserta</strong>
+                            <a className="float-right" href={'api/excel-mapel-siswa/' + id}>
+                                <button className="btn btn-sm btn-outline-primary"><i className="fas fa-file-excel"></i> Download</button>
+                            </a>
                         </div>
                         <SelectForm formW="2" label="kelas / kelompok" options={groups} placeholder="-" value={selectedGroup} handleChange={e => { setSelectedGroup(e.currentTarget.value) }} />
                         <strong>{pesertas.length} Siswa</strong>

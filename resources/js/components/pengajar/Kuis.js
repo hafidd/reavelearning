@@ -164,7 +164,7 @@ class Kuis extends React.Component {
             <div className="row">
                 <div className="col-12">
                     <PageTitle
-                        title="...."
+                        title="Kuis"
                         navs={[
                             { show: this.state.action === '', clickHandle: () => this.setAction('', { action: 'kuisAdd' }) },
                             { show: (['kuisAdd', 'kuisUpdate', 'kuisDelete', 'kuisDetail'].indexOf(this.state.action) !== -1), clickHandle: () => this.setAction('', { action: '' }, true), icon: "fa-arrow-left" },

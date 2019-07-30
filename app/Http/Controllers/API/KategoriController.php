@@ -19,7 +19,7 @@ class KategoriController extends Controller
 
     public function index(Request $request)
     {
-        $data = MapelKategori::withCount('mapel');
+        $data = MapelKategori::withCount('mapel')->orderBy('nama');
         $data = $data->paginate(100);
         return JsonResource::collection($data);
     }

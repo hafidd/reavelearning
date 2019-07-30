@@ -33,7 +33,7 @@ const Item = (props) => {
                 {action === "default" &&
                     <React.Fragment>
                         <button className="btn btn-xs btn-warning ml-1" value={`soalUpdate-${soal.id}`} onClick={setAction}><i className="fas fa-edit"></i></button>
-                        <button className="btn btn-xs btn-danger ml-1" value={`soalDelete-${soal.id}`} onClick={setAction}><i className="fas fa-trash"></i></button>
+                        <button style={{display: 'none'}} className="btn btn-xs btn-danger ml-1" value={`soalDelete-${soal.id}`} onClick={setAction}><i className="fas fa-trash"></i></button>
                     </React.Fragment>
                 }
                 {action === "select" &&
