@@ -21,7 +21,7 @@ class CreateMapelTable extends Migration
         Schema::create('mapel', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('kategori');
+            $table->integer('kategori_id');
             $table->string('nama', 100);
             $table->string('kode', 30)->nullable();;
             $table->enum('status', ['aktif', 'nonaktif']);
@@ -30,7 +30,7 @@ class CreateMapelTable extends Migration
             $table->json('groups')->nullable();
             $table->boolean('image')->default(false);
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('kategori')->references('id')->on('mapel_kategori');
+            $table->foreign('kategori_id')->references('id')->on('mapel_kategori');
         });
     }
 

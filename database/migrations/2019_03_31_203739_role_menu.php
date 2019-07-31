@@ -24,13 +24,16 @@ class RoleMenu extends Migration
             $table->increments('id');
             $table->string('name', 50);
             $table->string('path', 25);
-            $table->string('component', 25);
+            $table->string('component', 25)->nullable();
             $table->string('desc', 100);
             $table->integer('order');
-            $table->integer('parent');
+            $table->integer('parent')->nullable();
+            $table->string('icon', 50)->nullable();
+            $table->json('apiendpoints')->nullable();
+            $table->json('paths')->nullable()->default('[]');
         });
         //role-menu
-        Schema::create('menurole', function (Blueprint $table) {
+        Schema::create('menu_role', function (Blueprint $table) {
             $table->integer('role');
             $table->integer('menu');
             $table->foreign('role')->references('id')->on('roles');

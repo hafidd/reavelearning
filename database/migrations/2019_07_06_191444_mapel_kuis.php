@@ -19,6 +19,7 @@ class MapelKuis extends Migration
             $table->integer('kuis_id');
             $table->string('group', 50)->nullable();
             $table->json('settings')->nullable();
+            $table->boolean('published')->default(false);
             $table->foreign('kuis_id')->references('id')->on('kuis');
             $table->foreign('mapel_id')->references('id')->on('mapel');
         });
