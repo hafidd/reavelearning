@@ -90,7 +90,7 @@ class MulaiKuis extends React.Component {
         const token = Token.getToken()
         if (!token) { this.props.logOut('mapel', true); return }
         this.setState({ loading: true })
-        axios.put('api/update-jawaban/', { hId: this.state.hasilId, sId: sId, value: value, bs: bs }, {
+        axios.put('api/update-jawaban', { hId: this.state.hasilId, sId: sId, value: value, bs: bs }, {
             headers: {
                 Authorization: 'Bearer ' + token
             }
@@ -116,7 +116,7 @@ class MulaiKuis extends React.Component {
         this.setState({ hasilModal: true }, () => {
             console.log(this.state.id)
             if (!Token.getToken()) { alert('mohon login ulang'); return }
-            axios.get('/api/detail-hasil-siswa/' + this.state.id, {
+            axios.get('/api/detail-hasil-siswa' + this.state.id, {
                 headers: {
                     Authorization: 'Bearer ' + Token.getToken()
                 }
