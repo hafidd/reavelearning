@@ -46,7 +46,7 @@ class MulaiKuis extends React.Component {
         const token = Token.getToken()
         if (!token) { this.props.logOut('mapel', true); return }
         this.setState({ loading: true })
-        axios.post('api/mulai-kuis/', { mkId: this.state.id }, {
+        axios.post('api/mulai-kuis', { mkId: this.state.id }, {
             headers: {
                 Authorization: 'Bearer ' + token
             }
