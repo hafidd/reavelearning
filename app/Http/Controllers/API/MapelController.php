@@ -209,7 +209,7 @@ class MapelController extends Controller
         $data = $request->kode ? $data->whereRaw("UPPER(kode) = '" . strtoupper($request->kode) . "'") : $data;
         $data = $request->kategori_id ? $data->where('kategori_id', $request->kategori_id) : $data;
         $data = $data->where('status', 'aktif');
-        $data = $data->paginate(10);
+        $data = $data->paginate(33);
         return MapelResource::collection($data);
     }
 

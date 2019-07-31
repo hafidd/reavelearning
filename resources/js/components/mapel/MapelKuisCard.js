@@ -73,7 +73,7 @@ const MapelKuisCard = (props) => {
 
     const getKuisList = () => {
         if (!Token.getToken()) { notif(<NotifMessage text={`mohon login ulang`} success={false} />); return }
-        axios.get('/api/kuis/', {
+        axios.get('/api/kuis', {
             params: kuisList.search.kuis,
             headers: {
                 Authorization: 'Bearer ' + Token.getToken()

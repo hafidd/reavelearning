@@ -116,7 +116,7 @@ class MulaiKuis extends React.Component {
         this.setState({ hasilModal: true }, () => {
             console.log(this.state.id)
             if (!Token.getToken()) { alert('mohon login ulang'); return }
-            axios.get('/api/detail-hasil-siswa' + this.state.id, {
+            axios.get('/api/detail-hasil-siswa/' + this.state.id, {
                 headers: {
                     Authorization: 'Bearer ' + Token.getToken()
                 }
@@ -374,8 +374,8 @@ const PilihanGanda = (props) => {
                                     <div className="form-inline float-left mb-1" style={{ width: '100%' }}>
                                         <label style={{ width: '1.3em', }}><b>{String.fromCharCode(65 + i)}. </b></label>
                                         {pertanyaan.type == 1 ?
-                                            <input name={`rd${soalId}`} type="radio" value={i} checked={jawab.indexOf(i + 1) !== -1} onChange={handleCheck} className="custom-rd mr-2" />
-                                            : <input name={`cb${soalId}`} type="checkbox" value={i} checked={jawab.indexOf(i + 1) !== -1} onChange={handleCheck} className="custom-cb mr-2" />
+                                            <input name={`qrd${soalId}`} type="radio" value={i} checked={jawab.indexOf(i + 1) !== -1} onChange={handleCheck} className="custom-rd mr-2" />
+                                            : <input name={`qcb${soalId}`} type="checkbox" value={i} checked={jawab.indexOf(i + 1) !== -1} onChange={handleCheck} className="custom-cb mr-2" />
                                         }
                                         <span className="mr-2">{a}</span>
                                     </div>
@@ -409,9 +409,9 @@ const BenarSalah = (props) => {
             />
             */}
             <div>
-                <input type="radio" name={`kunci${soalId}`} onChange={(e) => setJawaban({ [soalId]: e.target.value }, true)} value={1} checked={jawaban == 1 || jawaban == true} /> BENAR
+                <input type="radio" name={`qkunci${soalId}`} onChange={(e) => setJawaban({ [soalId]: e.target.value }, true)} value={1} checked={jawaban == 1 || jawaban == true} /> BENAR
                 <br />
-                <input type="radio" name={`kunci${soalId}`} onChange={(e) => setJawaban({ [soalId]: e.target.value }, true)} value={0} checked={jawaban == 0 || jawaban == false} /> SALAH
+                <input type="radio" name={`qkunci${soalId}`} onChange={(e) => setJawaban({ [soalId]: e.target.value }, true)} value={0} checked={jawaban == 0 || jawaban == false} /> SALAH
             </div>
         </React.Fragment>
     )
@@ -465,7 +465,7 @@ const Menjodohkan = (props) => {
                                 <li className="list-group-item">
                                     <div className="form">
                                         <label className="m-0"><b>{String.fromCharCode(65 + i)}.</b></label>{' '}
-                                        <span draggable="true" onDragStart={handleDragStart({ id: i })} className={`float-right fas fa-question-circle listq-${i}`}></span>
+                                        <span draggable="true" onDragStart={handleDragStart({ id: i })} className={`float-right fas fa-question-circle ${soalId}qlistq-${i}`}></span>
                                         <span className="">{q}</span>
                                     </div>
                                 </li>
@@ -474,7 +474,7 @@ const Menjodohkan = (props) => {
                     </ul>
                 </div>
                 <div className="col-2 m-0">
-                    {jawaban.map((line, i) => <LineTo key={i} from={`listq-${line.q}`} to={`lista-${line.a}`} />)}
+                    {jawaban.map((line, i) => <LineTo key={i} from={`${soalId}qlistq-${line.q}`} to={`${soalId}qlista-${line.a}`} />)}
                 </div>
                 <div className="col-5">
                     <ul className="list-group">
@@ -485,7 +485,7 @@ const Menjodohkan = (props) => {
                                         draggable="true"
                                         onDragOver={(e) => { e.preventDefault() }}
                                         onDrop={handleDrop({ id: i })} >
-                                        <span className={`fas fa-check-circle lista-${i}`}></span> {' '}
+                                        <span className={`fas fa-check-circle ${soalId}qlista-${i}`}></span> {' '}
                                         <label className="m-0"><b>{String.fromCharCode(65 + i)}. </b></label>{' '}
                                         <span>{a}</span>
                                     </div>

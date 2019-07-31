@@ -153,7 +153,7 @@ class MapelSiswa extends React.Component {
             group: this.state.group,
             action: this.state.action,
         }
-        axios.post('/api/mapel-action/', values, {
+        axios.post('/api/mapel-action', values, {
             headers: {
                 Authorization: 'Bearer ' + Token.getToken()
             }
@@ -198,10 +198,10 @@ class MapelSiswa extends React.Component {
                                     <button className={`btn btnnav ${this.state.action === '' && 'active'}`} onClick={this.changeData} value="">Tersedia</button>
                                 </li>
                                 <li className="nav-item">
-                                    <button className={`btn btnnav ${this.state.action === 'waiting' && 'active'}`} onClick={this.changeData} value="waiting">Menunggu ({this.state.menungguCount})</button>
+                                    <button className={`btn btnnav ${this.state.action === 'waiting' && 'active'}`} onClick={this.changeData} value="waiting">Menunggu</button>
                                 </li>
                                 <li className="nav-item">
-                                    <button className={`btn btnnav ${this.state.action === 'joined' && 'active'}`} onClick={this.changeData} value="joined">Bergabung ({this.state.bergabungCount})</button>
+                                    <button className={`btn btnnav ${this.state.action === 'joined' && 'active'}`} onClick={this.changeData} value="joined">Bergabung</button>
                                 </li>
                             </ul>
                         </span>

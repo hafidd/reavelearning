@@ -89,9 +89,14 @@ const SoalForm = (props) => {
                 setLoading(false)
                 setSuccess(true)
                 setErrors({})
-                if (tipe === 'add')
-                    if (values.type != 3) setValues({ ...fields })
+                if (tipe === 'add'){                     
+                    if (values.type == 1){
+                        console.log('reset pilgan')
+                        setValues({ ...fields, aType: 1, jawabans: [""], kunci: [] })
+                    } 
+                    else if (values.type != 3) setValues({ ...fields })
                     else setValues({ ...fields, pertanyaans: [''], jawabans: [''], kunci: [] })
+                }
             }).catch(err => {
                 if (err.response) {
                     if (err.response.request.status === 422) {
@@ -179,7 +184,11 @@ const PilihanGandaForm = (props) => {
     const { values, handleChange, setValues } = props
 
     useEffect(() => {
-        if (values.aType === undefined) setValues({ ...values, aType: 1, jawabans: [""], kunci: [] })
+        console.log(values.aType)
+        if (values.aType === undefined) {
+            console.log('set')
+            setValues({ ...values, aType: 1, jawabans: [""], kunci: [] })
+        }
     }, [])
 
     useEffect(() => {
@@ -217,6 +226,7 @@ const PilihanGandaForm = (props) => {
         const filteredKeys = values.kunci.filter((k, i) => { return deletedKeys.indexOf(k) === -1 })
         setValues({ ...values, jawabans: filteredJawabans, kunci: filteredKeys })
     }
+    //console.log(values)
     return (
         <React.Fragment>
             <TextAreaForm label="Pertanyaan" formW="10" name="q" value={values.q} placeholder="isikan pertanyaan..." handleChange={handleChange} />

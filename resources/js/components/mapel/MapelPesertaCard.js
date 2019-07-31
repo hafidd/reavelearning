@@ -50,7 +50,7 @@ const MapelPesertaCard = (props) => {
         e.preventDefault()
         if (!token) { notif(<NotifMessage text="mohon login ulang" success={false} />); return }
         setLoading(true)
-        axios.put('/api/mov-siswa/', values, {
+        axios.put('/api/mov-siswa', values, {
             headers: {
                 Authorization: 'Bearer ' + token
             }
