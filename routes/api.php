@@ -5,76 +5,76 @@ use Illuminate\Http\Request;
 //jwt
 Route::group(['middleware' => ['jwt-auth']], function () {
     // mapel
-    Route::apiResource('mapel', 'Api\MapelController');
-    Route::get('mapel-req-list/{id}', 'Api\MapelController@getRequest');
-    Route::post('mapel-req-process', 'Api\MapelController@processRequest');
+    Route::apiResource('mapel', 'API\MapelController');
+    Route::get('mapel-req-list/{id}', 'API\MapelController@getRequest');
+    Route::post('mapel-req-process', 'API\MapelController@processRequest');
     // profile
     Route::post('update-profile', 'API\UserController@updateProfile');
     Route::post('update-pp', 'API\UserController@updatePp');
     // mapel siswa
-    Route::get('mapel-siswa', 'Api\MapelController@siswa');
-    Route::get('mapel-detail/{id}', 'Api\MapelController@detailAktif');
-    Route::post('mapel-action', 'Api\MapelController@mapelAction');
+    Route::get('mapel-siswa', 'API\MapelController@siswa');
+    Route::get('mapel-detail/{id}', 'API\MapelController@detailAktif');
+    Route::post('mapel-action', 'API\MapelController@mapelAction');
     // materi
-    Route::apiResource('materi', 'Api\MateriController');
+    Route::apiResource('materi', 'API\MateriController');
     //kuis - soal
-    Route::apiResource('kuis', 'Api\KuisController');
-    Route::apiResource('soal', 'Api\SoalController');
-    Route::apiResource('kuis-soal', 'Api\KuisSoalController');
-    Route::get('soal/kuis/{id}', 'Api\SoalController@soalByKuis');
-    Route::post('add-soal', 'Api\KuisController@addSoal');
-    Route::delete('rem-soal/{id}', 'Api\KuisController@removeSoal');
+    Route::apiResource('kuis', 'API\KuisController');
+    Route::apiResource('soal', 'API\SoalController');
+    Route::apiResource('kuis-soal', 'API\KuisSoalController');
+    Route::get('soal/kuis/{id}', 'API\SoalController@soalByKuis');
+    Route::post('add-soal', 'API\KuisController@addSoal');
+    Route::delete('rem-soal/{id}', 'API\KuisController@removeSoal');
     // materi-mapel (p)
-    Route::post('add-materi', 'Api\MapelController@addMateri');
-    Route::delete('rem-materi/{id}', 'Api\MapelController@removeMateri');
-    Route::get('materi/mapel/{id}', 'Api\MapelController@materiByMapel');
+    Route::post('add-materi', 'API\MapelController@addMateri');
+    Route::delete('rem-materi/{id}', 'API\MapelController@removeMateri');
+    Route::get('materi/mapel/{id}', 'API\MapelController@materiByMapel');
     // materi-peserta (p)
-    Route::get('materi/peserta/{id}', 'Api\MapelController@pesertaByMapel');
-    Route::put('mov-siswa', 'Api\MapelController@moveSiswa');
-    Route::delete('rem-siswa/{id}', 'Api\MapelController@removeSiswa');
+    Route::get('materi/peserta/{id}', 'API\MapelController@pesertaByMapel');
+    Route::put('mov-siswa', 'API\MapelController@moveSiswa');
+    Route::delete('rem-siswa/{id}', 'API\MapelController@removeSiswa');
     //materi-kuis
-    Route::get('materi/kuis/{id}', 'Api\MapelController@kuisByMapel');
-    Route::put('materi/kuis/{id}', 'Api\MapelController@pengaturanKuis');
-    Route::put('start-kuis/{id}', 'Api\MapelController@startKuis');
-    Route::get('materi/kuis-detail/{id}', 'Api\MapelController@kuisMapelDetail');
-    Route::post('add-kuis', 'Api\MapelController@addKuis');
-    Route::delete('rem-kuis/{id}', 'Api\MapelController@removeKuis');
+    Route::get('materi/kuis/{id}', 'API\MapelController@kuisByMapel');
+    Route::put('materi/kuis/{id}', 'API\MapelController@pengaturanKuis');
+    Route::put('start-kuis/{id}', 'API\MapelController@startKuis');
+    Route::get('materi/kuis-detail/{id}', 'API\MapelController@kuisMapelDetail');
+    Route::post('add-kuis', 'API\MapelController@addKuis');
+    Route::delete('rem-kuis/{id}', 'API\MapelController@removeKuis');
     // download file materi
-    Route::get('get-materi-file/{type}/{name}', 'Api\MateriController@downloadFile');
+    Route::get('get-materi-file/{type}/{name}', 'API\MateriController@downloadFile');
 
     // materi-mapel (s)
-    Route::get('materi-siswa/mapel/{id}', 'Api\MapelController@materiByMapelSiswa');
+    Route::get('materi-siswa/mapel/{id}', 'API\MapelController@materiByMapelSiswa');
     // materi-kuis (s)
-    Route::get('materi-siswa/kuis/{id}', 'Api\MapelController@kuisTersedia');
+    Route::get('materi-siswa/kuis/{id}', 'API\MapelController@kuisTersedia');
     // materi (s)
-    Route::get('materi-siswa/{id}', 'Api\MateriController@materiSiswaDetail');
+    Route::get('materi-siswa/{id}', 'API\MateriController@materiSiswaDetail');
 
     // mengerjakan kuis
-    Route::post('mulai-kuis', 'Api\MulaiKuisController@start');
-    Route::put('update-jawaban', 'Api\MulaiKuisController@updateJawaban');
+    Route::post('mulai-kuis', 'API\MulaiKuisController@start');
+    Route::put('update-jawaban', 'API\MulaiKuisController@updateJawaban');
 
     //kuis detail
-    Route::get('detail-kuis/{id}', 'Api\HasilController@getDetail');
-    Route::get('detail-hasil/{id}', 'Api\HasilController@getDetailHasil');
-    Route::put('koreksi/{id}', 'Api\HasilController@koreksiHasil');
-    Route::put('publish-hasil/{id}', 'Api\HasilController@publishHasil');
+    Route::get('detail-kuis/{id}', 'API\HasilController@getDetail');
+    Route::get('detail-hasil/{id}', 'API\HasilController@getDetailHasil');
+    Route::put('koreksi/{id}', 'API\HasilController@koreksiHasil');
+    Route::put('publish-hasil/{id}', 'API\HasilController@publishHasil');
 
     //hasil kuis siswa
-    Route::get('kuis-selesai/{id}', 'Api\HasilController@hasilSiswa');
-    Route::get('detail-hasil-siswa/{id}', 'Api\HasilController@getDetailHasilSiswa');
+    Route::get('kuis-selesai/{id}', 'API\HasilController@hasilSiswa');
+    Route::get('detail-hasil-siswa/{id}', 'API\HasilController@getDetailHasilSiswa');
 
     //kategori
-    Route::apiResource('kategori-admin', 'Api\KategoriController');
+    Route::apiResource('kategori-admin', 'API\KategoriController');
 
     //excel
 });
-Route::get('excel-mapel-siswa/{id}', 'Api\ExportController@excel_siswa_mapel');
+Route::get('excel-mapel-siswa/{id}', 'API\ExportController@excel_siswa_mapel');
 
-Route::get('detail-hasil-test/{id}', 'Api\HasilController@getDetailHasil');
+Route::get('detail-hasil-test/{id}', 'API\HasilController@getDetailHasil');
 
-Route::get('get-materi-file-test/{type}/{name}', 'Api\MateriController@downloadFile');
+Route::get('get-materi-file-test/{type}/{name}', 'API\MateriController@downloadFile');
 
-//Route::get('mulai-kuis-test/{mkId}', 'Api\MulaiKuisController@start');
+//Route::get('mulai-kuis-test/{mkId}', 'API\MulaiKuisController@start');
 Route::get('testxx', function () {
     $data_jawaban = App\HasilDetail::select('soal_id', 'jawaban')
         ->where([
@@ -153,4 +153,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('export-test', 'Api\ExportController@export_test');
+Route::get('export-test', 'API\ExportController@export_test');
