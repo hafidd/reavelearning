@@ -1,1 +1,877 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[16],{11:function(e,a,t){"use strict";var n=t(0);function r(e,a,t){return a in e?Object.defineProperty(e,a,{value:t,enumerable:!0,configurable:!0,writable:!0}):e[a]=t,e}function l(e,a){return function(e){if(Array.isArray(e))return e}(e)||function(e,a){var t=[],n=!0,r=!1,l=void 0;try{for(var c,o=e[Symbol.iterator]();!(n=(c=o.next()).done)&&(t.push(c.value),!a||t.length!==a);n=!0);}catch(e){r=!0,l=e}finally{try{n||null==o.return||o.return()}finally{if(r)throw l}}return t}(e,a)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance")}()}a.a=function(e){var a=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},t=l(Object(n.useState)(a),2),c=t[0],o=t[1];return{handleChange:function(e){e.persist(),o(function(a){return function(e){for(var a=1;a<arguments.length;a++){var t=null!=arguments[a]?arguments[a]:{},n=Object.keys(t);"function"==typeof Object.getOwnPropertySymbols&&(n=n.concat(Object.getOwnPropertySymbols(t).filter(function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),n.forEach(function(a){r(e,a,t[a])})}return e}({},a,r({},e.target.name,e.target.value))})},handleSubmit:function(a){a&&a.preventDefault(),e()},setValues:o,values:c,getErrors:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[];return Object.keys(e).map(function(a){return e[a].map(function(e){return e})})}}}},434:function(e,a,t){"use strict";t.r(a);var n=t(0),r=t.n(n),l=t(11),c=t(1),o=t(4),s=t.n(o),m=t(186),i=t.n(m),u=(t(236),t(7)),d=t(5);function f(e){for(var a=1;a<arguments.length;a++){var t=null!=arguments[a]?arguments[a]:{},n=Object.keys(t);"function"==typeof Object.getOwnPropertySymbols&&(n=n.concat(Object.getOwnPropertySymbols(t).filter(function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),n.forEach(function(a){p(e,a,t[a])})}return e}function p(e,a,t){return a in e?Object.defineProperty(e,a,{value:t,enumerable:!0,configurable:!0,writable:!0}):e[a]=t,e}function b(e,a){return function(e){if(Array.isArray(e))return e}(e)||function(e,a){var t=[],n=!0,r=!1,l=void 0;try{for(var c,o=e[Symbol.iterator]();!(n=(c=o.next()).done)&&(t.push(c.value),!a||t.length!==a);n=!0);}catch(e){r=!0,l=e}finally{try{n||null==o.return||o.return()}finally{if(r)throw l}}return t}(e,a)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance")}()}a.default=function(e){var a=e.user,t=e.updateUser,o=a,m=Object(l.a)(T,o),p=m.values,h=m.setValues,v=m.getErrors,g=m.handleChange,E=m.handleSubmit,y=b(Object(n.useState)(!1),2),N=y[0],w=y[1],k=b(Object(n.useState)(!1),2),x=k[0],j=k[1],C=b(Object(n.useState)([]),2),O=C[0],S=C[1],W=b(Object(n.useState)({src:"images/profile.jpg",changed:!1,prev:"",file:""}),2),P=W[0],q=W[1],_=b(Object(n.useState)(),2),A=_[0],L=_[1],M=null;function T(){var e=arguments.length>0&&void 0!==arguments[0]&&arguments[0],a=c.a.getToken();if(a){w(!0),j(!1);var n=e?"update-pp":"update-profile",r=new FormData;for(var l in p)r.append(l,p[l]);s.a.post("/api/"+n,r,{headers:{"Content-Type":"multipart/form-data",Authorization:"Bearer "+a}}).then(function(){j(!0),w(!1),h(function(e){return f({},e,{password_baru:"",password_baru_confirmation:"",password:"",img:""})}),e?q(f({},P,{prev:""})):t({email:p.email,name:p.name,jk:p.jk})}).catch(function(e){U(),e.response?422===e.response.request.status?S(v(e.response.data.errors)):401===e.response.request.status?S([e.response.data.error]):S(["server error"]):S(["server error"]),U(),w(!1)})}}function U(){L(""),q({src:P.prev?P.prev:P.src,changed:!1,prev:""})}return Object(n.useEffect)(function(){s.a.get("images/users/"+a.id+".jpg").then(function(){return q(f({},P,{src:"images/users/"+a.id+".jpg"}))}).catch(function(){})},[]),r.a.createElement(r.a.Fragment,null,r.a.createElement(d.e,{title:"Pengaturan"}),r.a.createElement("hr",null),r.a.createElement("div",{className:"row"},r.a.createElement("div",{className:"col-12 col-md-2 mb-2"},r.a.createElement("div",{className:"card"},r.a.createElement("div",{className:"card-body"},r.a.createElement("div",{className:"mb-1"},r.a.createElement("img",{src:P.src,style:{width:"100%"}})),r.a.createElement("label",{className:"btn btn-xs btn-primary",style:{width:"100%",paddingBottom:"10px"}},"Pilih Gambar ",r.a.createElement("input",{type:"file",accept:"image/*",onChange:function(e){var a=e.target.files[0];j(!1),q(f({},P,{changed:!0})),L(URL.createObjectURL(a))},style:{height:"0.1px",width:"0.1px",opacity:0,margin:0}})),r.a.createElement("div",{className:"text-center mt-1"},P.changed&&!N&&!x&&r.a.createElement(r.a.Fragment,null,r.a.createElement("button",{className:"btn btn-xs btn-success mr-3",onClick:function(){P.changed&&T(!0)}},r.a.createElement("i",{className:"fas fa-check"})),r.a.createElement("button",{className:"btn btn-xs btn-warning",onClick:U},r.a.createElement("i",{className:"fas fa-times"}))),N&&P.changed&&r.a.createElement("i",{className:"fa fa-spinner fa-spin"}))))),r.a.createElement("div",{className:"col-12 col-md-10"},r.a.createElement("div",{className:"card"},r.a.createElement("form",{onSubmit:E},r.a.createElement("div",{className:"card-body row"},r.a.createElement("div",{className:"col-12"},r.a.createElement("h5",{className:"card-title"},"Ubah Profil"),r.a.createElement("hr",null)),r.a.createElement("div",{className:"col-md-8"},A?r.a.createElement(r.a.Fragment,null,r.a.createElement("button",{type:"button",className:"btn btn-success btn-fullwidth",onClick:function(){var e=M.getCroppedCanvas().toDataURL();L(""),j(!1),q({src:e,changed:!0,prev:P.src}),h(function(a){return f({},a,{img:e})})}},"crop"),r.a.createElement(i.a,{ref:function(e){M=e},src:A,style:{height:400,width:"100%"},aspectRatio:1,guides:!1})):r.a.createElement(r.a.Fragment,null,r.a.createElement(u.d,{type:"email",name:"email",label:"Email",value:p.email,handleChange:g,labelW:"3",formW:"6"}),r.a.createElement(u.d,{name:"name",label:"Nama Lengkap",value:p.name,handleChange:g,labelW:"3",formW:"6"}),r.a.createElement(u.a,{label:"Jenis Kelamin",name:"jk",handleChange:g,value:p.jk,options:[["l","Laki - Laki"],["p","Perempuan"]],labelW:"3",formW:"6"}),r.a.createElement("hr",null),r.a.createElement(u.d,{type:"password",name:"password_baru",label:"Password Baru",value:p.password_baru,handleChange:g,labelW:"3",formW:"5",formtext:"kosongi jika tidak ingin mengubah password"}),r.a.createElement(u.d,{type:"password",name:"password_baru_confirmation",label:"Ulangi Password",value:p.password_baru_confirmation,handleChange:g,labelW:"3",formW:"5"}),r.a.createElement("hr",null),r.a.createElement(u.d,{type:"password",name:"password",label:"Password",value:p.password,handleChange:g,labelW:"3",formW:"5",required:!0}))),r.a.createElement("div",{className:"col-md-4"},O.constructor===Array&&O.length>0&&!x&&r.a.createElement("div",{className:"bg-warning",style:{padding:"5%",margin:"5%"}},r.a.createElement("ul",null,O.map(function(e,a){return r.a.createElement("li",{key:a},e)}))),x&&r.a.createElement("div",{className:"bg-success",style:{padding:"5%",margin:"5%"}},r.a.createElement("p",{className:"lead"},"Sukses!"),r.a.createElement("p",null,"profil berhasil disimpan")))),r.a.createElement("div",{className:"card-footer"},r.a.createElement("button",{type:"submit",className:"btn btn-success",disabled:N||!p.password},"SIMPAN ",N&&r.a.createElement("i",{className:"fa fa-spinner fa-spin"})," ")))))))}},5:function(e,a,t){"use strict";t.d(a,"e",function(){return l}),t.d(a,"a",function(){return c}),t.d(a,"c",function(){return o}),t.d(a,"b",function(){return s}),t.d(a,"d",function(){return m});var n=t(0),r=t.n(n);function l(e){var a=e.title,t=void 0===a?"Judul Halaman":a,n=e.navs,l=void 0===n?[]:n;return r.a.createElement("div",{className:"row mt-2 mb-0"},r.a.createElement("div",{className:"col-12"},r.a.createElement("h2",{className:"float-left"},r.a.createElement("b",null,t)),l.map(function(e,a){if(e.show)return r.a.createElement("button",{key:a,value:e.action,onClick:e.clickHandle,className:"btn ".concat(e.className?e.className:"btn-primary"," float-right ml-1")},r.a.createElement("span",{className:"fas ".concat(e.icon?e.icon:"fa-plus")})," ",r.a.createElement("span",null,e.text||""))})))}function c(e){var a=e.message,t=e.type,n=e.clickHandle,l=e.html,c=void 0!==l&&l;return r.a.createElement("div",{className:"alert alert-".concat(t||"info"),style:{overflow:"hidden"},role:"alert"},r.a.createElement("span",{className:"float-left"},c?r.a.createElement("span",{dangerouslySetInnerHTML:{__html:a}}):a),r.a.createElement("button",{className:"btn btn-xs float-right",onClick:function(){return n()}},r.a.createElement("i",{className:"fas fa-times"})))}function o(e){return e.loading?r.a.createElement("span",{className:"col-12 text-center"},r.a.createElement("i",{className:"fas fa-spinner fa-spin"})," ",e.text?e.text:"Loading..."):""}function s(e){var a=e.text,t=void 0===a?"":a,n=e.w,l=e.h,c=Math.floor(255*Math.random()),o=Math.floor(255*Math.random()),s=Math.floor(255*Math.random());return r.a.createElement("div",{style:{width:n||"100%",height:l||150,backgroundColor:"rgb(".concat(c,", ").concat(o,", ").concat(s,")"),color:"white",textShadow:"-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",textAlign:"middle",fontSize:60,paddingTop:30,textTransform:"uppercase"}},r.a.createElement("b",null,t.substring(0,1)," ",t.substring(t.length-1,t.length)))}function m(e){var a=e.text,t=e.success,n=void 0===t||t;return r.a.createElement("span",null,r.a.createElement("i",{className:"fas ".concat(n?"fa-check text-success":"fa-exclamation text-danger")})," ",a)}},7:function(e,a,t){"use strict";t.d(a,"d",function(){return l}),t.d(a,"b",function(){return c}),t.d(a,"a",function(){return o}),t.d(a,"c",function(){return s});var n=t(0),r=t.n(n);function l(e){var a=e.type,t=e.name,n=e.placeholder,l=e.handleChange,c=e.value,o=e.required,s=e.label,m=e.labelW,i=e.formW,u=e.formtext,d=e.form;return r.a.createElement("div",{className:"form-group row"},r.a.createElement("label",{className:"col-md-"+(m||2)+" col-form-label"},s),r.a.createElement("div",{className:"col-md-"+(i||6)},r.a.createElement("input",{form:d,type:a||"text",className:"form-control",name:t,placeholder:n,onChange:l,value:c||"",required:o}),r.a.createElement("small",{className:"form-text text-muted"},u)))}function c(e){var a=e.name,t=e.placeholder,n=e.options,l=e.handleChange,c=e.value,o=e.required,s=e.label,m=e.labelW,i=e.formW;return r.a.createElement("div",{className:"form-group row"},r.a.createElement("label",{className:"col-md-"+(m||2)+" col-form-label"},s),r.a.createElement("div",{className:"col-md-"+(i||4)},r.a.createElement("select",{className:"custom-select",name:a,onChange:l,value:c||"",required:o},t&&r.a.createElement("option",{value:""},t),n.map(function(e){return r.a.createElement("option",{key:e.id,value:e.id},e.nama)}))))}function o(e){var a=e.name,t=e.options,n=e.handleChange,l=e.value,c=e.required,o=e.label,s=e.labelW,m=e.formW,i=e.form,u=e.labelClass,d=void 0===u?"":u;return r.a.createElement("div",{className:"form-group row"},r.a.createElement("label",{className:"col-md-"+(s||2)+" col-form-label"},o),r.a.createElement("div",{className:"col-md-"+(m||4),style:{marginTop:"0.4rem"}},t.map(function(e){var t=e[2]?e[2]:d;return r.a.createElement("div",{className:"form-check form-check-inline",key:e[0]},r.a.createElement("label",{className:"form-check-label ".concat(t)},r.a.createElement("input",{form:i,className:"form-check-input",type:"radio",name:a,onChange:n,value:e[0],checked:l==e[0],required:c})," ",e[1]))})))}function s(e){var a=e.name,t=e.handleChange,n=e.value,l=e.placeholder,c=e.required,o=e.label,s=e.labelW,m=e.formW;return r.a.createElement("div",{className:"form-group row"},r.a.createElement("label",{className:"col-md-"+(s||2)+" col-form-label"},o),r.a.createElement("div",{className:"col-md-"+(m||4)},r.a.createElement("textarea",{style:{width:"100%"},className:"form-control",name:a,onChange:t,value:n||"",placeholder:l,required:c})))}}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[16],{
+
+/***/ "./node_modules/react-hot-loader/root.js":
+/*!***********************************************!*\
+  !*** ./node_modules/react-hot-loader/root.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+if (true) {
+  var hot = __webpack_require__(/*! ./index */ "./node_modules/react-hot-loader/index.js").hot;
+  if (false) { var parent, cache; } else {
+    fallbackHot();
+  }
+} else {}
+
+function fallbackHot() {
+  exports.hot = function (a) {
+    return a;
+  };
+}
+
+
+/***/ }),
+
+/***/ "./resources/js/components/html/BasicForm.js":
+/*!***************************************************!*\
+  !*** ./resources/js/components/html/BasicForm.js ***!
+  \***************************************************/
+/*! exports provided: TextForm, SelectForm, RadioForm, RadioForm2, TextAreaForm */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TextForm", function() { return TextForm; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectForm", function() { return SelectForm; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RadioForm", function() { return RadioForm; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RadioForm2", function() { return RadioForm2; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TextAreaForm", function() { return TextAreaForm; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function TextForm(props) {
+  var type = props.type,
+      name = props.name,
+      placeholder = props.placeholder,
+      handleChange = props.handleChange,
+      value = props.value,
+      required = props.required,
+      label = props.label,
+      labelW = props.labelW,
+      formW = props.formW,
+      formtext = props.formtext,
+      form = props.form;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    className: "col-md-" + (labelW || 2) + " col-form-label"
+  }, label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-" + (formW || 6)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    form: form,
+    type: type || 'text',
+    className: "form-control",
+    name: name,
+    placeholder: placeholder,
+    onChange: handleChange,
+    value: value || '',
+    required: required
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", {
+    className: "form-text text-muted"
+  }, formtext)));
+}
+
+function SelectForm(props) {
+  var name = props.name,
+      placeholder = props.placeholder,
+      options = props.options,
+      handleChange = props.handleChange,
+      value = props.value,
+      required = props.required,
+      label = props.label,
+      labelW = props.labelW,
+      formW = props.formW;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    className: "col-md-" + (labelW || 2) + " col-form-label"
+  }, label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-" + (formW || 4)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+    className: "custom-select",
+    name: name,
+    onChange: handleChange,
+    value: value || '',
+    required: required
+  }, placeholder && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: ""
+  }, placeholder), options.map(function (option) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+      key: option.id,
+      value: option.id
+    }, option.nama);
+  }))));
+}
+
+function RadioForm(props) {
+  var name = props.name,
+      options = props.options,
+      handleChange = props.handleChange,
+      value = props.value,
+      required = props.required,
+      label = props.label,
+      labelW = props.labelW,
+      formW = props.formW,
+      form = props.form,
+      _props$labelClass = props.labelClass,
+      labelClass = _props$labelClass === void 0 ? "" : _props$labelClass;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    className: "col-md-" + (labelW || 2) + " col-form-label"
+  }, label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-" + (formW || 4),
+    style: {
+      marginTop: "0.4rem"
+    }
+  }, options.map(function (option) {
+    var labelC = option[2] ? option[2] : labelClass;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "form-check form-check-inline",
+      key: option[0]
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      className: "form-check-label ".concat(labelC)
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      form: form,
+      className: "form-check-input",
+      type: "radio",
+      name: name,
+      onChange: handleChange,
+      value: option[0],
+      checked: value == option[0],
+      required: required
+    }), " ", option[1]));
+  })));
+}
+
+function RadioForm2(props) {
+  var name = props.name,
+      options = props.options,
+      handleChange = props.handleChange,
+      value = props.value,
+      required = props.required,
+      label = props.label,
+      labelW = props.labelW,
+      formW = props.formW,
+      form = props.form,
+      _props$labelClass2 = props.labelClass,
+      labelClass = _props$labelClass2 === void 0 ? "" : _props$labelClass2;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    className: "col-md-" + (labelW || 2) + " col-form-label"
+  }, label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-" + (formW || 4),
+    style: {
+      marginTop: "0.4rem"
+    }
+  }, options.map(function (option) {
+    var labelC = option[2] ? option[2] : labelClass;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "form-check form-check-inline",
+      key: option[0]
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      className: "form-check-label ".concat(labelC)
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      form: form,
+      className: "form-check-input",
+      type: "radio",
+      name: name,
+      onChange: handleChange,
+      value: option[0],
+      checked: value === option[0],
+      required: required
+    }), " ", option[1]));
+  })));
+}
+
+function TextAreaForm(props) {
+  var name = props.name,
+      handleChange = props.handleChange,
+      value = props.value,
+      placeholder = props.placeholder,
+      required = props.required,
+      label = props.label,
+      labelW = props.labelW,
+      formW = props.formW;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    className: "col-md-" + (labelW || 2) + " col-form-label"
+  }, label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-" + (formW || 4)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+    style: {
+      width: '100%'
+    },
+    className: "form-control",
+    name: name,
+    onChange: handleChange,
+    value: value || '',
+    placeholder: placeholder,
+    required: required
+  })));
+}
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/html/Template.js":
+/*!**************************************************!*\
+  !*** ./resources/js/components/html/Template.js ***!
+  \**************************************************/
+/*! exports provided: PageTitle, Alert, Loading, DefaultImage, NotifMessage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PageTitle", function() { return PageTitle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Alert", function() { return Alert; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Loading", function() { return Loading; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DefaultImage", function() { return DefaultImage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotifMessage", function() { return NotifMessage; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function PageTitle(props) {
+  var _props$title = props.title,
+      title = _props$title === void 0 ? 'Judul Halaman' : _props$title,
+      _props$navs = props.navs,
+      navs = _props$navs === void 0 ? [] : _props$navs;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row mt-2 mb-0"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-12"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+    className: "float-left"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, title)), navs.map(function (n, key) {
+    if (n.show) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      key: key,
+      value: n.action,
+      onClick: n.clickHandle,
+      className: "btn ".concat(n.className ? n.className : 'btn-primary', " float-right ml-1")
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "fas ".concat(n.icon ? n.icon : 'fa-plus')
+    }), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, n.text || ''));
+  })));
+}
+
+function Alert(props) {
+  var message = props.message,
+      type = props.type,
+      clickHandle = props.clickHandle,
+      _props$html = props.html,
+      html = _props$html === void 0 ? false : _props$html;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "alert alert-".concat(type ? type : 'info'),
+    style: {
+      overflow: 'hidden'
+    },
+    role: "alert"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "float-left"
+  }, html ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    dangerouslySetInnerHTML: {
+      __html: message
+    }
+  }) : message), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-xs float-right",
+    onClick: function onClick() {
+      return clickHandle();
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-times"
+  })));
+}
+
+function Loading(props) {
+  return props.loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "col-12 text-center"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-spinner fa-spin"
+  }), " ", props.text ? props.text : 'Loading...') : '';
+}
+
+function DefaultImage(props) {
+  var _props$text = props.text,
+      text = _props$text === void 0 ? "" : _props$text,
+      w = props.w,
+      h = props.h;
+  var r = Math.floor(Math.random() * 255);
+  var g = Math.floor(Math.random() * 255);
+  var b = Math.floor(Math.random() * 255);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    style: {
+      width: w ? w : '100%',
+      height: h ? h : 150,
+      backgroundColor: "rgb(".concat(r, ", ").concat(g, ", ").concat(b, ")"),
+      color: 'white',
+      textShadow: "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
+      textAlign: 'middle',
+      fontSize: 60,
+      paddingTop: 30,
+      textTransform: 'uppercase'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, text.substring(0, 1), " ", text.substring(text.length - 1, text.length)));
+}
+
+function NotifMessage(props) {
+  var text = props.text,
+      _props$success = props.success,
+      success = _props$success === void 0 ? true : _props$success;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas ".concat(!success ? 'fa-exclamation text-danger' : 'fa-check text-success')
+  }), " ", text);
+}
+
+function ModalWarpper(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal",
+    style: {
+      display: 'block',
+      overflow: 'auto'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-dialog modal-lg",
+    role: "document"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-content"
+  }, props.children)));
+}
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/kategori/Kategori.js":
+/*!******************************************************!*\
+  !*** ./resources/js/components/kategori/Kategori.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils_Token__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/Token */ "./resources/js/utils/Token.js");
+/* harmony import */ var _html_Template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../html/Template */ "./resources/js/components/html/Template.js");
+/* harmony import */ var react_hot_loader_root__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-hot-loader/root */ "./node_modules/react-hot-loader/root.js");
+/* harmony import */ var react_hot_loader_root__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_hot_loader_root__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _KategoriForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./KategoriForm */ "./resources/js/components/kategori/KategoriForm.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+
+
+var Kategori = /*#__PURE__*/function (_React$Component) {
+  _inherits(Kategori, _React$Component);
+
+  var _super = _createSuper(Kategori);
+
+  function Kategori(props) {
+    var _this;
+
+    _classCallCheck(this, Kategori);
+
+    _this = _super.call(this, props);
+
+    _defineProperty(_assertThisInitialized(_this), "loadData", function () {
+      if (!_utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) {
+        _this.props.logOut('mapel', true);
+
+        return;
+      }
+
+      _this.setState({
+        fetch: true
+      });
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/kategori-admin?', {
+        headers: {
+          Authorization: 'Bearer ' + _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()
+        }
+      }).then(function (res) {
+        _this.setState({
+          kategoris: res.data.data,
+          fetch: false
+        });
+      })["catch"](function (err) {
+        console.log(err);
+
+        if (err.response.status === 401) {
+          //this.setState({ error: 'mohon login ulang', fetch: false })
+          _this.props.logOut('kategori', true);
+        } else {
+          _this.setState({
+            error: 'server error',
+            fetch: false
+          });
+        }
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "setId", function (e) {
+      _this.setState({
+        id: e ? e.target.value : ''
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "remAlert", function () {
+      _this.setState({
+        message: ''
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "hapusData", function (id, nama, count) {
+      if (!confirm('hapus kategori: ' + nama + "?") || count > 0) return;
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]('/api/kategori-admin/' + id, {
+        headers: {
+          Authorization: 'Bearer ' + _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()
+        }
+      }).then(function () {
+        alert('sukses hapus: ' + nama);
+
+        _this.loadData();
+      })["catch"](function () {
+        alert('gagal hapus: ' + nama);
+      });
+    });
+
+    _this.state = {
+      action: 'table',
+      kategoris: [],
+      pageData: {
+        pageCount: 0
+      },
+      page: 1,
+      fetch: false,
+      error: '',
+      message: '',
+      id: ''
+    };
+    _this.toggle = _this.toggle.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Kategori, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "toggle",
+    value: function toggle() {
+      var _this2 = this;
+
+      var action = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'table';
+      var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+      var msg = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+      this.setState({
+        action: action,
+        mapels: [],
+        id: id,
+        message: msg
+      }, function () {
+        if (action = 'table') _this2.loadData();
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      //console.log(this.state.kategoris)
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_Template__WEBPACK_IMPORTED_MODULE_3__["PageTitle"], {
+        title: "Kategori Mata Pelajaran",
+        navs: [{
+          show: this.state.action === 'table',
+          clickHandle: function clickHandle() {
+            return _this3.toggle('add');
+          }
+        }, {
+          show: this.state.action !== 'table',
+          clickHandle: function clickHandle() {
+            return _this3.toggle('table');
+          },
+          icon: "fa-arrow-left"
+        }]
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", {
+        className: "mt-1"
+      }), this.state.message !== '' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_Template__WEBPACK_IMPORTED_MODULE_3__["Alert"], {
+        message: this.state.message,
+        clickHandle: this.remAlert
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, this.state.error === '' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12"
+      }, function () {
+        switch (_this3.state.action) {
+          case "table":
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ol", {
+              className: "list-group"
+            }, _this3.state.kategoris.map(function (kategori, i) {
+              return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+                className: "list-group-item p-1",
+                key: i
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, i + 1, "."), " ", kategori.nama, " (", kategori.mapel_count, ")", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+                className: "float-right"
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+                onClick: function onClick() {
+                  return _this3.toggle('update', kategori.id);
+                },
+                className: "btn btn-xs btn-warning mr-1"
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+                className: "fas fa-edit"
+              })), kategori.mapel_count == 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+                onClick: function onClick() {
+                  return _this3.hapusData(kategori.id, kategori.nama, kategori.mapel_count);
+                },
+                className: "btn btn-xs btn-danger"
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+                className: "fas fa-times"
+              }))));
+            })));
+
+          case "add":
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_KategoriForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
+              tipe: 'add',
+              toggle: _this3.toggle
+            });
+
+          case "update":
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_KategoriForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
+              tipe: 'update',
+              id: _this3.state.id,
+              toggle: _this3.toggle
+            });
+
+          default:
+            return '';
+        }
+      }()) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "text-danger"
+      }, this.state.error))));
+    }
+  }]);
+
+  return Kategori;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_hot_loader_root__WEBPACK_IMPORTED_MODULE_4__["hot"])(Kategori));
+
+/***/ }),
+
+/***/ "./resources/js/components/kategori/KategoriForm.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/kategori/KategoriForm.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils_Token__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/Token */ "./resources/js/utils/Token.js");
+/* harmony import */ var _utils_useForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/useForm */ "./resources/js/utils/useForm.js");
+/* harmony import */ var _html_BasicForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../html/BasicForm */ "./resources/js/components/html/BasicForm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+var KategoriForm = function KategoriForm(props) {
+  var tipe = props.tipe,
+      id = props.id,
+      toggle = props.toggle;
+  var fields = {
+    id: tipe === 'update' ? id : 0
+  };
+
+  var _useForm = Object(_utils_useForm__WEBPACK_IMPORTED_MODULE_3__["default"])(submit, fields),
+      values = _useForm.values,
+      setValues = _useForm.setValues,
+      getErrors = _useForm.getErrors,
+      handleChange = _useForm.handleChange,
+      handleSubmit = _useForm.handleSubmit;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      loading = _useState2[0],
+      setLoading = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      success = _useState4[0],
+      setSuccess = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState6 = _slicedToArray(_useState5, 2),
+      errors = _useState6[0],
+      setErrors = _useState6[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (tipe === 'update') {
+      if (!_utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) {
+        setErrors(['mohon login ulang']);
+        return;
+      }
+
+      setLoading(true);
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/kategori-admin/' + id, {
+        headers: {
+          Authorization: 'Bearer ' + _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()
+        }
+      }).then(function (res) {
+        var data = res.data.data;
+        setValues(function (values) {
+          return _objectSpread(_objectSpread({}, values), {}, {
+            nama: data.nama
+          });
+        });
+        setLoading(false);
+      })["catch"](function () {
+        return toggle('table', '');
+      });
+    }
+  }, []);
+
+  function submit() {
+    if (!_utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) {
+      setErrors(['mohon login ulang']);
+      return;
+    }
+
+    setLoading(true);
+    setSuccess(false);
+    var m = tipe === 'add' ? 'post' : 'put';
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a[m]('/api/kategori-admin/' + (id ? id : ''), _objectSpread({}, values), {
+      headers: {
+        Authorization: 'Bearer ' + _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()
+      }
+    }).then(function (res) {
+      setLoading(false);
+      setSuccess(true);
+      setErrors({});
+      if (tipe === 'add') setValues({});
+    })["catch"](function (err) {
+      if (err.response) {
+        if (err.response.request.status === 422) {
+          setErrors(getErrors(err.response.data.errors));
+        } else if (err.response.request.status === 401) {
+          setErrors(['mohon login ulang']);
+        } else {
+          setErrors(['server error']);
+        }
+      } else {
+        setErrors(['server error']);
+      }
+
+      setLoading(false);
+    });
+  }
+
+  function errorMessages(err) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, err.map(function (item, key) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        key: key
+      }, item);
+    }));
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row",
+    style: {
+      padding: '2%'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-12"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-12"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+    className: "float-left"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, tipe === 'add' ? 'Tambah' : 'Ubah', " Data Kategori")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row",
+    style: {
+      marginTop: '2%'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-8"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: handleSubmit,
+    id: "form"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_BasicForm__WEBPACK_IMPORTED_MODULE_4__["TextForm"], {
+    name: "nama",
+    label: "Nama",
+    placeholder: "Nama Kategori",
+    handleChange: handleChange,
+    value: values.nama
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-2"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-8"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "submit",
+    className: "btn btn-success",
+    disabled: loading
+  }, "SIMPAN ", loading && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fa fa-spinner fa-spin"
+  }), " "))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-4"
+  }, errors.constructor === Array && errors.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "bg-warning",
+    style: {
+      padding: '5%',
+      margin: '5%'
+    }
+  }, errorMessages(errors)), success && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "bg-success",
+    style: {
+      padding: '5%',
+      margin: '5%'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "lead"
+  }, "Sukses!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "data berhasil disimpan"))))));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (KategoriForm);
+
+/***/ }),
+
+/***/ "./resources/js/utils/useForm.js":
+/*!***************************************!*\
+  !*** ./resources/js/utils/useForm.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+var useForm = function useForm(callback) {
+  var fields = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(fields),
+      _useState2 = _slicedToArray(_useState, 2),
+      values = _useState2[0],
+      setValues = _useState2[1];
+
+  var handleSubmit = function handleSubmit(event) {
+    if (event) event.preventDefault();
+    callback();
+  };
+
+  var handleChange = function handleChange(event) {
+    event.persist();
+    setValues(function (values) {
+      return _objectSpread(_objectSpread({}, values), {}, _defineProperty({}, event.target.name, event.target.value));
+    });
+  };
+
+  function getErrors() {
+    var msg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    var errMsg = [];
+    errMsg = Object.keys(msg).map(function (key) {
+      return msg[key].map(function (item) {
+        return item;
+      });
+    });
+    return errMsg;
+  }
+
+  return {
+    handleChange: handleChange,
+    handleSubmit: handleSubmit,
+    setValues: setValues,
+    values: values,
+    getErrors: getErrors
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (useForm);
+
+/***/ })
+
+}]);

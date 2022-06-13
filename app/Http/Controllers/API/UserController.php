@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Image;
 use JWTAuth;
 
+use Illuminate\Support\Facades\Log;
+
 class UserController extends Controller
 {
     private $user;

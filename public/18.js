@@ -1,1 +1,723 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[18],{27:function(e,t,a){"use strict";a.d(t,"e",function(){return m}),a.d(t,"a",function(){return u}),a.d(t,"b",function(){return f}),a.d(t,"d",function(){return d}),a.d(t,"c",function(){return p});var n=a(0),r=a.n(n),l=a(7),c=a(38),i=a.n(c);function o(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){var a=[],n=!0,r=!1,l=void 0;try{for(var c,i=e[Symbol.iterator]();!(n=(c=i.next()).done)&&(a.push(c.value),!t||a.length!==t);n=!0);}catch(e){r=!0,l=e}finally{try{n||null==i.return||i.return()}finally{if(r)throw l}}return a}(e,t)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance")}()}function s(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}var m=function(e){var t=e.pertanyaan,a=e.jawaban,n=(e.setJawaban,e.soalId),l=e.kunci,c=void 0===l?{a:[]}:l,i=a||[],o=function(e){};return r.a.createElement(r.a.Fragment,null,r.a.createElement("div",null,t.q.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e,r.a.createElement("br",null))})),r.a.createElement("div",{className:"row"},r.a.createElement("div",{className:"col-md-12"},r.a.createElement("ul",{className:"list-group"},t.alist.map(function(e,a){return r.a.createElement(r.a.Fragment,{key:a},r.a.createElement("li",{style:{listStyle:"none"}},r.a.createElement("div",{className:"form-inline float-left mb-1"+(-1!==c.a.indexOf(a+1)&&" bg-success"),style:{width:"100%"}},r.a.createElement("label",{style:{width:"1.3em"}},r.a.createElement("b",null,String.fromCharCode(65+a),". ")),1==t.type?r.a.createElement("input",{name:"rd".concat(n),type:"radio",value:a,checked:-1!==i.indexOf(a+1),onChange:o,className:"custom-rd mr-2"}):r.a.createElement("input",{name:"cb".concat(n),type:"checkbox",value:a,checked:-1!==i.indexOf(a+1),onChange:o,className:"custom-cb mr-2"}),r.a.createElement("span",{className:"mr-2"},e))))})))))},u=function(e){var t=e.pertanyaan,a=e.jawaban,n=e.setJawaban,c=e.soalId,i=e.kunci,o=void 0===i?null:i;return r.a.createElement(r.a.Fragment,null,r.a.createElement("div",null,t.q.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e,r.a.createElement("br",null))})),r.a.createElement(l.a,{labelW:"0",name:"kunci".concat(c),handleChange:function(e){return n(s({},c,e.target.value),!0)},value:a,options:[[1,"BENAR",o?"bg-success":""],[0,"SALAH",o?"":"bg-success"]]}))},f=function(e){var t=e.pertanyaan,a=e.jawaban,n=(e.setJawaban,e.soalId,e.kunci);return r.a.createElement(r.a.Fragment,null,r.a.createElement("div",null,t.q.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e,r.a.createElement("br",null))})),r.a.createElement("table",{className:"table table-sm"},r.a.createElement("tbody",null,r.a.createElement("tr",null,r.a.createElement("td",{width:"10%"},"Jawab: "),r.a.createElement("td",null,null!==a&&a.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e,r.a.createElement("br",null))}))))),r.a.createElement("table",{className:"bg-success text-white"},r.a.createElement("tbody",null,r.a.createElement("tr",null,r.a.createElement("td",null,"Kunci: "),r.a.createElement("td",null,null!==n&&n.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e,r.a.createElement("br",null))}))))))},d=function(e){var t=e.pertanyaan,a=e.jawaban,l=void 0===a?[]:a,c=(e.setJawaban,e.soalId,e.idkWhy,e.kunci),s=o(Object(n.useState)(l),2),m=(s[0],s[1],o(Object(n.useState)(c),2));m[0],m[1];return r.a.createElement(r.a.Fragment,null,r.a.createElement("div",null,t.q.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e,r.a.createElement("br",null))})),r.a.createElement("div",{className:"row"},r.a.createElement("div",{className:"col-5"},r.a.createElement("ul",{className:"list-group"},t.qlist.map(function(e,t){return r.a.createElement(r.a.Fragment,{key:t},r.a.createElement("li",{className:"list-group-item"},r.a.createElement("div",{className:"form"},r.a.createElement("label",{className:"m-0"},r.a.createElement("b",null,String.fromCharCode(65+t),"."))," ",r.a.createElement("span",{draggable:"true",onDragStart:function(e){},className:"float-right fas fa-question-circle listq-".concat(t)}),r.a.createElement("span",{className:""},e))))}))),r.a.createElement("div",{className:"col-2 m-0"},l.map(function(e,t){return r.a.createElement(i.a,{key:t,zIndex:9999,borderColor:"red",from:"listq-".concat(e.q),to:"lista-".concat(e.a)})}),c.map(function(e,t){return r.a.createElement(i.a,{key:t,from:"listq-".concat(e.q),to:"lista-".concat(e.a)})})),r.a.createElement("div",{className:"col-5"},r.a.createElement("ul",{className:"list-group"},t.alist.map(function(e,t){return r.a.createElement(r.a.Fragment,{key:"a"+t},r.a.createElement("li",{className:"list-group-item"},r.a.createElement("div",{className:"form",draggable:"true",onDragOver:function(e){e.preventDefault()},onDrop:function(e){e.preventDefault()}},r.a.createElement("span",{className:"fas fa-check-circle lista-".concat(t)})," "," ",r.a.createElement("label",{className:"m-0"},r.a.createElement("b",null,String.fromCharCode(65+t),". "))," ",r.a.createElement("span",null,e))))}))),r.a.createElement("div",{className:"col-12"},"Kunci : ",JSON.stringify(c)," ",r.a.createElement("br",null),"Jawaban : ",JSON.stringify(l))))},p=function(e){var t=e.pertanyaan,a=e.jawaban,n=e.setJawaban,l=e.soalId,c=e.kunci,i={border:"none",borderBottom:"1px solid black",padding:0},o=0;return console.log(c),r.a.createElement(r.a.Fragment,null,r.a.createElement("div",{className:"row"},r.a.createElement("div",{className:"col-12"},t.q.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e.split("[[]]").map(function(t,c){return r.a.createElement(r.a.Fragment,{key:c},t,c+1!=e.split("[[]]").length&&r.a.createElement("input",{name:o,style:i,size:"5",type:"text",value:a[o++],onChange:function(e){return n(s({},l,function(e){for(var t=1;t<arguments.length;t++){var a=null!=arguments[t]?arguments[t]:{},n=Object.keys(a);"function"==typeof Object.getOwnPropertySymbols&&(n=n.concat(Object.getOwnPropertySymbols(a).filter(function(e){return Object.getOwnPropertyDescriptor(a,e).enumerable}))),n.forEach(function(t){s(e,t,a[t])})}return e}({},a,s({},e.target.name.toString(),e.target.value))))}}))})," ",r.a.createElement("br",null))}))),r.a.createElement("div",{className:"row"},r.a.createElement("div",{className:"col-12"},r.a.createElement("hr",null),r.a.createElement("strong",null,"Kunci Jawaban")," ",r.a.createElement("br",null),c.map(function(e,t){return r.a.createElement("span",{key:t},e,c.length!==t+1&&", ")}))))}},444:function(e,t,a){"use strict";a.r(t);var n=a(0),r=a.n(n),l=a(4),c=a.n(l),i=a(1),o=a(5),s=a(38),m=a.n(s),u=a(27);function f(e){return function(e){if(Array.isArray(e)){for(var t=0,a=new Array(e.length);t<e.length;t++)a[t]=e[t];return a}}(e)||function(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}(e)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance")}()}function d(e){return(d="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function p(e,t){for(var a=0;a<t.length;a++){var n=t[a];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}function b(e){return(b=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function E(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function h(e,t){return(h=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}function g(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}var v=function(e){function t(e){var a,n,r;return function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,t),n=this,r=b(t).call(this,e),a=!r||"object"!==d(r)&&"function"!=typeof r?E(n):r,g(E(a),"updatePoints",function(e){a.setState({points:a.state.points.map(function(t){return t.id==e.target.name&&(t.updated=!0,t.point=parseFloat(e.target.value)>parseFloat(t.max_point)?t.max_point:e.target.value),t})})}),g(E(a),"getPoint",function(e){return a.state.points.filter(function(t){return t.id==e})[0].point}),g(E(a),"savePoints",function(e){e.preventDefault();var t=i.a.getToken();if(t){a.setState({loading:!0});var n={points:a.state.points.filter(function(e){return!0===e.updated})};c.a.put("api/koreksi/"+a.state.id,n,{headers:{Authorization:"Bearer "+t}}).then(function(e){alert("sukses"),a.setState({loading:!1})}).catch(function(e){alert("gagal"),console.log(e),a.setState({loading:!1})})}else a.props.logOut("mapel",!0)}),a.state={id:e.id,hasil:{},details:[],jawabans:[],points:[],loading:!1,idkWhy:!0},a}var a,n,l;return function(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&h(e,t)}(t,r.a.Component),a=t,(n=[{key:"componentDidMount",value:function(){var e=this;window.addEventListener("resize",function(){e.setState({idkWhy:!e.state.idkWhy})}),this.getDetail()}},{key:"getDetail",value:function(){var e=this,t=i.a.getToken();t?(this.setState({loading:!0}),c.a.get("api/detail-hasil/"+this.state.id,{headers:{Authorization:"Bearer "+t}}).then(function(t){var a=t.data.data.hasil;e.setState({hasil:a,details:a.details,points:a.details.map(function(e){return{id:e.id,max_point:e.max_point,point:e.point,updated:!1}}),loading:!1})}).catch(function(t){console.log(t),e.setState({loading:!1})})):this.props.logOut("mapel",!0)}},{key:"render",value:function(){var e=this,t=1;return r.a.createElement(r.a.Fragment,null,this.state.details.map(function(a){var n=a.soal,l=JSON.parse(n.pertanyaan),c=JSON.parse(n.jawaban);return r.a.createElement("div",{className:"card mb-2",key:a.id},r.a.createElement("div",{className:"card-body"},r.a.createElement("div",{className:"row"},r.a.createElement("div",{className:"col-12"},r.a.createElement("span",{className:"float-left"},r.a.createElement("b",null,t++," .")),r.a.createElement("span",{className:"float-left"},1==n.type&&r.a.createElement(u.e,{soalId:n.id,pertanyaan:l,jawaban:JSON.parse(a.jawaban),kunci:c,setJawaban:function(){return!1}}),2==n.type&&r.a.createElement(u.a,{soalId:n.id,pertanyaan:l,jawaban:JSON.parse(a.jawaban),kunci:c,setJawaban:function(){return!1}}),3==n.type&&r.a.createElement(y,{soalId:n.id,pertanyaan:l,jawaban:a.jawaban?JSON.parse(a.jawaban):[],kunci:c,setJawaban:function(){return!1},idkWhy:function(){e.setState({idkWhy:!e.state.idkWhy})}}),4==n.type&&r.a.createElement(u.c,{soalId:n.id,pertanyaan:l,jawaban:a.jawaban?JSON.parse(a.jawaban):[],kunci:c,setJawaban:function(){return!1}}),5==n.type&&r.a.createElement(u.b,{soalId:n.id,pertanyaan:l,jawaban:JSON.parse(a.jawaban),kunci:c,setJawaban:function(){return!1}})),r.a.createElement("span",{className:"float-right"},a.point==a.max_point?r.a.createElement("i",{className:"fa fa-check text-success fa-2x"}):0==a.point?r.a.createElement("i",{className:"fa fa-times text-danger fa-2x"}):null==a.point?r.a.createElement("i",{className:"fa fa-question text-warning fa-2x"}):r.a.createElement("i",{className:"fa fa-exclamation text-info fa-2x"})))),r.a.createElement("div",{className:"row"},r.a.createElement("div",{className:"col-12"},r.a.createElement("hr",null),r.a.createElement("small",{className:"text-primary"},"max point: ",a.max_point),r.a.createElement("div",{className:"form-inline float-right"},"POINT : ",r.a.createElement("input",{onChange:e.updatePoints,type:"text",name:a.id,value:e.getPoint(a.id),size:"3",className:"form-control form-control-sm ml-2",disabled:null!=a.point}))))))}),r.a.createElement("div",{className:""},r.a.createElement("div",{className:"col-12 text-right"},r.a.createElement("button",{onClick:this.savePoints,className:"btn btn-success",disabled:this.state.loading},r.a.createElement("i",{className:"fas fa-save"})," SIMPAN"))))}}])&&p(a.prototype,n),l&&p(a,l),t}(),y=function(e){var t=e.pertanyaan,a=e.jawaban,n=void 0===a?[]:a,l=e.setJawaban,c=e.soalId,i=e.idkWhy;return r.a.createElement(r.a.Fragment,null,r.a.createElement("div",null,t.q.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e,r.a.createElement("br",null))}),r.a.createElement("button",{onClick:i,className:"btn btn-xs btn-success mb-1"},r.a.createElement("i",{className:"fas fa-retweet"}))),r.a.createElement("div",{className:"row"},r.a.createElement("div",{className:"col-5"},r.a.createElement("ul",{className:"list-group"},t.qlist.map(function(e,t){return r.a.createElement(r.a.Fragment,{key:t},r.a.createElement("li",{className:"list-group-item"},r.a.createElement("div",{className:"form"},r.a.createElement("label",{className:"m-0"},r.a.createElement("b",null,String.fromCharCode(65+t),"."))," ",r.a.createElement("span",{draggable:"true",onDragStart:(a={id:t},function(e){var t=n.filter(function(e){return e.q!==a.id});l(g({},c,t)),e.dataTransfer.setData("dragContent",a.id)}),className:"float-right fas fa-question-circle listq-".concat(t)}),r.a.createElement("span",{className:""},e))));var a}))),r.a.createElement("div",{className:"col-2 m-0"},n.map(function(e,t){return r.a.createElement(m.a,{key:t,from:"listq-".concat(e.q),to:"lista-".concat(e.a)})})),r.a.createElement("div",{className:"col-5"},r.a.createElement("ul",{className:"list-group"},t.alist.map(function(e,t){return r.a.createElement(r.a.Fragment,{key:"a"+t},r.a.createElement("li",{className:"list-group-item"},r.a.createElement("div",{className:"form",draggable:"true",onDragOver:function(e){e.preventDefault()},onDrop:(a={id:t},function(e){if(e.preventDefault(),!(n.filter(function(e){return e.a===a.id}).length>0)){var t=JSON.parse(e.dataTransfer.getData("dragContent")),r=a.id;return l(g({},c,[].concat(f(n),[{q:t,a:r}]))),!1}})},r.a.createElement("span",{className:"fas fa-check-circle lista-".concat(t)})," "," ",r.a.createElement("label",{className:"m-0"},r.a.createElement("b",null,String.fromCharCode(65+t),". "))," ",r.a.createElement("span",null,e))));var a}))),r.a.createElement("div",{className:"col-12"},JSON.stringify(n))))},N=v;function w(e){return(w="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function k(e){return function(e){if(Array.isArray(e)){for(var t=0,a=new Array(e.length);t<e.length;t++)a[t]=e[t];return a}}(e)||function(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}(e)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance")}()}function x(e,t){for(var a=0;a<t.length;a++){var n=t[a];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}function S(e){return(S=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function O(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function j(e,t){return(j=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}function C(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}var q=function(e){function t(e){var a,n,r;return function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,t),n=this,r=S(t).call(this,e),a=!r||"object"!==w(r)&&"function"!=typeof r?O(n):r,C(O(a),"detail",function(){var e=arguments.length>0&&void 0!==arguments[0]&&arguments[0];a.setState({hasilId:e,detail:!!e},function(){0==e&&(console.log("ok"),a.getKuis())})}),C(O(a),"publish",function(){if(confirm("terbitkan hasil?")){var e=i.a.getToken();e?(a.setState({loading:!0}),c.a.put("api/publish-hasil/"+a.state.id,{},{headers:{Authorization:"Bearer "+e}}).then(function(e){alert("sukses"),a.getKuis(),a.setState({loading:!1})}).catch(function(e){e.response.status&&"422"==e.response.status&&alert(e.response.data),alert("gagal"),console.log(e),a.setState({loading:!1})})):a.props.logOut("mapel",!0)}}),a.state={id:e.match.params.dataId,kuis:{},mapel:{},pesertas:[],settings:{},soals:[],jawabans:{},loading:!1,detail:!1,hasil_id:""},a.nilai=[],a}var a,n,l;return function(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&j(e,t)}(t,r.a.Component),a=t,(n=[{key:"componentDidMount",value:function(){this.getKuis()}},{key:"getKuis",value:function(){var e=this,t=i.a.getToken();t?(this.setState({loading:!0}),c.a.get("api/detail-kuis/"+this.state.id,{headers:{Authorization:"Bearer "+t}}).then(function(t){var a=t.data.data;e.setState({kuis:a.kuis.kuis,mapel:a.kuis.mapel,pesertas:a.peserta})}).catch(function(e){console.log(e)})):this.props.logOut("mapel",!0)}},{key:"render",value:function(){var e=this,t=1;return r.a.createElement(r.a.Fragment,null,r.a.createElement("div",{className:"row"},r.a.createElement("div",{className:"col-12"},r.a.createElement(o.e,{title:this.state.kuis.judul,navs:[{show:this.state.detail,clickHandle:function(){return e.detail(!1)},icon:"fa-arrow-left"}]}),r.a.createElement("p",null,this.state.mapel.nama))),r.a.createElement("div",{className:"row"},r.a.createElement("div",{className:"col-12"},this.state.detail?r.a.createElement(N,{id:this.state.hasilId,back:this.detail}):r.a.createElement(r.a.Fragment,null,r.a.createElement("table",{className:"table table-bordered table-sm"},r.a.createElement("thead",null,r.a.createElement("tr",null,r.a.createElement("th",{className:"text-center",width:"5%"},"ID"),r.a.createElement("th",{className:"text-center",width:""},"NAMA"),r.a.createElement("th",{className:"text-center",width:"20%"},"NILAI"))),r.a.createElement("tbody",null,this.state.pesertas.map(function(a){return e.nilai.push(parseFloat(a.points/a.max_points*100).toFixed(2)),r.a.createElement("tr",{style:{lineHeight:1},key:a.id,className:"".concat(a.belum_dikoreksi>0?"bg-warning":a.published?"bg-success":"bg-info")},r.a.createElement("td",{className:"text-center"},t++),r.a.createElement("td",null,r.a.createElement("p",{className:"m-0"},r.a.createElement("b",null,a.user.name)),r.a.createElement("small",null,a.user.email)),r.a.createElement("td",{className:"text-center"},r.a.createElement("p",{className:"m-0 text-right"},parseFloat(a.points/a.max_points*100).toFixed(2)),r.a.createElement("button",{className:"btn btn-xs ",onClick:function(){return e.detail(a.id)}},a.belum_dikoreksi," Belum dikoreksi")))}))),r.a.createElement("div",null,r.a.createElement("table",null,r.a.createElement("tbody",null,r.a.createElement("tr",null,r.a.createElement("td",{className:"pr-5"},"Tertinggi"),r.a.createElement("td",null,this.nilai.length>0?Math.max.apply(Math,k(this.nilai)):"-")),r.a.createElement("tr",null,r.a.createElement("td",null,"Terendah"),r.a.createElement("td",null,this.nilai.length>0?Math.min.apply(Math,k(this.nilai)):"-")),r.a.createElement("tr",null,r.a.createElement("td",null,"Rata - Rata"),r.a.createElement("td",null,this.nilai.length>0?this.nilai.reduce(function(e,t){return parseFloat(e)+parseFloat(t)},0)/this.nilai.length:"-"))))),r.a.createElement("div",null,r.a.createElement("button",{onClick:this.publish,className:"btn btn-success mt-2"}," ",r.a.createElement("i",{className:"fas fa-check"})," Terbitkan"))))))}}])&&x(a.prototype,n),l&&x(a,l),t}();t.default=q},5:function(e,t,a){"use strict";a.d(t,"e",function(){return l}),a.d(t,"a",function(){return c}),a.d(t,"c",function(){return i}),a.d(t,"b",function(){return o}),a.d(t,"d",function(){return s});var n=a(0),r=a.n(n);function l(e){var t=e.title,a=void 0===t?"Judul Halaman":t,n=e.navs,l=void 0===n?[]:n;return r.a.createElement("div",{className:"row mt-2 mb-0"},r.a.createElement("div",{className:"col-12"},r.a.createElement("h2",{className:"float-left"},r.a.createElement("b",null,a)),l.map(function(e,t){if(e.show)return r.a.createElement("button",{key:t,value:e.action,onClick:e.clickHandle,className:"btn ".concat(e.className?e.className:"btn-primary"," float-right ml-1")},r.a.createElement("span",{className:"fas ".concat(e.icon?e.icon:"fa-plus")})," ",r.a.createElement("span",null,e.text||""))})))}function c(e){var t=e.message,a=e.type,n=e.clickHandle,l=e.html,c=void 0!==l&&l;return r.a.createElement("div",{className:"alert alert-".concat(a||"info"),style:{overflow:"hidden"},role:"alert"},r.a.createElement("span",{className:"float-left"},c?r.a.createElement("span",{dangerouslySetInnerHTML:{__html:t}}):t),r.a.createElement("button",{className:"btn btn-xs float-right",onClick:function(){return n()}},r.a.createElement("i",{className:"fas fa-times"})))}function i(e){return e.loading?r.a.createElement("span",{className:"col-12 text-center"},r.a.createElement("i",{className:"fas fa-spinner fa-spin"})," ",e.text?e.text:"Loading..."):""}function o(e){var t=e.text,a=void 0===t?"":t,n=e.w,l=e.h,c=Math.floor(255*Math.random()),i=Math.floor(255*Math.random()),o=Math.floor(255*Math.random());return r.a.createElement("div",{style:{width:n||"100%",height:l||150,backgroundColor:"rgb(".concat(c,", ").concat(i,", ").concat(o,")"),color:"white",textShadow:"-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",textAlign:"middle",fontSize:60,paddingTop:30,textTransform:"uppercase"}},r.a.createElement("b",null,a.substring(0,1)," ",a.substring(a.length-1,a.length)))}function s(e){var t=e.text,a=e.success,n=void 0===a||a;return r.a.createElement("span",null,r.a.createElement("i",{className:"fas ".concat(n?"fa-check text-success":"fa-exclamation text-danger")})," ",t)}},7:function(e,t,a){"use strict";a.d(t,"d",function(){return l}),a.d(t,"b",function(){return c}),a.d(t,"a",function(){return i}),a.d(t,"c",function(){return o});var n=a(0),r=a.n(n);function l(e){var t=e.type,a=e.name,n=e.placeholder,l=e.handleChange,c=e.value,i=e.required,o=e.label,s=e.labelW,m=e.formW,u=e.formtext,f=e.form;return r.a.createElement("div",{className:"form-group row"},r.a.createElement("label",{className:"col-md-"+(s||2)+" col-form-label"},o),r.a.createElement("div",{className:"col-md-"+(m||6)},r.a.createElement("input",{form:f,type:t||"text",className:"form-control",name:a,placeholder:n,onChange:l,value:c||"",required:i}),r.a.createElement("small",{className:"form-text text-muted"},u)))}function c(e){var t=e.name,a=e.placeholder,n=e.options,l=e.handleChange,c=e.value,i=e.required,o=e.label,s=e.labelW,m=e.formW;return r.a.createElement("div",{className:"form-group row"},r.a.createElement("label",{className:"col-md-"+(s||2)+" col-form-label"},o),r.a.createElement("div",{className:"col-md-"+(m||4)},r.a.createElement("select",{className:"custom-select",name:t,onChange:l,value:c||"",required:i},a&&r.a.createElement("option",{value:""},a),n.map(function(e){return r.a.createElement("option",{key:e.id,value:e.id},e.nama)}))))}function i(e){var t=e.name,a=e.options,n=e.handleChange,l=e.value,c=e.required,i=e.label,o=e.labelW,s=e.formW,m=e.form,u=e.labelClass,f=void 0===u?"":u;return r.a.createElement("div",{className:"form-group row"},r.a.createElement("label",{className:"col-md-"+(o||2)+" col-form-label"},i),r.a.createElement("div",{className:"col-md-"+(s||4),style:{marginTop:"0.4rem"}},a.map(function(e){var a=e[2]?e[2]:f;return r.a.createElement("div",{className:"form-check form-check-inline",key:e[0]},r.a.createElement("label",{className:"form-check-label ".concat(a)},r.a.createElement("input",{form:m,className:"form-check-input",type:"radio",name:t,onChange:n,value:e[0],checked:l==e[0],required:c})," ",e[1]))})))}function o(e){var t=e.name,a=e.handleChange,n=e.value,l=e.placeholder,c=e.required,i=e.label,o=e.labelW,s=e.formW;return r.a.createElement("div",{className:"form-group row"},r.a.createElement("label",{className:"col-md-"+(o||2)+" col-form-label"},i),r.a.createElement("div",{className:"col-md-"+(s||4)},r.a.createElement("textarea",{style:{width:"100%"},className:"form-control",name:t,onChange:a,value:n||"",placeholder:l,required:c})))}}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[18],{
+
+/***/ "./resources/js/components/Landing.js":
+/*!********************************************!*\
+  !*** ./resources/js/components/Landing.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _utils_Token__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/Token */ "./resources/js/utils/Token.js");
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+/* harmony import */ var _web_TopNav__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./web/TopNav */ "./resources/js/components/web/TopNav.js");
+/* harmony import */ var _web_Login__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./web/Login */ "./resources/js/components/web/Login.js");
+/* harmony import */ var _web_RegisterForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./web/RegisterForm */ "./resources/js/components/web/RegisterForm.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+
+
+
+
+var Landing = /*#__PURE__*/function (_Component) {
+  _inherits(Landing, _Component);
+
+  var _super = _createSuper(Landing);
+
+  function Landing(props) {
+    var _this;
+
+    _classCallCheck(this, Landing);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      form: props.form
+    };
+    _this.formChange = _this.formChange.bind(_assertThisInitialized(_this));
+    _this.setLoggedIn = _this.setLoggedIn.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Landing, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      if (_utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getRole() !== 0) {
+        this.props.updateRole(_utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getRole(), true, '', _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getUser());
+        this.props.history.push('/dashboard');
+      }
+    }
+  }, {
+    key: "setLoggedIn",
+    value: function setLoggedIn(data) {
+      _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].setToken(data.access_token);
+      _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].setUser(data.user);
+      this.props.updateRole(_utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getRole(), true, this.props.lastPath, data.user);
+
+      if (this.props.lastPath) {
+        this.props.history.push(this.props.lastPath);
+      } else {
+        this.props.history.push('/dashboard');
+      }
+    }
+  }, {
+    key: "formChange",
+    value: function formChange(form) {
+      this.setState({
+        form: form
+      });
+    }
+  }, {
+    key: "home",
+    value: function home(form) {
+      var _this2 = this;
+
+      if (form === 'login') return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_web_Login__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        formChange: this.formChange,
+        setLoggedIn: this.setLoggedIn
+      });else if (form === 'register') return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_web_RegisterForm__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        formChange: this.formChange,
+        setLoggedIn: this.setLoggedIn
+      });
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "d-flex justify-content-center h-100"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "landing-text"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "SKRIPSI SI"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Pengembangan E-Learning Menggunakan ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "laravel-color"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Laravel")), " dan ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "react-color"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "React"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
+        onClick: function onClick() {
+          return _this2.formChange('login');
+        },
+        className: "btn btn-lg btn-landing",
+        disabled: this.props.fetch
+      }, "Log In "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "lead"
+      }, "Belum punya akun? ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this2.formChange('register');
+        },
+        className: "btn-register-link",
+        disabled: this.props.fetch
+      }, "Register"))));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "app"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_web_TopNav__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "home"
+      }, this.home(this.state.form)));
+    }
+  }]);
+
+  return Landing;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Landing));
+
+/***/ }),
+
+/***/ "./resources/js/components/html/LoginForm.js":
+/*!***************************************************!*\
+  !*** ./resources/js/components/html/LoginForm.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LoginForm; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+function LoginForm(props) {
+  var submitForm = props.submitForm,
+      handleChange = props.handleChange,
+      email = props.email,
+      password = props.password,
+      disabled = props.disabled;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: submitForm
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "input-group form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "input-group-prepend"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "input-group-text"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-user"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "email",
+    placeholder: "Email",
+    name: "email",
+    value: email || '',
+    onChange: handleChange,
+    className: "form-control",
+    disabled: disabled
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "input-group form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "input-group-prepend"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "input-group-text"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-key"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "password",
+    placeholder: "Password",
+    name: "password",
+    value: password || '',
+    onChange: handleChange,
+    className: "form-control",
+    disabled: disabled
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn float-right login_btn",
+    disabled: disabled
+  }, disabled && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "fa fa-spinner fa-pulse"
+  }), " Log In")));
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/web/Login.js":
+/*!**********************************************!*\
+  !*** ./resources/js/components/web/Login.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Login; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _html_LoginForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../html/LoginForm */ "./resources/js/components/html/LoginForm.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+var Login = /*#__PURE__*/function (_React$Component) {
+  _inherits(Login, _React$Component);
+
+  var _super = _createSuper(Login);
+
+  function Login(props) {
+    var _this;
+
+    _classCallCheck(this, Login);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      email: '',
+      password: '',
+      isLoading: false,
+      err: ''
+    };
+    _this.submitForm = _this.submitForm.bind(_assertThisInitialized(_this));
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Login, [{
+    key: "handleChange",
+    value: function handleChange(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
+    key: "submitForm",
+    value: function submitForm(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+
+      if (this.state.email === '' || this.state.password === '') {
+        this.setState({
+          err: 'username dan password harus diisi!'
+        });
+        return;
+      }
+
+      this.setState({
+        isLoading: true
+      });
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/user/login', this.state).then(function (response) {
+        if (!response.data.err) {
+          _this2.props.setLoggedIn(response.data);
+        } else {
+          _this2.setState({
+            err: 'email / password salah',
+            isLoading: false
+          });
+        }
+      })["catch"](function (err) {
+        console.log(err);
+
+        _this2.setState({
+          err: 'server error',
+          isLoading: false
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "d-flex justify-content-center h-100"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card card-login"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-header card-login-header"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+        className: "float-left"
+      }, "Log In "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this3.props.formChange('');
+        },
+        className: "card-close-btn float-right"
+      }, 'x')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-body"
+      }, this.state.err !== '' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "form-error"
+      }, this.state.err), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_LoginForm__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        submitForm: this.submitForm,
+        handleChange: this.handleChange,
+        email: this.state.email,
+        password: this.state.password,
+        disabled: this.state.isLoading
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-footer card-login-footer"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "d-flex justify-content-center links"
+      }, "Belum punya akun?", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#",
+        onClick: function onClick() {
+          return _this3.props.formChange('register');
+        }
+      }, "Register")))));
+    }
+  }]);
+
+  return Login;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/web/RegisterForm.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/web/RegisterForm.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RegisterForm; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+var RegisterForm = /*#__PURE__*/function (_React$Component) {
+  _inherits(RegisterForm, _React$Component);
+
+  var _super = _createSuper(RegisterForm);
+
+  function RegisterForm(props) {
+    var _this;
+
+    _classCallCheck(this, RegisterForm);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      name: '',
+      email: '',
+      password: '',
+      password2: '',
+      type: 'siswa',
+      error: ''
+    };
+    _this.submitForm = _this.submitForm.bind(_assertThisInitialized(_this));
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(RegisterForm, [{
+    key: "handleChange",
+    value: function handleChange(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
+    key: "submitForm",
+    value: function submitForm(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      this.setState({
+        error: ''
+      }); //cek
+
+      if (this.state.name == '' || this.state.email == '' || this.state.password == '' || this.state.type == '') {
+        this.setState({
+          error: 'mohon lengkapi data!'
+        });
+        return;
+      }
+
+      if (this.state.password != this.state.password2) {
+        this.setState({
+          error: 'konfirmasi password salah!'
+        });
+        console.log(this.state.password, this.state.password2);
+        return;
+      }
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/user/register', this.state).then(function (response) {
+        _this2.setState({
+          name: '',
+          email: '',
+          password: '',
+          password2: '',
+          type: 'siswa',
+          error: response.data
+        });
+      })["catch"](function (err) {
+        console.log(err);
+
+        if (err.response.status === 422) {
+          if (err.response.data.errors.email) _this2.setState({
+            error: 'email salah/sudah digunakan'
+          });else _this2.setState({
+            error: 'err'
+          });
+        } else {
+          _this2.setState({
+            error: 'err'
+          });
+        }
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "d-flex justify-content-center h-100"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card card-login"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-header card-login-header"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+        className: "float-left"
+      }, "Register"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this3.props.formChange('');
+        },
+        className: "card-close-btn float-right"
+      }, 'x')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-body"
+      }, this.state.error !== '' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "form-error"
+      }, this.state.error), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.submitForm
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group form-group"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-prepend"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "input-group-text"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-user"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        placeholder: "Nama Lengkap",
+        name: "name",
+        value: this.state.name,
+        onChange: this.handleChange,
+        className: "form-control"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group form-group"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-prepend"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "input-group-text"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-envelope"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "email",
+        placeholder: "Email",
+        name: "email",
+        value: this.state.email,
+        onChange: this.handleChange,
+        className: "form-control"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group form-group"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-prepend"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "input-group-text"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-key"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "password",
+        placeholder: "Password",
+        name: "password",
+        value: this.state.password,
+        onChange: this.handleChange,
+        className: "form-control"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group form-group"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-prepend"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "input-group-text"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-key"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "password",
+        placeholder: "Ulangi Password",
+        name: "password2",
+        value: this.state.password2,
+        onChange: this.handleChange,
+        className: "form-control"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group form-group"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-group-prepend"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "input-group-text"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-book"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-control"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "radio",
+        name: "type",
+        value: "siswa",
+        checked: this.state.type === 'siswa',
+        onChange: this.handleChange
+      }), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", {
+        className: "mr-4"
+      }, "Siswa"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "radio",
+        name: "type",
+        value: "pengajar",
+        checked: this.state.type === 'pengajar',
+        onChange: this.handleChange
+      }), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Pengajar"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn float-right login_btn"
+      }, "Register")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-footer card-login-footer"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "d-flex justify-content-center links"
+      }, "Sudah punya akun?", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#",
+        onClick: function onClick() {
+          return _this3.props.formChange('login');
+        }
+      }, "Log In")))));
+    }
+  }]);
+
+  return RegisterForm;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/web/TopNav.js":
+/*!***********************************************!*\
+  !*** ./resources/js/components/web/TopNav.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+var TopNav = /*#__PURE__*/function (_React$Component) {
+  _inherits(TopNav, _React$Component);
+
+  var _super = _createSuper(TopNav);
+
+  function TopNav(props) {
+    var _this;
+
+    _classCallCheck(this, TopNav);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      isOpen: false
+    };
+    _this.toggle = _this.toggle.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(TopNav, [{
+    key: "toggle",
+    value: function toggle() {
+      this.setState({
+        isOpen: !this.state.isOpen
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Navbar"], {
+        fixed: "top",
+        dark: true,
+        expand: "md"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["NavbarBrand"], {
+        href: "/"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: "images/logo2.png"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["NavbarToggler"], {
+        onClick: this.toggle
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "fas fa-bars"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Collapse"], {
+        isOpen: this.state.isOpen,
+        navbar: true
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Nav"], {
+        className: "ml-auto",
+        navbar: true
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["NavItem"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
+        href: "https://laravel.com",
+        target: "new",
+        className: "laravel-color"
+      }, "Laravel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["NavItem"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
+        href: "https://reactjs.org/",
+        target: "new",
+        className: "react-color"
+      }, "React"))))));
+    }
+  }]);
+
+  return TopNav;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (TopNav);
+
+/***/ })
+
+}]);

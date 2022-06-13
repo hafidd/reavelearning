@@ -1,1 +1,2994 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[14],{19:function(e,t,a){"use strict";var n=a(0),r=a.n(n);var l,s="INITED",i=function(){function e(e){var t=this;void 0===e&&(e=function(e){}),this.state=s,this.onChange=function(){return e({state:t.state})},this.state=s}return e.prototype.getState=function(){return this.state},e.prototype.setInited=function(){return this.state!==s&&(this.state=s,this.onChange(),!0)},e.prototype.isInited=function(){return this.state===s},e.prototype.setPlaying=function(){return"PLAYING"!==this.state&&(this.state="PLAYING",this.onChange(),!0)},e.prototype.isPlaying=function(){return"PLAYING"===this.state},e.prototype.setPaused=function(){return"PLAYING"===this.state&&(this.state="PAUSED",this.onChange(),!0)},e.prototype.isPaused=function(){return"PAUSED"===this.state},e.prototype.setStopped=function(){return this.state!==s&&(this.state="STOPPED",this.onChange(),!0)},e.prototype.isStopped=function(){return"STOPPED"===this.state},e}(),o=function(){function e(e){var t=e.initialTime,a=e.direction,n=e.timeToUpdate,r=e.lastUnit,l=e.checkpoints,s=e.onChange;this.initialTime=t,this.time=t,this.direction=a,this.timeToUpdate=n,this.lastUnit=r,this.checkpoints=l,this.innerState=new i(s),this.onChange=s,this.timerId=null}return Object.defineProperty(e.prototype,"state",{get:function(){return this.innerState.getState()},enumerable:!0,configurable:!0}),Object.defineProperty(e.prototype,"timeParts",{get:function(){return this.getTimeParts(this.computeTime())},enumerable:!0,configurable:!0}),e.prototype.getTimeParts=function(e){return function(e,t){var a=["ms","s","m","h","d"],n=a.findIndex(function(e){return e===t}),r=[1e3,60,60,24,1],l=[1,1e3,6e4,36e5,864e5];return a.reduce(function(t,a,s){return t[a]=s>n?0:s===n?Math.floor(e/l[s]):Math.floor(e/l[s])%r[s],t},{ms:0,s:0,m:0,h:0,d:0})}(e,this.lastUnit)},e.prototype.setTime=function(e){this.time=e},e.prototype.getTime=function(){return this.time},e.prototype.setDirection=function(e){this.direction=e},e.prototype.setCheckpoints=function(e){this.checkpoints=e},e.prototype.start=function(){this.innerState.setPlaying()&&this.setTimerInterval(!0)},e.prototype.resume=function(){!this.innerState.isStopped()&&this.innerState.setPlaying()&&this.setTimerInterval()},e.prototype.pause=function(){this.innerState.setPaused()&&clearInterval(this.timerId)},e.prototype.stop=function(){this.innerState.setStopped()&&clearInterval(this.timerId)},e.prototype.reset=function(){this.time=this.initialTime,this.onChange(this.getTimeParts(this.time))},e.prototype.setTimerInterval=function(e){var t=this;void 0===e&&(e=!1);e&&this.onChange(this.getTimeParts(this.time)),this.timerId=window.setInterval(function(){var e=t.time,a=t.computeTime();t.onChange(t.getTimeParts(a)),t.checkpoints.map(function(n){var r=n.time,l=n.callback,s=r>e&&r<=a,i=r<e&&r>=a;("backward"===t.direction?i:s)&&l()})},this.timeToUpdate)},e.prototype.computeTime=function(){if(this.innerState.isPlaying())switch(this.direction){case"forward":return this.time=this.time+this.timeToUpdate,this.time;case"backward":return this.time=this.time-this.timeToUpdate,this.time<0?(this.stop(),0):this.time;default:return this.time}return this.time},e}(),c=(l=function(e,t){return(l=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(e,t){e.__proto__=t}||function(e,t){for(var a in t)t.hasOwnProperty(a)&&(e[a]=t[a])})(e,t)},function(e,t){function a(){this.constructor=e}l(e,t),e.prototype=null===t?Object.create(t):(a.prototype=t.prototype,new a)}),m=function(){return(m=Object.assign||function(e){for(var t,a=1,n=arguments.length;a<n;a++)for(var r in t=arguments[a])Object.prototype.hasOwnProperty.call(t,r)&&(e[r]=t[r]);return e}).apply(this,arguments)},u=r.a.createContext({ms:0,s:0,m:0,h:0,d:0,formatValue:function(e){return String(e)}}),d=function(e){var t=e.unit,a=e.formatValue;return r.a.createElement(y.Consumer,null,function(e){return(a||e.formatValue)(e[t])||null})},p=function(e){return r.a.createElement(d,m({unit:"ms"},e))},f=function(e){return r.a.createElement(d,m({unit:"s"},e))},b=function(e){return r.a.createElement(d,m({unit:"m"},e))},h=function(e){return r.a.createElement(d,m({unit:"h"},e))},E=function(e){return r.a.createElement(d,m({unit:"d"},e))},y=function(e){function t(t){var a=e.call(this,t)||this,n=a.props,r=n.initialTime,l=n.direction,s=n.timeToUpdate,i=n.lastUnit,c=n.checkpoints;return a.timer=new o({initialTime:r,direction:l,timeToUpdate:s,lastUnit:i,checkpoints:c,onChange:a.setState.bind(a)}),a.state=m({},a.timer.timeParts,{timerState:"INITED"}),a.start=a.start.bind(a),a.pause=a.pause.bind(a),a.resume=a.resume.bind(a),a.stop=a.stop.bind(a),a.reset=a.reset.bind(a),a.setTime=a.setTime.bind(a),a.getTime=a.getTime.bind(a),a.getTimerState=a.getTimerState.bind(a),a.setDirection=a.setDirection.bind(a),a.setCheckpoints=a.setCheckpoints.bind(a),a}return c(t,e),t.getUI=function(e,t){if(null===e)return null;if(Array.isArray(e)||r.a.isValidElement(e))return e;if(e.prototype&&e.prototype.isReactComponent)return r.a.createElement(e,t);if("function"==typeof e)return e(t);throw new Error("Please use one of the supported APIs for children")},t.prototype.componentDidMount=function(){this.props.startImmediately&&this.timer.start()},t.prototype.componentWillUnmount=function(){this.timer.stop()},t.prototype.render=function(){var e=this,a=e.start,n=e.pause,l=e.resume,s=e.stop,i=e.reset,o=e.getTime,c=e.getTimerState,m=e.setTime,d=e.setDirection,p=e.setCheckpoints,f=this.state,b=f.ms,h=f.s,E=f.m,y=f.h,g=f.d,v=f.timerState,w=this.props,N=w.formatValue,k=w.children;return r.a.createElement(u.Provider,{value:{ms:b,s:h,m:E,h:y,d:g,formatValue:N}},t.getUI(k,{start:a,resume:l,pause:n,stop:s,reset:i,getTime:o,getTimerState:c,setTime:m,setDirection:d,setCheckpoints:p,timerState:v}))},t.prototype.setTime=function(e){this.timer.setTime(e)},t.prototype.getTime=function(){return this.timer.getTime()},t.prototype.getTimerState=function(){return this.timer.state},t.prototype.setDirection=function(e){this.timer.setDirection(e)},t.prototype.setCheckpoints=function(e){this.timer.setCheckpoints(e)},t.prototype.start=function(){this.timer.start(),this.props.onStart()},t.prototype.stop=function(){this.timer.stop(),this.props.onStop()},t.prototype.pause=function(){this.timer.pause(),this.props.onPause()},t.prototype.reset=function(){this.timer.reset(),this.props.onReset()},t.prototype.resume=function(){this.timer.resume(),this.props.onResume()},t.Consumer=u.Consumer,t.Milliseconds=p,t.Seconds=f,t.Minutes=b,t.Hours=h,t.Days=E,t.defaultProps={timeToUpdate:1e3,direction:"forward",initialTime:0,startImmediately:!0,lastUnit:"d",checkpoints:[],children:null,formatValue:function(e){return String(e)},onStart:function(){},onResume:function(){},onPause:function(){},onStop:function(){},onReset:function(){}},t}(r.a.PureComponent),g=y;t.a=g},27:function(e,t,a){"use strict";a.d(t,"e",function(){return m}),a.d(t,"a",function(){return u}),a.d(t,"b",function(){return d}),a.d(t,"d",function(){return p}),a.d(t,"c",function(){return f});var n=a(0),r=a.n(n),l=a(7),s=a(38),i=a.n(s);function o(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){var a=[],n=!0,r=!1,l=void 0;try{for(var s,i=e[Symbol.iterator]();!(n=(s=i.next()).done)&&(a.push(s.value),!t||a.length!==t);n=!0);}catch(e){r=!0,l=e}finally{try{n||null==i.return||i.return()}finally{if(r)throw l}}return a}(e,t)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance")}()}function c(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}var m=function(e){var t=e.pertanyaan,a=e.jawaban,n=(e.setJawaban,e.soalId),l=e.kunci,s=void 0===l?{a:[]}:l,i=a||[],o=function(e){};return r.a.createElement(r.a.Fragment,null,r.a.createElement("div",null,t.q.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e,r.a.createElement("br",null))})),r.a.createElement("div",{className:"row"},r.a.createElement("div",{className:"col-md-12"},r.a.createElement("ul",{className:"list-group"},t.alist.map(function(e,a){return r.a.createElement(r.a.Fragment,{key:a},r.a.createElement("li",{style:{listStyle:"none"}},r.a.createElement("div",{className:"form-inline float-left mb-1"+(-1!==s.a.indexOf(a+1)&&" bg-success"),style:{width:"100%"}},r.a.createElement("label",{style:{width:"1.3em"}},r.a.createElement("b",null,String.fromCharCode(65+a),". ")),1==t.type?r.a.createElement("input",{name:"rd".concat(n),type:"radio",value:a,checked:-1!==i.indexOf(a+1),onChange:o,className:"custom-rd mr-2"}):r.a.createElement("input",{name:"cb".concat(n),type:"checkbox",value:a,checked:-1!==i.indexOf(a+1),onChange:o,className:"custom-cb mr-2"}),r.a.createElement("span",{className:"mr-2"},e))))})))))},u=function(e){var t=e.pertanyaan,a=e.jawaban,n=e.setJawaban,s=e.soalId,i=e.kunci,o=void 0===i?null:i;return r.a.createElement(r.a.Fragment,null,r.a.createElement("div",null,t.q.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e,r.a.createElement("br",null))})),r.a.createElement(l.a,{labelW:"0",name:"kunci".concat(s),handleChange:function(e){return n(c({},s,e.target.value),!0)},value:a,options:[[1,"BENAR",o?"bg-success":""],[0,"SALAH",o?"":"bg-success"]]}))},d=function(e){var t=e.pertanyaan,a=e.jawaban,n=(e.setJawaban,e.soalId,e.kunci);return r.a.createElement(r.a.Fragment,null,r.a.createElement("div",null,t.q.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e,r.a.createElement("br",null))})),r.a.createElement("table",{className:"table table-sm"},r.a.createElement("tbody",null,r.a.createElement("tr",null,r.a.createElement("td",{width:"10%"},"Jawab: "),r.a.createElement("td",null,null!==a&&a.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e,r.a.createElement("br",null))}))))),r.a.createElement("table",{className:"bg-success text-white"},r.a.createElement("tbody",null,r.a.createElement("tr",null,r.a.createElement("td",null,"Kunci: "),r.a.createElement("td",null,null!==n&&n.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e,r.a.createElement("br",null))}))))))},p=function(e){var t=e.pertanyaan,a=e.jawaban,l=void 0===a?[]:a,s=(e.setJawaban,e.soalId,e.idkWhy,e.kunci),c=o(Object(n.useState)(l),2),m=(c[0],c[1],o(Object(n.useState)(s),2));m[0],m[1];return r.a.createElement(r.a.Fragment,null,r.a.createElement("div",null,t.q.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e,r.a.createElement("br",null))})),r.a.createElement("div",{className:"row"},r.a.createElement("div",{className:"col-5"},r.a.createElement("ul",{className:"list-group"},t.qlist.map(function(e,t){return r.a.createElement(r.a.Fragment,{key:t},r.a.createElement("li",{className:"list-group-item"},r.a.createElement("div",{className:"form"},r.a.createElement("label",{className:"m-0"},r.a.createElement("b",null,String.fromCharCode(65+t),"."))," ",r.a.createElement("span",{draggable:"true",onDragStart:function(e){},className:"float-right fas fa-question-circle listq-".concat(t)}),r.a.createElement("span",{className:""},e))))}))),r.a.createElement("div",{className:"col-2 m-0"},l.map(function(e,t){return r.a.createElement(i.a,{key:t,zIndex:9999,borderColor:"red",from:"listq-".concat(e.q),to:"lista-".concat(e.a)})}),s.map(function(e,t){return r.a.createElement(i.a,{key:t,from:"listq-".concat(e.q),to:"lista-".concat(e.a)})})),r.a.createElement("div",{className:"col-5"},r.a.createElement("ul",{className:"list-group"},t.alist.map(function(e,t){return r.a.createElement(r.a.Fragment,{key:"a"+t},r.a.createElement("li",{className:"list-group-item"},r.a.createElement("div",{className:"form",draggable:"true",onDragOver:function(e){e.preventDefault()},onDrop:function(e){e.preventDefault()}},r.a.createElement("span",{className:"fas fa-check-circle lista-".concat(t)})," "," ",r.a.createElement("label",{className:"m-0"},r.a.createElement("b",null,String.fromCharCode(65+t),". "))," ",r.a.createElement("span",null,e))))}))),r.a.createElement("div",{className:"col-12"},"Kunci : ",JSON.stringify(s)," ",r.a.createElement("br",null),"Jawaban : ",JSON.stringify(l))))},f=function(e){var t=e.pertanyaan,a=e.jawaban,n=e.setJawaban,l=e.soalId,s=e.kunci,i={border:"none",borderBottom:"1px solid black",padding:0},o=0;return console.log(s),r.a.createElement(r.a.Fragment,null,r.a.createElement("div",{className:"row"},r.a.createElement("div",{className:"col-12"},t.q.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e.split("[[]]").map(function(t,s){return r.a.createElement(r.a.Fragment,{key:s},t,s+1!=e.split("[[]]").length&&r.a.createElement("input",{name:o,style:i,size:"5",type:"text",value:a[o++],onChange:function(e){return n(c({},l,function(e){for(var t=1;t<arguments.length;t++){var a=null!=arguments[t]?arguments[t]:{},n=Object.keys(a);"function"==typeof Object.getOwnPropertySymbols&&(n=n.concat(Object.getOwnPropertySymbols(a).filter(function(e){return Object.getOwnPropertyDescriptor(a,e).enumerable}))),n.forEach(function(t){c(e,t,a[t])})}return e}({},a,c({},e.target.name.toString(),e.target.value))))}}))})," ",r.a.createElement("br",null))}))),r.a.createElement("div",{className:"row"},r.a.createElement("div",{className:"col-12"},r.a.createElement("hr",null),r.a.createElement("strong",null,"Kunci Jawaban")," ",r.a.createElement("br",null),s.map(function(e,t){return r.a.createElement("span",{key:t},e,s.length!==t+1&&", ")}))))}},438:function(e,t,a){"use strict";a.r(t);var n=a(0),r=a.n(n),l=a(4),s=a.n(l),i=a(1),o=a(39),c=a(19),m=a(38),u=a.n(m),d=a(5),p=a(7),f=a(93);function b(e){return function(e){if(Array.isArray(e)){for(var t=0,a=new Array(e.length);t<e.length;t++)a[t]=e[t];return a}}(e)||function(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}(e)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance")}()}function h(e){return(h="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function E(e){for(var t=1;t<arguments.length;t++){var a=null!=arguments[t]?arguments[t]:{},n=Object.keys(a);"function"==typeof Object.getOwnPropertySymbols&&(n=n.concat(Object.getOwnPropertySymbols(a).filter(function(e){return Object.getOwnPropertyDescriptor(a,e).enumerable}))),n.forEach(function(t){N(e,t,a[t])})}return e}function y(e,t){for(var a=0;a<t.length;a++){var n=t[a];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}function g(e){return(g=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function v(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function w(e,t){return(w=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}function N(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}var k=function(e){function t(e){var a,n,l;return function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,t),n=this,l=g(t).call(this,e),a=!l||"object"!==h(l)&&"function"!=typeof l?v(n):l,N(v(a),"setJawaban",function(e){var t=arguments.length>1&&void 0!==arguments[1]&&arguments[1];for(var n in a.setState({jawabans:E({},a.state.jawabans,e)}),e)a.updateJawaban(n,e[n],t)}),N(v(a),"renderBab",function(e){return r.a.createElement(r.a.Fragment,null)}),N(v(a),"showJawaban",function(){a.setState({hasilModal:!0},function(){console.log(a.state.id),i.a.getToken()?s.a.get("/api/detail-hasil-siswa"+a.state.id,{headers:{Authorization:"Bearer "+i.a.getToken()}}).then(function(e){a.setState({hasil:e.data.data})}).catch(function(){a.setState({hasil:null})}):alert("mohon login ulang")})}),N(v(a),"pindahBab",function(){!(arguments.length>0&&void 0!==arguments[0])||arguments[0]?a.state.babIndex+1!==a.state.soals.length?a.setState({babIndex:a.state.babIndex+1,soalIndex:0}):a.setState({babIndex:0,soalIndex:0}):a.state.babIndex-1!=-1?a.setState({babIndex:a.state.babIndex-1,soalIndex:0}):a.setState({babIndex:a.state.soals.length-1,soalIndex:0})}),N(v(a),"pindahSoal",function(){!(arguments.length>0&&void 0!==arguments[0])||arguments[0]?a.state.soalIndex+1!==a.state.soals[a.state.babIndex].child.length?a.setState({soalIndex:a.state.soalIndex+1}):a.setState({soalIndex:0}):a.state.soalIndex-1!=-1?a.setState({soalIndex:a.state.soalIndex-1}):a.setState({soalIndex:a.state.soals[a.state.babIndex].child.length-1})}),a.state={id:e.match.params.kuisId,hasilId:"",sisa:0,kuis:{},mapel:{},settings:{},soals:[],jawabans:{},loading:!1,hasil:null,hasilModal:!1,babIndex:0,soalIndex:0,mode:1},a}var a,n,l;return function(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&w(e,t)}(t,r.a.Component),a=t,(n=[{key:"componentDidMount",value:function(){this.mulaiKuis()}},{key:"mulaiKuis",value:function(){var e=this,t=i.a.getToken();t?(this.setState({loading:!0}),s.a.post("api/mulai-kuis",{mkId:this.state.id},{headers:{Authorization:"Bearer "+t}}).then(function(t){var a=t.data.data,n=Object(o.a)(a.soals).map(function(e){return JSON.parse(e.settings).acakSoal&&Object(o.b)(e.child),e});e.setState({hasilId:a.hasil.id,hasil:a.hasil,sisa:a.sisa,settings:JSON.parse(a.mapel_kuis.settings),kuis:a.mapel_kuis.kuis,mapel:a.mapel_kuis.mapel,soals:n,jawabans:JSON.parse(a.jawabans),loading:!1})}).catch(function(e){console.log(e)})):this.props.logOut("mapel",!0)}},{key:"updateJawaban",value:function(e,t,a){var n=this;console.log(t);var r=i.a.getToken();r?(this.setState({loading:!0}),s.a.put("api/update-jawaban",{hId:this.state.hasilId,sId:e,value:t,bs:a},{headers:{Authorization:"Bearer "+r}}).then(function(e){n.setState({loading:!1})}).catch(function(e){})):this.props.logOut("mapel",!0)}},{key:"render",value:function(){var e,t,a=this,n=1;return r.a.createElement(r.a.Fragment,null,r.a.createElement("div",{className:"row",style:{position:"fixed",zIndex:999,background:"white",width:"95%"}},r.a.createElement("div",{className:"col-12"},r.a.createElement(d.e,{title:this.state.kuis.judul,navs:[{show:1==this.state.settings.type,clickHandle:this.showJawaban,icon:"fa-question",text:"Jawaban"},{show:!0,clickHandle:function(){a.setState({mode:1==a.state.mode?2:1})},icon:"fa-refresh",text:"Ubah Tampilan ("+this.state.mode+")"},{show:!0,clickHandle:function(){a.props.history.goBack()},icon:"fa-arrow-left"}]}),r.a.createElement("p",null,this.state.mapel.nama),this.state.sisa&&r.a.createElement(c.a,{initialTime:this.state.sisa-1e4,direction:"backward",checkpoints:[{time:0,callback:function(){alert("waktu habis!"),a.props.history.goBack()}}]},function(){return r.a.createElement("span",{style:{display:2==a.state.settings.type?"block":"none"}},r.a.createElement(c.a.Hours,null),"jam"," ",r.a.createElement(c.a.Minutes,null),"menit"," ",r.a.createElement("strong",{style:{fontSize:20}},r.a.createElement(c.a.Seconds,null)))}))),r.a.createElement("div",{className:"row",style:{marginTop:"100px"}},1==this.state.mode&&r.a.createElement("div",{className:"col-12"},r.a.createElement("hr",null),this.state.soals.length>0&&r.a.createElement("div",null,r.a.createElement("h5",{className:"text-center mt-4"},r.a.createElement("strong",null,this.state.soals[this.state.babIndex].nama)),r.a.createElement("div",{className:"text-center"},r.a.createElement("button",{onClick:function(){return a.pindahBab(!1)},className:"btn btn-sm btn-primary mr-1"},"«"),r.a.createElement("button",{onClick:function(){return a.pindahBab(!0)},className:"btn btn-sm btn-primary mr-1"},"»"),this.state.babIndex+1," / ",this.state.soals.length),r.a.createElement("p",{className:"m-1 mb-0"},JSON.parse(this.state.soals[this.state.babIndex].settings).keterangan),r.a.createElement("hr",{className:"m-2"}),r.a.createElement("div",{className:"mb-2"},r.a.createElement("button",{onClick:function(){return a.pindahSoal(!1)},className:"btn btn-sm btn-outline-primary mr-1"},"« kembali"),r.a.createElement("button",{onClick:function(){return a.pindahSoal(!0)},className:"btn btn-sm btn-outline-primary mr-1"},"selanjutnya »"),this.state.soalIndex+1," / ",this.state.soals[this.state.babIndex].child.length),r.a.createElement("div",{className:"card mb-2"},r.a.createElement("div",{className:"card-body"},r.a.createElement("span",{className:"float-left"},r.a.createElement("strong",null,this.state.soalIndex+1,". ")),r.a.createElement("span",{className:""},(e=a.state.soals[a.state.babIndex].child[a.state.soalIndex].soal,t=JSON.parse(e.pertanyaan),r.a.createElement("span",{className:""},1==e.type&&r.a.createElement(S,{soalId:e.id,pertanyaan:t,jawaban:a.state.jawabans[e.id],setJawaban:a.setJawaban}),2==e.type&&r.a.createElement(x,{soalId:e.id,pertanyaan:t,jawaban:a.state.jawabans[e.id],setJawaban:a.setJawaban}),3==e.type&&r.a.createElement(I,{soalId:e.id,pertanyaan:t,jawaban:a.state.jawabans[e.id]?a.state.jawabans[e.id]:[],setJawaban:a.setJawaban}),4==e.type&&r.a.createElement(O,{soalId:e.id,pertanyaan:t,jawaban:a.state.jawabans[e.id]?a.state.jawabans[e.id]:[],setJawaban:a.setJawaban}),5==e.type&&r.a.createElement(j,{soalId:e.id,pertanyaan:t,jawaban:a.state.jawabans[e.id],setJawaban:a.setJawaban})))))),r.a.createElement("hr",null),r.a.createElement("div",{className:"p-2"},r.a.createElement("p",{className:"text-center"},"Daftar BAB/Soal:"),this.state.soals.map(function(e,t){return r.a.createElement("div",{key:e.id},r.a.createElement("span",{className:"mr-2"},t==a.state.babIndex?r.a.createElement("strong",null,r.a.createElement("u",null,e.nama)):e.nama),e.child.map(function(e,n){var l=e.soal,s=JSON.parse(l.pertanyaan);return r.a.createElement("button",{onClick:function(){a.setState({babIndex:t,soalIndex:n})},className:"mr-1 mb-1 btn btn-sm "+function(){if(3==l.type){if(!Array.isArray(a.state.jawabans[l.id])||a.state.jawabans[l.id].length<s.qlist.length)return" btn-outline-warning text-dark"}else if(4==l.type){if(null==a.state.jawabans[l.id])return" btn-outline-warning text-dark";var e=s.q.match(/\[\[.*?\]\]/g).length,t=0;if("[object Object]"===Object.prototype.toString.call(a.state.jawabans[l.id]))for(var n in a.state.jawabans[l.id])""!=a.state.jawabans[l.id][n]&&null!=a.state.jawabans[l.id][n]&&t++;else Array.isArray(a.state.jawabans[l.id])&&a.state.jawabans[l.id].forEach(function(e){""!=e&&null!=e&&t++});if(e>t)return" btn-outline-warning text-dark"}else{if(Array.isArray(a.state.jawabans[l.id])&&0===a.state.jawabans[l.id].length)return" btn-outline-warning text-dark";if(null===a.state.jawabans[l.id]||""===a.state.jawabans[l.id])return" btn-outline-warning text-dark"}return" btn-outline-dark"}(),key:e.id},t==a.state.babIndex&&n==a.state.soalIndex?r.a.createElement("strong",null,r.a.createElement("u",null,n+1)):n+1)}))}),"keterangan : ",r.a.createElement("br",null),r.a.createElement("span",{className:"bg-warning p-1 pl-5 mr-1"})," Belum dikerjakan / belum selesai"))),2==this.state.mode&&r.a.createElement("div",{className:"col-12"},this.state.soals.map(function(e){return r.a.createElement(r.a.Fragment,{key:e.id},r.a.createElement("h5",{className:"text-center mt-4"},r.a.createElement("strong",null,e.nama.toUpperCase())),r.a.createElement("p",null,JSON.parse(e.settings).keterangan),e.child.map(function(e){var t=e.soal,l=JSON.parse(t.pertanyaan);return r.a.createElement("div",{className:"card mb-2",key:e.id},r.a.createElement("div",{className:"card-body"},r.a.createElement("span",{className:"float-left"},r.a.createElement("b",null,n++," .")),r.a.createElement("span",{className:""},1==t.type&&r.a.createElement(S,{soalId:t.id,pertanyaan:l,jawaban:a.state.jawabans[t.id],setJawaban:a.setJawaban}),2==t.type&&r.a.createElement(x,{soalId:t.id,pertanyaan:l,jawaban:a.state.jawabans[t.id],setJawaban:a.setJawaban}),3==t.type&&r.a.createElement(I,{soalId:t.id,pertanyaan:l,jawaban:a.state.jawabans[t.id]?a.state.jawabans[t.id]:[],setJawaban:a.setJawaban}),4==t.type&&r.a.createElement(O,{soalId:t.id,pertanyaan:l,jawaban:a.state.jawabans[t.id]?a.state.jawabans[t.id]:[],setJawaban:a.setJawaban}),5==t.type&&r.a.createElement(j,{soalId:t.id,pertanyaan:l,jawaban:a.state.jawabans[t.id],setJawaban:a.setJawaban}))))}))}))),r.a.createElement(f.a,{show:this.state.hasilModal,nilai:!1,hasil:this.state.hasil,toggle:function(){a.setState({hasilModal:!1})}}))}}])&&y(a.prototype,n),l&&y(a,l),t}(),S=function(e){var t=e.pertanyaan,a=e.jawaban,n=e.setJawaban,l=e.soalId,s=a||[],i=function(e){if(1==t.type)n(N({},l,[parseInt(e.target.value)+1]));else if(2==t.type)if(e.target.checked)n(N({},l,[].concat(b(s),[parseInt(e.target.value)+1])));else{var a=s.filter(function(t){return t!==parseInt(e.target.value)+1});n(N({},l,a))}};return r.a.createElement(r.a.Fragment,null,r.a.createElement("div",null,t.q.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e,r.a.createElement("br",null))})),r.a.createElement("div",{className:"row"},r.a.createElement("div",{className:"col-md-12"},r.a.createElement("ul",{className:"list-group"},t.alist.map(function(e,a){return r.a.createElement(r.a.Fragment,{key:a},r.a.createElement("li",{style:{listStyle:"none"}},r.a.createElement("div",{className:"form-inline float-left mb-1",style:{width:"100%"}},r.a.createElement("label",{style:{width:"1.3em"}},r.a.createElement("b",null,String.fromCharCode(65+a),". ")),1==t.type?r.a.createElement("input",{name:"rd".concat(l),type:"radio",value:a,checked:-1!==s.indexOf(a+1),onChange:i,className:"custom-rd mr-2"}):r.a.createElement("input",{name:"cb".concat(l),type:"checkbox",value:a,checked:-1!==s.indexOf(a+1),onChange:i,className:"custom-cb mr-2"}),r.a.createElement("span",{className:"mr-2"},e))))})))))},x=function(e){var t=e.pertanyaan,a=e.jawaban,n=e.setJawaban,l=e.soalId;return r.a.createElement(r.a.Fragment,null,r.a.createElement("div",null,t.q.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e,r.a.createElement("br",null))})),r.a.createElement("div",null,r.a.createElement("input",{type:"radio",name:"kunci".concat(l),onChange:function(e){return n(N({},l,e.target.value),!0)},value:1,checked:1==a||1==a})," BENAR",r.a.createElement("br",null),r.a.createElement("input",{type:"radio",name:"kunci".concat(l),onChange:function(e){return n(N({},l,e.target.value),!0)},value:0,checked:0==a||0==a})," SALAH"))},j=function(e){var t=e.pertanyaan,a=e.jawaban,n=e.setJawaban,l=e.soalId;return r.a.createElement(r.a.Fragment,null,r.a.createElement("div",null,t.q.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e,r.a.createElement("br",null))})),r.a.createElement(p.c,{labelW:"0",formW:"5",name:"kunci".concat(l),value:a,placeholder:"Isikan jawaban anda",handleChange:function(e){return n(N({},l,e.target.value))}}))},I=function(e){var t=e.pertanyaan,a=e.jawaban,n=void 0===a?[]:a,l=e.setJawaban,s=e.soalId;return r.a.createElement(r.a.Fragment,null,r.a.createElement("div",null,t.q.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e,r.a.createElement("br",null))})),r.a.createElement("div",{className:"row"},r.a.createElement("div",{className:"col-5"},r.a.createElement("ul",{className:"list-group"},t.qlist.map(function(e,t){return r.a.createElement(r.a.Fragment,{key:t},r.a.createElement("li",{className:"list-group-item"},r.a.createElement("div",{className:"form"},r.a.createElement("label",{className:"m-0"},r.a.createElement("b",null,String.fromCharCode(65+t),"."))," ",r.a.createElement("span",{draggable:"true",onDragStart:(a={id:t},function(e){var t=n.filter(function(e){return e.q!==a.id});l(N({},s,t)),e.dataTransfer.setData("dragContent",a.id)}),className:"float-right fas fa-question-circle listq-".concat(t)}),r.a.createElement("span",{className:""},e))));var a}))),r.a.createElement("div",{className:"col-2 m-0"},n.map(function(e,t){return r.a.createElement(u.a,{key:t,from:"listq-".concat(e.q),to:"lista-".concat(e.a)})})),r.a.createElement("div",{className:"col-5"},r.a.createElement("ul",{className:"list-group"},t.alist.map(function(e,t){return r.a.createElement(r.a.Fragment,{key:"a"+t},r.a.createElement("li",{className:"list-group-item"},r.a.createElement("div",{className:"form",draggable:"true",onDragOver:function(e){e.preventDefault()},onDrop:(a={id:t},function(e){if(e.preventDefault(),!(n.filter(function(e){return e.a===a.id}).length>0)){var t=JSON.parse(e.dataTransfer.getData("dragContent")),r=a.id;return l(N({},s,[].concat(b(n),[{q:t,a:r}]))),!1}})},r.a.createElement("span",{className:"fas fa-check-circle lista-".concat(t)})," "," ",r.a.createElement("label",{className:"m-0"},r.a.createElement("b",null,String.fromCharCode(65+t),". "))," ",r.a.createElement("span",null,e))));var a}))),r.a.createElement("div",{className:"col-12"},JSON.stringify(n))))},O=function(e){var t=e.pertanyaan,a=e.jawaban,n=e.setJawaban,l=e.soalId,s={border:"none",borderBottom:"1px solid black",padding:0},i=0;return r.a.createElement(r.a.Fragment,null,r.a.createElement("div",{className:"row"},r.a.createElement("div",{className:"col-12"},t.q.split("\n").map(function(e,t){return r.a.createElement("span",{key:t},e.split("[[]]").map(function(t,o){return r.a.createElement(r.a.Fragment,{key:o},t,o+1!=e.split("[[]]").length&&r.a.createElement("input",{name:i,style:s,size:"5",type:"text",value:a[i++]||"",onChange:function(e){return n(N({},l,E({},a,N({},e.target.name.toString(),e.target.value))))}}))})," ",r.a.createElement("br",null))}))))};t.default=k},5:function(e,t,a){"use strict";a.d(t,"e",function(){return l}),a.d(t,"a",function(){return s}),a.d(t,"c",function(){return i}),a.d(t,"b",function(){return o}),a.d(t,"d",function(){return c});var n=a(0),r=a.n(n);function l(e){var t=e.title,a=void 0===t?"Judul Halaman":t,n=e.navs,l=void 0===n?[]:n;return r.a.createElement("div",{className:"row mt-2 mb-0"},r.a.createElement("div",{className:"col-12"},r.a.createElement("h2",{className:"float-left"},r.a.createElement("b",null,a)),l.map(function(e,t){if(e.show)return r.a.createElement("button",{key:t,value:e.action,onClick:e.clickHandle,className:"btn ".concat(e.className?e.className:"btn-primary"," float-right ml-1")},r.a.createElement("span",{className:"fas ".concat(e.icon?e.icon:"fa-plus")})," ",r.a.createElement("span",null,e.text||""))})))}function s(e){var t=e.message,a=e.type,n=e.clickHandle,l=e.html,s=void 0!==l&&l;return r.a.createElement("div",{className:"alert alert-".concat(a||"info"),style:{overflow:"hidden"},role:"alert"},r.a.createElement("span",{className:"float-left"},s?r.a.createElement("span",{dangerouslySetInnerHTML:{__html:t}}):t),r.a.createElement("button",{className:"btn btn-xs float-right",onClick:function(){return n()}},r.a.createElement("i",{className:"fas fa-times"})))}function i(e){return e.loading?r.a.createElement("span",{className:"col-12 text-center"},r.a.createElement("i",{className:"fas fa-spinner fa-spin"})," ",e.text?e.text:"Loading..."):""}function o(e){var t=e.text,a=void 0===t?"":t,n=e.w,l=e.h,s=Math.floor(255*Math.random()),i=Math.floor(255*Math.random()),o=Math.floor(255*Math.random());return r.a.createElement("div",{style:{width:n||"100%",height:l||150,backgroundColor:"rgb(".concat(s,", ").concat(i,", ").concat(o,")"),color:"white",textShadow:"-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",textAlign:"middle",fontSize:60,paddingTop:30,textTransform:"uppercase"}},r.a.createElement("b",null,a.substring(0,1)," ",a.substring(a.length-1,a.length)))}function c(e){var t=e.text,a=e.success,n=void 0===a||a;return r.a.createElement("span",null,r.a.createElement("i",{className:"fas ".concat(n?"fa-check text-success":"fa-exclamation text-danger")})," ",t)}},7:function(e,t,a){"use strict";a.d(t,"d",function(){return l}),a.d(t,"b",function(){return s}),a.d(t,"a",function(){return i}),a.d(t,"c",function(){return o});var n=a(0),r=a.n(n);function l(e){var t=e.type,a=e.name,n=e.placeholder,l=e.handleChange,s=e.value,i=e.required,o=e.label,c=e.labelW,m=e.formW,u=e.formtext,d=e.form;return r.a.createElement("div",{className:"form-group row"},r.a.createElement("label",{className:"col-md-"+(c||2)+" col-form-label"},o),r.a.createElement("div",{className:"col-md-"+(m||6)},r.a.createElement("input",{form:d,type:t||"text",className:"form-control",name:a,placeholder:n,onChange:l,value:s||"",required:i}),r.a.createElement("small",{className:"form-text text-muted"},u)))}function s(e){var t=e.name,a=e.placeholder,n=e.options,l=e.handleChange,s=e.value,i=e.required,o=e.label,c=e.labelW,m=e.formW;return r.a.createElement("div",{className:"form-group row"},r.a.createElement("label",{className:"col-md-"+(c||2)+" col-form-label"},o),r.a.createElement("div",{className:"col-md-"+(m||4)},r.a.createElement("select",{className:"custom-select",name:t,onChange:l,value:s||"",required:i},a&&r.a.createElement("option",{value:""},a),n.map(function(e){return r.a.createElement("option",{key:e.id,value:e.id},e.nama)}))))}function i(e){var t=e.name,a=e.options,n=e.handleChange,l=e.value,s=e.required,i=e.label,o=e.labelW,c=e.formW,m=e.form,u=e.labelClass,d=void 0===u?"":u;return r.a.createElement("div",{className:"form-group row"},r.a.createElement("label",{className:"col-md-"+(o||2)+" col-form-label"},i),r.a.createElement("div",{className:"col-md-"+(c||4),style:{marginTop:"0.4rem"}},a.map(function(e){var a=e[2]?e[2]:d;return r.a.createElement("div",{className:"form-check form-check-inline",key:e[0]},r.a.createElement("label",{className:"form-check-label ".concat(a)},r.a.createElement("input",{form:m,className:"form-check-input",type:"radio",name:t,onChange:n,value:e[0],checked:l==e[0],required:s})," ",e[1]))})))}function o(e){var t=e.name,a=e.handleChange,n=e.value,l=e.placeholder,s=e.required,i=e.label,o=e.labelW,c=e.formW;return r.a.createElement("div",{className:"form-group row"},r.a.createElement("label",{className:"col-md-"+(o||2)+" col-form-label"},i),r.a.createElement("div",{className:"col-md-"+(c||4)},r.a.createElement("textarea",{style:{width:"100%"},className:"form-control",name:t,onChange:a,value:n||"",placeholder:l,required:s})))}},93:function(e,t,a){"use strict";var n=a(0),r=a.n(n),l=a(27);function s(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){var a=[],n=!0,r=!1,l=void 0;try{for(var s,i=e[Symbol.iterator]();!(n=(s=i.next()).done)&&(a.push(s.value),!t||a.length!==t);n=!0);}catch(e){r=!0,l=e}finally{try{n||null==i.return||i.return()}finally{if(r)throw l}}return a}(e,t)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance")}()}t.a=function(e){var t=e.show,a=e.toggle,i=e.hasil,o=e.nilai,c=void 0===o||o,m=s(Object(n.useState)(1),2),u=m[0],d=m[1],p=1;return r.a.createElement("div",{className:"modal",id:"modal",style:{display:t?"block":"none",overflow:"auto"}},r.a.createElement("div",{className:"modal-dialog modal-xl",role:"document"},r.a.createElement("div",{className:"modal-content"},r.a.createElement("div",{className:"modal-header row"},r.a.createElement("div",{className:"col-12"},r.a.createElement("strong",null,c?"Hasil":"Jawaban"),r.a.createElement("button",{type:"button",className:"close",onClick:a},r.a.createElement("span",null,"×")))),r.a.createElement("div",{className:"modal-body"},null===i?"Anda belum/tidak mengikuti ujian ini!":i?r.a.createElement("div",{className:"row"},r.a.createElement("div",{className:"col-12"},c&&"Nilai : ".concat(i.hasil&&parseFloat(i.hasil.points)/parseFloat(i.hasil.max_points)*100),c&&r.a.createElement("hr",null),i.hasil&&i.hasil.details.map(function(e){var t=e.soal,a=JSON.parse(t.pertanyaan),n=JSON.parse(t.jawaban);return r.a.createElement("div",{className:"card mb-2",key:e.id},r.a.createElement("div",{className:"card-body"},r.a.createElement("div",{className:"row"},r.a.createElement("div",{className:"col-12"},r.a.createElement("span",{className:"float-left"},r.a.createElement("b",null,p++," .")),r.a.createElement("span",{className:"float-left"},1==t.type&&r.a.createElement(l.e,{soalId:t.id,pertanyaan:a,jawaban:JSON.parse(e.jawaban),kunci:n,setJawaban:function(){return!1}}),2==t.type&&r.a.createElement(l.a,{soalId:t.id,pertanyaan:a,jawaban:JSON.parse(e.jawaban),kunci:n,setJawaban:function(){return!1}}),3==t.type&&r.a.createElement(l.d,{soalId:t.id,pertanyaan:a,jawaban:e.jawaban?JSON.parse(e.jawaban):[],kunci:n,setJawaban:function(){return!1},idkWhy:function(){console.log(u),d(!u)}}),4==t.type&&r.a.createElement(l.c,{soalId:t.id,pertanyaan:a,jawaban:e.jawaban?JSON.parse(e.jawaban):[],kunci:n,setJawaban:function(){return!1}}),5==t.type&&r.a.createElement(l.b,{soalId:t.id,pertanyaan:a,jawaban:JSON.parse(e.jawaban),kunci:n,setJawaban:function(){return!1}})),r.a.createElement("span",{className:"float-right"},e.point==e.max_point?r.a.createElement("i",{className:"fas fa-check text-success fa-2x"}):0==e.point?r.a.createElement("i",{className:"fas fa-times text-danger fa-2x"}):null==e.point?r.a.createElement("i",{className:"fas fa-question text-warning fa-2x"}):r.a.createElement("i",{className:"fas fa-exclamation text-info fa-2x"})))),r.a.createElement("div",{className:"row",style:{display:c?"block":"none"}},r.a.createElement("div",{className:"col-12"},r.a.createElement("hr",null),r.a.createElement("small",{className:"text-primary"},"Kunci :  ",r.a.createElement("br",null),"max point: ",e.max_point),r.a.createElement("div",{className:"form-inline float-right"},"POINT : ",e.point)))))}))):"Hasil ujian belum diterbitkan"),r.a.createElement("div",{className:"modal-footer"}))))}}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[14],{
+
+/***/ "./resources/js/ErrorBoundary.js":
+/*!***************************************!*\
+  !*** ./resources/js/ErrorBoundary.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ErrorBoundary; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var ErrorBoundary = /*#__PURE__*/function (_React$Component) {
+  _inherits(ErrorBoundary, _React$Component);
+
+  var _super = _createSuper(ErrorBoundary);
+
+  function ErrorBoundary(props) {
+    var _this;
+
+    _classCallCheck(this, ErrorBoundary);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      hasError: false,
+      error: props.error
+    };
+    return _this;
+  }
+
+  _createClass(ErrorBoundary, [{
+    key: "componentDidCatch",
+    value: function componentDidCatch(error, info) {// You can also log the error to an error reporting service
+      // logErrorToMyService(error, info);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      if (this.state.hasError) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          style: {
+            paddingLeft: '2%'
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Error"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, JSON.stringify(this.state.error)));
+      }
+
+      return this.props.children;
+    }
+  }], [{
+    key: "getDerivedStateFromError",
+    value: function getDerivedStateFromError(error) {
+      return {
+        hasError: true
+      };
+    }
+  }]);
+
+  return ErrorBoundary;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/kuis/KuisDelete.js":
+/*!****************************************************!*\
+  !*** ./resources/js/components/kuis/KuisDelete.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils_Token__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/Token */ "./resources/js/utils/Token.js");
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! file-saver */ "./node_modules/file-saver/dist/FileSaver.min.js");
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_3__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+var KuisDelete = function KuisDelete(props) {
+  var id = props.id,
+      notif = props.notif,
+      setAction = props.setAction;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+      _useState2 = _slicedToArray(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+      _useState4 = _slicedToArray(_useState3, 2),
+      materi = _useState4[0],
+      setMateri = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      loading = _useState6[0],
+      setLoading = _useState6[1];
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(),
+      _useState8 = _slicedToArray(_useState7, 2),
+      message = _useState8[0],
+      setMessage = _useState8[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (!_utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) {
+      notif('mohon login ulang');
+      return;
+    }
+
+    setLoading(true);
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/kuis/' + id, {
+      headers: {
+        Authorization: 'Bearer ' + _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()
+      }
+    }).then(function (res) {
+      setData(res.data.data);
+      setLoading(false);
+    })["catch"](function () {
+      return setAction('', '', true);
+    });
+  }, []);
+
+  function submit() {
+    if (!_utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) {
+      notif('mohon login ulang');
+      return;
+    }
+
+    if (!confirm('Hapus data?')) return;
+    setLoading(true);
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]('/api/kuis/' + id, {
+      headers: {
+        Authorization: 'Bearer ' + _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()
+      }
+    }).then(function () {
+      setAction('', {
+        message: 'data berhasil dihapus'
+      }, true);
+    })["catch"](function () {
+      notif('err');
+      setLoading(false);
+    });
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row p2"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-12"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-12"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+    className: "float-left"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Hapus Data")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row mt-2"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-8"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Kode : "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), data.kode), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Judul : "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), data.judul), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Keterangan : "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), data.keterangan), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-sm btn-danger mt-1",
+    onClick: submit,
+    disabled: loading
+  }, "Hapus")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-4"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "nothing here")))));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (KuisDelete);
+
+/***/ }),
+
+/***/ "./resources/js/components/kuis/KuisDetail.js":
+/*!****************************************************!*\
+  !*** ./resources/js/components/kuis/KuisDetail.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils_Token__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/Token */ "./resources/js/utils/Token.js");
+/* harmony import */ var _utils_useForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/useForm */ "./resources/js/utils/useForm.js");
+/* harmony import */ var _utils_Array__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/Array */ "./resources/js/utils/Array.js");
+/* harmony import */ var _html_Template__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../html/Template */ "./resources/js/components/html/Template.js");
+/* harmony import */ var _html_BasicForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../html/BasicForm */ "./resources/js/components/html/BasicForm.js");
+/* harmony import */ var _soal_SoalList__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../soal/SoalList */ "./resources/js/components/soal/SoalList.js");
+/* harmony import */ var _soal_SoalSearch__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../soal/SoalSearch */ "./resources/js/components/soal/SoalSearch.js");
+/* harmony import */ var _PengaturanKuisModal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./PengaturanKuisModal */ "./resources/js/components/kuis/PengaturanKuisModal.js");
+/* harmony import */ var react_content_loader__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-content-loader */ "./node_modules/react-content-loader/dist/react-content-loader.es.js");
+/* harmony import */ var _html_Pagination__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./../html/Pagination */ "./resources/js/components/html/Pagination.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var KuisDetail = function KuisDetail(props) {
+  var id = props.id,
+      notif = props.notif,
+      setAction = props.setAction;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+      _useState2 = _slicedToArray(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState4 = _slicedToArray(_useState3, 2),
+      soals = _useState4[0],
+      setSoals = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      loading = _useState6[0],
+      setLoading = _useState6[1];
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(),
+      _useState8 = _slicedToArray(_useState7, 2),
+      message = _useState8[0],
+      setMessage = _useState8[1];
+
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState10 = _slicedToArray(_useState9, 2),
+      formOpen = _useState10[0],
+      setFormOpen = _useState10[1];
+
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
+      _useState12 = _slicedToArray(_useState11, 2),
+      formType = _useState12[0],
+      setFormType = _useState12[1];
+
+  var token = _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken(); //pilihan soal
+
+  var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
+    soals: [],
+    pageData: {},
+    search: {},
+    page: 1
+  }),
+      _useState14 = _slicedToArray(_useState13, 2),
+      soalList = _useState14[0],
+      setSoalList = _useState14[1];
+
+  var _useState15 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState16 = _slicedToArray(_useState15, 2),
+      selectedSoals = _useState16[0],
+      setSelectedSoals = _useState16[1];
+
+  var fields = {
+    kuis_id: id,
+    type: '1',
+    dirName: '',
+    parent: '',
+    soal: ''
+  };
+
+  var _useForm = Object(_utils_useForm__WEBPACK_IMPORTED_MODULE_3__["default"])(submit, fields),
+      values = _useForm.values,
+      setValues = _useForm.setValues,
+      getErrors = _useForm.getErrors,
+      handleChange = _useForm.handleChange,
+      handleSubmit = _useForm.handleSubmit;
+
+  var _useState17 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
+      _useState18 = _slicedToArray(_useState17, 2),
+      dataId = _useState18[0],
+      setDataId = _useState18[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    loadDetail();
+    loadSoal();
+  }, []);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    getSoalList();
+  }, [soalList.search, soalList.page]);
+
+  var loadDetail = function loadDetail() {
+    if (!_utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) {
+      notif('mohon login ulang');
+      return;
+    }
+
+    setLoading(true);
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/kuis/' + id, {
+      headers: {
+        Authorization: 'Bearer ' + _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()
+      }
+    }).then(function (res) {
+      setData(res.data.data);
+      setLoading(false);
+    })["catch"](function () {
+      return setAction('', '', true);
+    });
+  };
+
+  var loadSoal = function loadSoal() {
+    if (!_utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()) {
+      notif( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_Template__WEBPACK_IMPORTED_MODULE_5__["NotifMessage"], {
+        text: "mohon login ulang",
+        success: false
+      }));
+      return;
+    }
+
+    setLoading(true);
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/soal/kuis/' + id, {
+      params: {},
+      headers: {
+        Authorization: 'Bearer ' + _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()
+      }
+    }).then(function (res) {
+      setLoading(false);
+      setSoals(Object(_utils_Array__WEBPACK_IMPORTED_MODULE_4__["flatToHierarchy"])(res.data.data));
+    })["catch"](function (err) {
+      setLoading(false);
+      notif(JSON.stringify(err.message));
+    });
+  };
+
+  var setSearch = function setSearch() {
+    var values = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    setSoalList(_objectSpread(_objectSpread({}, soalList), {}, {
+      search: values
+    }));
+  };
+
+  var getSoalList = function getSoalList() {
+    if (!_utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()) {
+      notif( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_Template__WEBPACK_IMPORTED_MODULE_5__["NotifMessage"], {
+        text: "mohon login ulang",
+        success: false
+      }));
+      return;
+    }
+
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/soal?page=' + soalList.page, {
+      params: soalList.search.soal,
+      headers: {
+        Authorization: 'Bearer ' + _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()
+      }
+    }).then(function (res) {
+      setSoalList(_objectSpread(_objectSpread({}, soalList), {}, {
+        soals: res.data.data,
+        pageData: {
+          from: res.data.meta.from,
+          total: res.data.meta.total,
+          per_page: res.data.meta.per_page,
+          pageCount: Math.ceil(res.data.meta.total / res.data.meta.per_page)
+        }
+      }));
+    })["catch"](function (err) {
+      notif(JSON.stringify(err.message));
+    });
+  };
+
+  var openForm = function openForm(e) {
+    var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+    var pid = e.currentTarget.value;
+    setFormType(type);
+    setDataId(pid);
+    setValues(function (values) {
+      return _objectSpread(_objectSpread({}, values), {}, {
+        parent: pid,
+        type: pid == 0 ? 1 : 2
+      });
+    });
+    setFormOpen(true);
+  };
+
+  var closeAndReset = function closeAndReset() {
+    setFormOpen(false);
+    setValues(fields);
+    setSoalList({
+      soals: [],
+      pageData: {},
+      search: {}
+    });
+    setSelectedSoals([]);
+  };
+
+  var delSoal = function delSoal(mid, nama) {
+    if (!token) {
+      notif("mohon login ulang");
+      return;
+    }
+
+    if (!confirm("hapus ".concat(nama, "?"))) return;
+    setLoading(true);
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]('/api/rem-soal/' + mid, {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    }).then(function () {
+      notif( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_Template__WEBPACK_IMPORTED_MODULE_5__["NotifMessage"], {
+        text: "".concat(nama, " berhasil dihapus")
+      }));
+      setLoading(false);
+      loadSoal();
+      closeAndReset();
+    })["catch"](function (err) {
+      if (err.response) {
+        if (err.response.request.status === 422) {
+          notif( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_Template__WEBPACK_IMPORTED_MODULE_5__["NotifMessage"], {
+            text: "Kosongkan direktori terlebih dahulu",
+            success: false
+          }));
+        } else if (err.response.request.status === 401) {
+          notif( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_Template__WEBPACK_IMPORTED_MODULE_5__["NotifMessage"], {
+            text: "mohon login ulang",
+            success: false
+          }));
+        } else {
+          notif(JSON.stringify(err.message) + ' ' + JSON.stringify(err.response.data));
+        }
+      } else {
+        notif(JSON.stringify(err.message) + ' ' + JSON.stringify(err.response.data));
+      }
+
+      setLoading(false);
+      closeAndReset();
+    });
+  };
+
+  var handleSelectSoal = function handleSelectSoal(e) {
+    e.persist();
+
+    if (e.target.checked) {
+      setSelectedSoals([].concat(_toConsumableArray(selectedSoals), [e.target.value]));
+      console.log([].concat(_toConsumableArray(selectedSoals), [e.target.value]));
+    } else {
+      var updated = selectedSoals.filter(function (mat) {
+        if (e.target.value !== mat) return mat;
+      });
+      setSelectedSoals(updated);
+      console.log(updated);
+    }
+  };
+
+  function submit() {
+    if (!token) {
+      notif("mohon login ulang");
+      return;
+    }
+
+    setLoading(true);
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/add-soal/', _objectSpread(_objectSpread({}, values), {}, {
+      soals: selectedSoals
+    }), {
+      headers: {
+        Authorization: 'Bearer ' + _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()
+      }
+    }).then(function (res) {
+      notif( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_Template__WEBPACK_IMPORTED_MODULE_5__["NotifMessage"], {
+        text: "berhasil ditambahkan"
+      }));
+      setLoading(false);
+      loadSoal();
+      closeAndReset();
+    })["catch"](function (err) {
+      if (err.response) {
+        if (err.response.request.status === 422) {
+          notif(getErrors(err.response.data.errors));
+        } else if (err.response.request.status === 401) {
+          notif( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_Template__WEBPACK_IMPORTED_MODULE_5__["NotifMessage"], {
+            text: "mohon login ulang",
+            success: false
+          }));
+        } else {
+          notif(JSON.stringify(err.message) + ' ' + JSON.stringify(err.response.data));
+        }
+      } else {
+        notif(JSON.stringify(err.message) + ' ' + JSON.stringify(err.response.data));
+      }
+
+      setLoading(false);
+      closeAndReset();
+    });
+  }
+
+  var types = {
+    1: "Pilihan ganda",
+    2: "Benar/Salah",
+    3: "Menjodohkan",
+    4: "Isian singkat",
+    5: "Essay"
+  };
+  var totalPoint = 0;
+
+  var renderItem = function renderItem() {
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    var root = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+    var level = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+    var enableSetting = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+    if (data.length === 0 && root) {
+      return loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_content_loader__WEBPACK_IMPORTED_MODULE_10__["List"], {
+        width: 300,
+        height: 80
+      }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-exclamation"
+      }), " Belum ada data");
+    } else return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      className: root ? "list-group" : ''
+    }, data.map(function (dt, i) {
+      var settings = JSON.parse(dt.settings);
+      var enableChildSetting = dt.type == 1 ? settings.bobotPerSoal : false;
+
+      if (dt.type == 2 && enableSetting || root && !enableChildSetting) {
+        totalPoint += parseInt(settings.bobot);
+      }
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        key: dt.id,
+        className: root ? 'list-group-item p-1' : ''
+      }, dt.type == 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-folder"
+      }), ' ', dt.type == 1 ? dt.nama : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "[", types[dt.soal.type], "] ", JSON.parse(dt.soal.pertanyaan).q), ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, dt.type == 1 && level < 2 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-xxs btn-outline-dark mr-1",
+        value: dt.id,
+        onClick: openForm
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-plus"
+      })), dt.type == 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-xxs btn-outline-primary mr-1",
+        value: dt.id,
+        onClick: function onClick(e) {
+          return openForm(e, "pengaturan");
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-wrench"
+      })), dt.type == 2 && enableSetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-xxs btn-outline-primary mr-1",
+        value: dt.id,
+        onClick: function onClick(e) {
+          return openForm(e, "pengaturan");
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-wrench"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-xxs btn-outline-danger",
+        value: dt.id,
+        onClick: function onClick() {
+          return delSoal(dt.id, dt.type == 1 ? dt.nama : JSON.parse(dt.soal.pertanyaan).q);
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-times"
+      }))), root && !enableChildSetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "float-right"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, settings.bobot | 0)), dt.type == 2 && enableSetting && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "float-right"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, settings.bobot | 0)), renderItem(dt.child, false, level + 1, enableChildSetting));
+    }));
+  };
+
+  var handlePageClick = function handlePageClick(data) {
+    console.log(data);
+    setSoalList(_objectSpread(_objectSpread({}, soalList), {}, {
+      page: data.selected + 1
+    }));
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row p2"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-12"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row card"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-12 card-body pb-0"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, data.kode && "[".concat(data.kode, "]"), " ", data.judul)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, data.keterangan))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row mt-2 card"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-12 card-body"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "pb-1"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Daftar Soal/Pertanyaan"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-xxs btn-primary ml-1",
+    value: 0,
+    onClick: openForm
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-plus"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: "list-group"
+  }, renderItem(soals)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "float-right"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Total : ", totalPoint)))))), formOpen && formType !== "pengaturan" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal",
+    style: {
+      display: 'block',
+      overflow: 'auto'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-dialog modal-lg",
+    role: "document"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-content"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: handleSubmit,
+    id: "form-1"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-body"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-12"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "button",
+    className: "close",
+    onClick: closeAndReset
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\xD7"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-12"
+  }, values.parent == '0' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_BasicForm__WEBPACK_IMPORTED_MODULE_6__["TextForm"], {
+    form: "form-1",
+    formW: "5",
+    labelW: "0",
+    placeholder: "Nama Bab",
+    name: "dirName",
+    value: values.dirName,
+    handleChange: handleChange
+  }), values.parent != '0' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_soal_SoalSearch__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    setSearch: setSearch,
+    defaultValues: {}
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "mb-1"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_soal_SoalList__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    soals: soalList.soals,
+    from: soalList.pageData.from,
+    loading: loading,
+    showType: soalList.search.type ? false : true,
+    action: "select",
+    select: handleSelectSoal
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "mb-1"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_Pagination__WEBPACK_IMPORTED_MODULE_11__["default"], {
+    pageData: soalList.pageData,
+    page: soalList.page,
+    handlePageClick: handlePageClick
+  }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-footer"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "sumbit",
+    form: "form-1",
+    className: "btn btn-sm btn-success",
+    disabled: loading
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-plus"
+  }), ' ', "Tambahkan", ' ', loading && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-spinner fa-spin"
+  })))))), formOpen && formType === "pengaturan" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PengaturanKuisModal__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    id: dataId,
+    closeAndReset: closeAndReset,
+    loadSoal: loadSoal,
+    setNotif: notif
+  }));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (KuisDetail);
+
+/***/ }),
+
+/***/ "./resources/js/components/kuis/KuisForm.js":
+/*!**************************************************!*\
+  !*** ./resources/js/components/kuis/KuisForm.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils_Token__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/Token */ "./resources/js/utils/Token.js");
+/* harmony import */ var _utils_useForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/useForm */ "./resources/js/utils/useForm.js");
+/* harmony import */ var _html_BasicForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../html/BasicForm */ "./resources/js/components/html/BasicForm.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+var KuisForm = function KuisForm(props) {
+  var tipe = props.tipe,
+      id = props.id,
+      setAction = props.setAction,
+      mapelId = props.mapelId,
+      dirId = props.dirId;
+  var fields = {
+    id: tipe === 'update' ? id : 0
+  };
+
+  var _useForm = Object(_utils_useForm__WEBPACK_IMPORTED_MODULE_3__["default"])(submit, fields),
+      values = _useForm.values,
+      setValues = _useForm.setValues,
+      getErrors = _useForm.getErrors,
+      handleChange = _useForm.handleChange,
+      handleSubmit = _useForm.handleSubmit;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      loading = _useState2[0],
+      setLoading = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      success = _useState4[0],
+      setSuccess = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState6 = _slicedToArray(_useState5, 2),
+      errors = _useState6[0],
+      setErrors = _useState6[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (tipe === 'update') {
+      if (!_utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) {
+        setErrors(['mohon login ulang']);
+        return;
+      }
+
+      setLoading(true);
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/kuis/' + id, {
+        headers: {
+          Authorization: 'Bearer ' + _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()
+        }
+      }).then(function (res) {
+        var data = res.data.data;
+        setValues(function (values) {
+          return _objectSpread(_objectSpread({}, values), {}, {
+            judul: data.judul,
+            kode: data.kode,
+            keterangan: data.keterangan
+          });
+        });
+        setLoading(false);
+      })["catch"](function () {
+        return setAction('', {
+          message: 'data error'
+        });
+      });
+    }
+
+    if (mapelId) {
+      console.log('kurang load data detail mapel');
+    }
+  }, []);
+
+  function submit() {
+    if (!_utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) {
+      setErrors(['mohon login ulang']);
+      return;
+    }
+
+    setLoading(true);
+    setSuccess(false);
+    var formData = new FormData();
+
+    for (var key in values) {
+      formData.append(key, values[key]);
+    }
+
+    if (tipe === "update") formData.append("_method", "put");
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/kuis/' + (id ? id : ''), formData, {
+      headers: {
+        'Content-Type': "multipart/form-data",
+        Authorization: 'Bearer ' + _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()
+      }
+    }).then(function (res) {
+      setLoading(false);
+      setSuccess(true);
+      setErrors({});
+      if (tipe === 'add') setValues({});
+    })["catch"](function (err) {
+      if (err.response) {
+        if (err.response.request.status === 422) {
+          setErrors(getErrors(err.response.data.errors));
+        } else if (err.response.request.status === 401) {
+          setErrors(['mohon login ulang']);
+        } else {
+          setErrors(['server error']);
+        }
+      } else {
+        setErrors(['server error']);
+      }
+
+      setLoading(false);
+    });
+  }
+
+  function errorMessages(err) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, err.map(function (item, key) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        key: key
+      }, item);
+    }));
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row",
+    style: {
+      padding: '2%'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-12"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-12"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+    className: "float-left"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, tipe === 'add' ? 'Tambah' : 'Ubah', " Kuis ", mapelId && " - Mata pelajaran : ".concat(mapelId))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row",
+    style: {
+      marginTop: '2%'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-8"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: handleSubmit,
+    id: "form"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_BasicForm__WEBPACK_IMPORTED_MODULE_4__["TextForm"], {
+    formW: "4",
+    name: "kode",
+    label: "Kode",
+    placeholder: "Kode Kuis",
+    handleChange: handleChange,
+    value: values.kode
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_BasicForm__WEBPACK_IMPORTED_MODULE_4__["TextForm"], {
+    name: "judul",
+    label: "Judul",
+    placeholder: "Judul Kuis",
+    handleChange: handleChange,
+    value: values.judul
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_BasicForm__WEBPACK_IMPORTED_MODULE_4__["TextAreaForm"], {
+    formW: "6",
+    name: "keterangan",
+    label: "Keterangan",
+    placeholder: "Keterangan (max 100)",
+    handleChange: handleChange,
+    value: values.keterangan
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-8"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "submit",
+    className: "btn btn-success",
+    disabled: loading
+  }, "SIMPAN ", loading && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fa fa-spinner fa-spin"
+  }), " "))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-4"
+  }, errors.constructor === Array && errors.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "bg-warning",
+    style: {
+      padding: '5%',
+      margin: '5%'
+    }
+  }, errorMessages(errors)), success && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "bg-success",
+    style: {
+      padding: '5%',
+      margin: '5%'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "lead"
+  }, "Sukses!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "data berhasil disimpan")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "bg-success",
+    style: {
+      padding: '5%',
+      margin: '5%',
+      display: 'none'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "lead"
+  }, "Keterangan"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "20"), " total murid"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "20"), " total ujian"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "10"), " total materi"))))));
+};
+
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["withRouter"])(KuisForm));
+
+/***/ }),
+
+/***/ "./resources/js/components/kuis/KuisList.js":
+/*!**************************************************!*\
+  !*** ./resources/js/components/kuis/KuisList.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+function KuisList(props) {
+  var kuises = props.kuises,
+      from = props.from,
+      loading = props.loading,
+      setAction = props.setAction,
+      _props$action = props.action,
+      action = _props$action === void 0 ? "default" : _props$action,
+      select = props.select;
+  var no = from | 1;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: "list-group"
+  }, kuises.map(function (kuis, key) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Item, {
+      kuis: kuis,
+      key: key,
+      no: no++,
+      action: action,
+      select: select,
+      setAction: setAction
+    });
+  }), kuises.length === 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Belum ada data kuis")), loading && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-spinner fa-spin"
+  }));
+}
+
+var Item = function Item(props) {
+  var kuis = props.kuis,
+      no = props.no,
+      action = props.action,
+      select = props.select,
+      setAction = props.setAction;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      selected = _useState2[0],
+      setSelected = _useState2[1];
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "list-group-item p-1",
+    style: {
+      backgroundColor: selected ? 'rgba(0,0,0,0.05)' : '#fff'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, no, " . "), kuis.kode && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "[", kuis.kode, "]"), " ", kuis.judul, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "float-right"
+  }, action === "default" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-xs btn-primary ml-1",
+    value: "kuisDetail-".concat(kuis.id),
+    onClick: setAction
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-expand"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-xs btn-warning ml-1",
+    value: "kuisUpdate-".concat(kuis.id),
+    onClick: setAction
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-edit"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-xs btn-danger ml-1",
+    value: "kuisDelete-".concat(kuis.id),
+    onClick: setAction
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-trash"
+  }))), action === "select" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    name: "select",
+    className: "custom-cb",
+    value: kuis.id,
+    type: "checkbox",
+    onChange: select,
+    onClick: function onClick() {
+      setSelected(!selected);
+    }
+  }))));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (KuisList);
+
+/***/ }),
+
+/***/ "./resources/js/components/kuis/KuisSearch.js":
+/*!****************************************************!*\
+  !*** ./resources/js/components/kuis/KuisSearch.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_useForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/useForm */ "./resources/js/utils/useForm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+function KuisSearch(props) {
+  var setSearch = props.setSearch,
+      defaultValues = props.defaultValues;
+
+  var _useForm = Object(_utils_useForm__WEBPACK_IMPORTED_MODULE_1__["default"])(submit),
+      values = _useForm.values,
+      handleChange = _useForm.handleChange,
+      setValues = _useForm.setValues;
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (defaultValues.judul || defaultValues.kode) setValues(_objectSpread({}, defaultValues));
+  }, []);
+
+  var submit = function submit(e) {
+    e.preventDefault();
+    setSearch({
+      kuis: values
+    });
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: submit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "container d-flex h-100 flex-column"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "flex-grow-1 mb-1"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row justify-content-center"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-3 mb-1"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    className: "form-control",
+    placeholder: "judul",
+    name: "judul",
+    value: values.judul || '',
+    onChange: handleChange
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-2 mb-1"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    className: "form-control",
+    placeholder: "kode",
+    name: "kode",
+    value: values.kode || '',
+    onChange: handleChange
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-2 mb-1"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-warning float-left",
+    style: {
+      width: '48%',
+      padding: "0.375rem 0.5rem"
+    },
+    onClick: function onClick() {
+      return setValues({});
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-times"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-success float-right",
+    style: {
+      width: '48%',
+      padding: "0.375rem 0.5rem"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-search"
+  }))))));
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (KuisSearch);
+
+/***/ }),
+
+/***/ "./resources/js/components/kuis/PengaturanKuisModal.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/kuis/PengaturanKuisModal.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_useForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/useForm */ "./resources/js/utils/useForm.js");
+/* harmony import */ var _utils_Token__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/Token */ "./resources/js/utils/Token.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _html_BasicForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../html/BasicForm */ "./resources/js/components/html/BasicForm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+var PengaturanSoalModal = function PengaturanSoalModal(props) {
+  var id = props.id,
+      closeAndReset = props.closeAndReset,
+      loadSoal = props.loadSoal,
+      setNotif = props.setNotif;
+  var fields = {
+    id: id,
+    nama: '',
+    settings: {}
+  };
+
+  var _useForm = Object(_utils_useForm__WEBPACK_IMPORTED_MODULE_1__["default"])(submit, fields),
+      values = _useForm.values,
+      setValues = _useForm.setValues,
+      getErrors = _useForm.getErrors,
+      handleChange = _useForm.handleChange,
+      handleSubmit = _useForm.handleSubmit;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState2 = _slicedToArray(_useState, 2),
+      type = _useState2[0],
+      setType = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      loading = _useState4[0],
+      setLoading = _useState4[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    loadDetail();
+  }, []);
+
+  var loadDetail = function loadDetail() {
+    if (!_utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) {
+      setNotif('mohon login ulang');
+      return;
+    }
+
+    setLoading(true);
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/kuis-soal/' + id, {
+      headers: {
+        Authorization: 'Bearer ' + _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()
+      }
+    }).then(function (res) {
+      setType(res.data.data.type);
+      setValues(_objectSpread(_objectSpread({}, values), {}, {
+        nama: res.data.data.nama,
+        settings: JSON.parse(res.data.data.settings)
+      }));
+      setLoading(false);
+    })["catch"](function () {
+      return closeAndReset();
+    });
+  };
+
+  function submit() {
+    if (!_utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) {
+      setNotif('mohon login ulang');
+      return;
+    }
+
+    setLoading(true);
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a.put('/api/kuis-soal/' + id, _objectSpread(_objectSpread({}, values), {}, {
+      type: type
+    }), {
+      headers: {
+        Authorization: 'Bearer ' + _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()
+      }
+    }).then(function (res) {
+      setLoading(false);
+      setNotif('sukses');
+      closeAndReset();
+      loadSoal();
+    })["catch"](function (err) {
+      if (err.response) {
+        if (err.response.request.status === 422) {
+          console.log(getErrors(err.response.data.errors));
+          setNotif(getErrors(err.response.data.errors));
+        }
+      }
+
+      closeAndReset();
+    });
+  }
+
+  var handleCheck = function handleCheck(e) {
+    var checked = e.target.checked;
+    setValues(_objectSpread(_objectSpread({}, values), {}, {
+      settings: _objectSpread(_objectSpread({}, values.settings), {}, _defineProperty({}, e.target.name, checked))
+    }));
+  };
+
+  var handleSettingsChange = function handleSettingsChange(e) {
+    setValues(_objectSpread(_objectSpread({}, values), {}, {
+      settings: _objectSpread(_objectSpread({}, values.settings), {}, _defineProperty({}, e.target.name, e.target.value))
+    }));
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal",
+    style: {
+      display: 'block',
+      overflow: 'auto'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-dialog modal-lg",
+    role: "document"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-content"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-header row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-12"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Pengaturan"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "button",
+    className: "close",
+    onClick: closeAndReset
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\xD7")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: handleSubmit,
+    id: "form-1"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-body"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-12"
+  }, type == 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_BasicForm__WEBPACK_IMPORTED_MODULE_4__["TextForm"], {
+    label: "Nama *",
+    placeholder: "Nama group/bab kuis",
+    name: "nama",
+    value: values.nama,
+    handleChange: handleChange
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_BasicForm__WEBPACK_IMPORTED_MODULE_4__["TextForm"], {
+    label: "Keterangan",
+    name: "keterangan",
+    placeholder: "keterangan kuis",
+    value: values.settings.keterangan,
+    handleChange: handleSettingsChange
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_BasicForm__WEBPACK_IMPORTED_MODULE_4__["TextForm"], {
+    label: "Bobot *",
+    formW: "3",
+    formtext: "* Bobot group/bab soal",
+    name: "bobot",
+    placeholder: "Bobot nilai",
+    value: values.settings.bobot,
+    handleChange: handleSettingsChange
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-8 offset-md-2 p-0"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    className: "mb-0"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "checkbox",
+    name: "bobotPerSoal",
+    className: "custom-cb",
+    onChange: handleCheck,
+    checked: values.settings.bobotPerSoal ? true : false
+  }), "  Bobot per soal")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-8 offset-md-2 p-0"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "checkbox",
+    name: "acakSoal",
+    className: "custom-cb",
+    onChange: handleCheck,
+    checked: values.settings.acakSoal ? true : false
+  }), "  Acak Soal"))), type == 2 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_BasicForm__WEBPACK_IMPORTED_MODULE_4__["TextForm"], {
+    label: "Bobot *",
+    formW: "3",
+    formtext: "* Bobot soal",
+    name: "bobot",
+    placeholder: "Bobot nilai",
+    value: values.settings.bobot,
+    handleChange: handleSettingsChange
+  }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-footer"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "sumbit",
+    form: "form-1",
+    className: "btn btn-sm btn-success",
+    disabled: loading
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-check"
+  }), ' ', "Terapkan", ' ', loading && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-spinner fa-spin"
+  }))))));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (PengaturanSoalModal);
+
+/***/ }),
+
+/***/ "./resources/js/components/pengajar/Kuis.js":
+/*!**************************************************!*\
+  !*** ./resources/js/components/pengajar/Kuis.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils_Token__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/Token */ "./resources/js/utils/Token.js");
+/* harmony import */ var _html_Template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../html/Template */ "./resources/js/components/html/Template.js");
+/* harmony import */ var _kuis_KuisList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../kuis/KuisList */ "./resources/js/components/kuis/KuisList.js");
+/* harmony import */ var _kuis_KuisSearch__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../kuis/KuisSearch */ "./resources/js/components/kuis/KuisSearch.js");
+/* harmony import */ var _kuis_KuisForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../kuis/KuisForm */ "./resources/js/components/kuis/KuisForm.js");
+/* harmony import */ var _kuis_KuisDelete__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../kuis/KuisDelete */ "./resources/js/components/kuis/KuisDelete.js");
+/* harmony import */ var _kuis_KuisDetail__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../kuis/KuisDetail */ "./resources/js/components/kuis/KuisDetail.js");
+/* harmony import */ var _soal_SoalList__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../soal/SoalList */ "./resources/js/components/soal/SoalList.js");
+/* harmony import */ var _soal_SoalSearch__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../soal/SoalSearch */ "./resources/js/components/soal/SoalSearch.js");
+/* harmony import */ var _soal_SoalForm__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../soal/SoalForm */ "./resources/js/components/soal/SoalForm.js");
+/* harmony import */ var _soal_SoalDelete__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../soal/SoalDelete */ "./resources/js/components/soal/SoalDelete.js");
+/* harmony import */ var _ErrorBoundary__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../ErrorBoundary */ "./resources/js/ErrorBoundary.js");
+/* harmony import */ var _html_Pagination__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./../html/Pagination */ "./resources/js/components/html/Pagination.js");
+/* harmony import */ var react_hot_loader_root__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-hot-loader/root */ "./node_modules/react-hot-loader/root.js");
+/* harmony import */ var react_hot_loader_root__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(react_hot_loader_root__WEBPACK_IMPORTED_MODULE_15__);
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var Kuis = /*#__PURE__*/function (_React$Component) {
+  _inherits(Kuis, _React$Component);
+
+  var _super = _createSuper(Kuis);
+
+  function Kuis(props) {
+    var _this;
+
+    _classCallCheck(this, Kuis);
+
+    _this = _super.call(this, props);
+
+    _defineProperty(_assertThisInitialized(_this), "loadKuis", function () {
+      var token = _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken();
+
+      if (!token) {
+        _this.props.logOut('kuis', true);
+
+        return;
+      }
+
+      _this.setState({
+        fetch: true
+      });
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('api/kuis?page=' + _this.state.kuisPage, {
+        params: _this.state.search.kuis,
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      }).then(function (res) {
+        _this.setState({
+          kuises: res.data.data,
+          pageDataKuis: {
+            from: res.data.meta.from,
+            total: res.data.meta.total,
+            per_page: res.data.meta.per_page,
+            pageCount: Math.ceil(res.data.meta.total / res.data.meta.per_page)
+          },
+          fetch: false
+        });
+      })["catch"](function (err) {
+        _this.notif(JSON.stringify(err.message));
+
+        _this.setState({
+          fetch: false
+        });
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "loadSoal", function () {
+      var token = _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken();
+
+      if (!token) {
+        _this.props.logOut('kuis', true);
+
+        return;
+      }
+
+      _this.setState({
+        fetch: true
+      });
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('api/soal?page=' + _this.state.soalPage, {
+        params: _this.state.search.soal,
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      }).then(function (res) {
+        _this.setState({
+          soals: res.data.data,
+          pageDataSoal: {
+            from: res.data.meta.from,
+            total: res.data.meta.total,
+            per_page: res.data.meta.per_page,
+            pageCount: Math.ceil(res.data.meta.total / res.data.meta.per_page)
+          },
+          fetch: false
+        });
+      })["catch"](function (err) {
+        _this.notif(JSON.stringify(err.message));
+
+        _this.setState({
+          fetch: false
+        });
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "setSearch", function (values) {
+      _this.setState({
+        search: _objectSpread(_objectSpread({}, _this.state.search), values)
+      }, function () {
+        if (_this.state.action === '') _this.loadKuis();
+        if (_this.state.action === 'soal') _this.loadSoal();
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "notif", function () {
+      var m = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+      var reloadData = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+      if (m.constructor === Array) {
+        var message = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, m.map(function (ms, key) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            key: key
+          }, ms);
+        }));
+
+        _this.setState({
+          message: message
+        });
+      } else _this.setState({
+        message: m
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "setAction", function (e, p) {
+      var reload = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+      if (e) {
+        e.preventDefault();
+        var action = e.currentTarget.value.split('-')[0];
+        var id = e.currentTarget.value.split('-')[1];
+        var message = e.currentTarget.value.split('-')[2];
+
+        _this.setState({
+          action: action,
+          kuisId: id ? id : '',
+          soalId: id ? id : '',
+          message: message ? message : ''
+        }, function () {
+          if (['', 'soal'].indexOf(action) !== -1) {
+            if (action === '') _this.loadKuis();
+            if (action === 'soal') _this.loadSoal();
+          }
+        });
+      } else if (p) {
+        _this.setState({
+          action: p.action ? p.action : '',
+          message: p.message ? p.message : ''
+        }, function () {
+          if (reload) {
+            if (_this.state.action === '') _this.loadKuis();
+            if (_this.state.action === 'soal') _this.loadSoal();
+          }
+        });
+      } else _this.setState({
+        action: '',
+        message: ''
+      }, function () {
+        if (reload) {
+          _this.loadKuis();
+        }
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handlePageClick", function (data) {
+      var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "kuis";
+
+      if (type == "kuis") {
+        _this.setState({
+          fetch: true,
+          kuisPage: data.selected + 1
+        }, function () {
+          _this.loadKuis();
+        });
+      } else {
+        _this.setState({
+          fetch: true,
+          soalPage: data.selected + 1
+        }, function () {
+          _this.loadSoal();
+        });
+      }
+    });
+
+    _this.state = {
+      action: '',
+      kuises: [],
+      pageDataKuis: {
+        pageCount: 0
+      },
+      kuisPage: 1,
+      soals: [],
+      pageDataSoal: {
+        pageCount: 0
+      },
+      soalPage: 1,
+      search: {
+        kuis: {
+          judul: '',
+          kode: ''
+        },
+        soal: {
+          kode: '',
+          pertanyaan: '',
+          type: ''
+        }
+      },
+      kuisId: '',
+      soalId: '',
+      fetch: false,
+      message: _this.props.location.state ? _this.props.location.state.message : ''
+    };
+    return _this;
+  }
+
+  _createClass(Kuis, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      if (this.state.action === '') this.loadKuis();
+      if (this.state.action === 'soal') this.loadSoal();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_Template__WEBPACK_IMPORTED_MODULE_3__["PageTitle"], {
+        title: "Kuis",
+        navs: [{
+          show: this.state.action === '',
+          clickHandle: function clickHandle() {
+            return _this2.setAction('', {
+              action: 'kuisAdd'
+            });
+          }
+        }, {
+          show: ['kuisAdd', 'kuisUpdate', 'kuisDelete', 'kuisDetail'].indexOf(this.state.action) !== -1,
+          clickHandle: function clickHandle() {
+            return _this2.setAction('', {
+              action: ''
+            }, true);
+          },
+          icon: "fa-arrow-left"
+        }, {
+          show: ['soalAdd', 'soalUpdate', 'soalDelete'].indexOf(this.state.action) !== -1,
+          clickHandle: function clickHandle() {
+            return _this2.setAction('', {
+              action: 'soal'
+            }, true);
+          },
+          icon: "fa-arrow-left"
+        }, {
+          show: this.state.action === 'soal',
+          clickHandle: function clickHandle() {
+            return _this2.setAction('', {
+              action: 'soalAdd'
+            });
+          }
+        }]
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 mt-3"
+      }, this.state.message !== '' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_Template__WEBPACK_IMPORTED_MODULE_3__["Alert"], {
+        message: this.state.message,
+        clickHandle: this.notif
+      })), ['', 'soal'].indexOf(this.state.action) !== -1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 mt-1 mb-0"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "nav nav-tabs"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "nav-item"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "nav-link ".concat(this.state.action === '' && 'active'),
+        onClick: this.setAction,
+        value: ""
+      }, "Kuis")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "nav-item"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "nav-link ".concat(this.state.action === 'soal' && 'active'),
+        onClick: this.setAction,
+        value: "soal"
+      }, "Soal / Pertanyaan")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-md-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ErrorBoundary__WEBPACK_IMPORTED_MODULE_13__["default"], null, function () {
+        switch (_this2.state.action) {
+          case "":
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_kuis_KuisSearch__WEBPACK_IMPORTED_MODULE_5__["default"], {
+              setSearch: _this2.setSearch,
+              defaultValues: _this2.state.search.kuis
+            }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_kuis_KuisList__WEBPACK_IMPORTED_MODULE_4__["default"], {
+              kuises: _this2.state.kuises,
+              from: _this2.state.pageDataKuis.from,
+              loading: _this2.fetch,
+              setAction: _this2.setAction
+            }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "mb-2"
+            }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_Pagination__WEBPACK_IMPORTED_MODULE_14__["default"], {
+              pageData: _this2.state.pageDataKuis,
+              page: _this2.state.kuisPage,
+              handlePageClick: _this2.handlePageClick
+            }));
+
+          case "kuisAdd":
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_kuis_KuisForm__WEBPACK_IMPORTED_MODULE_6__["default"], {
+              tipe: "add",
+              id: ""
+            });
+
+          case "kuisUpdate":
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_kuis_KuisForm__WEBPACK_IMPORTED_MODULE_6__["default"], {
+              tipe: "update",
+              id: _this2.state.kuisId,
+              setAction: _this2.setAction
+            });
+
+          case "kuisDelete":
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_kuis_KuisDelete__WEBPACK_IMPORTED_MODULE_7__["default"], {
+              id: _this2.state.kuisId,
+              setAction: _this2.setAction,
+              notif: _this2.notif
+            });
+
+          case "kuisDetail":
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_kuis_KuisDetail__WEBPACK_IMPORTED_MODULE_8__["default"], {
+              id: _this2.state.kuisId,
+              setAction: _this2.setAction,
+              notif: _this2.notif
+            });
+
+          case "soal":
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_soal_SoalSearch__WEBPACK_IMPORTED_MODULE_10__["default"], {
+              setSearch: _this2.setSearch,
+              defaultValues: _this2.state.search.soal
+            }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_soal_SoalList__WEBPACK_IMPORTED_MODULE_9__["default"], {
+              soals: _this2.state.soals,
+              from: _this2.state.pageDataSoal.from,
+              loading: _this2.fetch,
+              setAction: _this2.setAction,
+              showType: _this2.state.search.soal.type ? false : true
+            }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "mb-2"
+            }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_Pagination__WEBPACK_IMPORTED_MODULE_14__["default"], {
+              pageData: _this2.state.pageDataSoal,
+              page: _this2.state.soalPage,
+              handlePageClick: function handlePageClick(data) {
+                return _this2.handlePageClick(data, "soal");
+              }
+            }));
+
+          case "soalAdd":
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_soal_SoalForm__WEBPACK_IMPORTED_MODULE_11__["default"], {
+              tipe: "add",
+              id: ""
+            });
+
+          case "soalUpdate":
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_soal_SoalForm__WEBPACK_IMPORTED_MODULE_11__["default"], {
+              tipe: "update",
+              id: _this2.state.soalId,
+              setAction: _this2.setAction
+            });
+
+          default:
+            return "nonono";
+        }
+      }())));
+    }
+  }]);
+
+  return Kuis;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_hot_loader_root__WEBPACK_IMPORTED_MODULE_15__["hot"])(Kuis));
+
+/***/ }),
+
+/***/ "./resources/js/components/soal/SoalDelete.js":
+/*!****************************************************!*\
+  !*** ./resources/js/components/soal/SoalDelete.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils_Token__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/Token */ "./resources/js/utils/Token.js");
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! file-saver */ "./node_modules/file-saver/dist/FileSaver.min.js");
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_3__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+var SoalDelete = function SoalDelete(props) {
+  var id = props.id,
+      notif = props.notif,
+      setAction = props.setAction;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+      _useState2 = _slicedToArray(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+      _useState4 = _slicedToArray(_useState3, 2),
+      materi = _useState4[0],
+      setMateri = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      loading = _useState6[0],
+      setLoading = _useState6[1];
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(),
+      _useState8 = _slicedToArray(_useState7, 2),
+      message = _useState8[0],
+      setMessage = _useState8[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (!_utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) {
+      notif('mohon login ulang');
+      return;
+    }
+
+    setLoading(true);
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/kuis/' + id, {
+      headers: {
+        Authorization: 'Bearer ' + _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()
+      }
+    }).then(function (res) {
+      setData(res.data.data);
+      setLoading(false);
+    })["catch"](function () {
+      return setAction('', '', true);
+    });
+  }, []);
+
+  function submit() {
+    if (!_utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) {
+      notif('mohon login ulang');
+      return;
+    }
+
+    if (!confirm('Hapus data?')) return;
+    setLoading(true);
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]('/api/kuis/' + id, {
+      headers: {
+        Authorization: 'Bearer ' + _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()
+      }
+    }).then(function () {
+      setAction('', {
+        message: 'data berhasil dihapus'
+      }, true);
+    })["catch"](function () {
+      notif('err');
+      setLoading(false);
+    });
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row p2"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-12"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-12"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+    className: "float-left"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Hapus Data")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row mt-2"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-8"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Kode : "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), data.kode), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Judul : "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), data.judul), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Keterangan : "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), data.keterangan), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-sm btn-danger mt-1",
+    onClick: submit,
+    disabled: loading
+  }, "Hapus")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-4"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "nothing here")))));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (SoalDelete);
+
+/***/ }),
+
+/***/ "./resources/js/components/soal/SoalForm.js":
+/*!**************************************************!*\
+  !*** ./resources/js/components/soal/SoalForm.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils_Token__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/Token */ "./resources/js/utils/Token.js");
+/* harmony import */ var _utils_useForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/useForm */ "./resources/js/utils/useForm.js");
+/* harmony import */ var react_lineto__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-lineto */ "./node_modules/react-lineto/dist/react-lineto.js");
+/* harmony import */ var react_lineto__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_lineto__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _html_BasicForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../html/BasicForm */ "./resources/js/components/html/BasicForm.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+var SoalForm = function SoalForm(props) {
+  var tipe = props.tipe,
+      id = props.id,
+      setAction = props.setAction;
+  var fields = {
+    id: tipe === 'update' ? id : 0,
+    type: 1
+  };
+
+  var _useForm = Object(_utils_useForm__WEBPACK_IMPORTED_MODULE_3__["default"])(submit, fields),
+      values = _useForm.values,
+      setValues = _useForm.setValues,
+      getErrors = _useForm.getErrors,
+      handleChange = _useForm.handleChange,
+      handleSubmit = _useForm.handleSubmit;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      loading = _useState2[0],
+      setLoading = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      success = _useState4[0],
+      setSuccess = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState6 = _slicedToArray(_useState5, 2),
+      errors = _useState6[0],
+      setErrors = _useState6[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (tipe === 'update') {
+      if (!_utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) {
+        setErrors(['mohon login ulang']);
+        return;
+      }
+
+      setLoading(true);
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/soal/' + id, {
+        headers: {
+          Authorization: 'Bearer ' + _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()
+        }
+      }).then(function (res) {
+        var data = res.data.data;
+        var dt = {};
+        if (data.type == 2) dt = {
+          kunci: JSON.parse(data.jawaban) ? '1' : '0'
+        };else if (data.type == 5) dt = {
+          kunci: JSON.parse(data.jawaban)
+        };else if (data.type == 1) dt = {
+          jawabans: JSON.parse(data.pertanyaan).alist,
+          kunci: JSON.parse(data.jawaban).a,
+          aType: JSON.parse(data.jawaban).type
+        };else if (data.type == 3) dt = {
+          pertanyaans: JSON.parse(data.pertanyaan).qlist,
+          jawabans: JSON.parse(data.pertanyaan).alist,
+          kunci: JSON.parse(data.jawaban)
+        };else if (data.type == 4) dt = {
+          kunci: JSON.parse(data.jawaban)
+        };
+        setValues(_objectSpread(_objectSpread({}, values), {}, {
+          type: data.type,
+          kode: data.kode,
+          q: JSON.parse(data.pertanyaan).q
+        }, dt));
+        setLoading(false);
+      })["catch"](function () {
+        return setAction('', {
+          message: 'data error',
+          action: 'soal'
+        });
+      });
+    }
+  }, []);
+
+  function submit() {
+    //console.log(values)
+    if (!_utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].cek()) {
+      setErrors(['mohon login ulang']);
+      return;
+    }
+
+    setLoading(true); //return
+
+    setSuccess(false);
+    var formData = new FormData();
+
+    for (var key in values) {
+      //const val = (values.type == 3 && key == 'kunci') ? JSON.stringify(values[key]) : values[key]
+      var val = values[key].constructor == Array ? JSON.stringify(values[key]) : values[key];
+      formData.append(key, val);
+    }
+
+    if (tipe === "update") formData.append("_method", "put");
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/soal/' + (id ? id : ''), formData, {
+      headers: {
+        'Content-Type': "multipart/form-data",
+        Authorization: 'Bearer ' + _utils_Token__WEBPACK_IMPORTED_MODULE_2__["default"].getToken()
+      }
+    }).then(function (res) {
+      setLoading(false);
+      setSuccess(true);
+      setErrors({});
+
+      if (tipe === 'add') {
+        if (values.type == 1) {
+          console.log('reset pilgan');
+          setValues(_objectSpread(_objectSpread({}, fields), {}, {
+            aType: 1,
+            jawabans: [""],
+            kunci: []
+          }));
+        } else if (values.type != 3) setValues(_objectSpread({}, fields));else setValues(_objectSpread(_objectSpread({}, fields), {}, {
+          pertanyaans: [''],
+          jawabans: [''],
+          kunci: []
+        }));
+      }
+    })["catch"](function (err) {
+      if (err.response) {
+        if (err.response.request.status === 422) {
+          setErrors(getErrors(err.response.data.errors));
+        } else if (err.response.request.status === 401) {
+          setErrors(['mohon login ulang']);
+        } else {
+          setErrors(['server error']);
+        }
+      } else {
+        setErrors(['server error']);
+      }
+
+      setLoading(false);
+    });
+  }
+
+  function errorMessages(err) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, err.map(function (item, key) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        key: key
+      }, item);
+    }));
+  }
+
+  function form(type) {
+    if (type == 1) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(PilihanGandaForm, {
+      values: values,
+      handleChange: handleChange,
+      setValues: setValues
+    });else if (type == 2) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(BenarSalahForm, {
+      values: values,
+      handleChange: handleChange,
+      setValues: setValues
+    });else if (type == 3) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MenjodohkanForm, {
+      values: values,
+      handleChange: handleChange,
+      setValues: setValues
+    });else if (type == 4) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(IsianForm, {
+      values: values,
+      handleChange: handleChange,
+      setValues: setValues
+    });else if (type == 5) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(EssayForm, {
+      values: values,
+      handleChange: handleChange,
+      setValues: setValues
+    });
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row",
+    style: {
+      padding: '2%'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-12"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-12"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+    className: "float-left"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, tipe === 'add' ? 'Tambah' : 'Ubah', " Soal ")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row",
+    style: {
+      marginTop: '2%'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-8"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: handleSubmit,
+    id: "form"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_BasicForm__WEBPACK_IMPORTED_MODULE_5__["SelectForm"], {
+    label: "Tipe Soal",
+    name: "type",
+    value: values.type,
+    handleChange: handleChange,
+    options: [{
+      id: 1,
+      nama: 'Pilihan Ganda'
+    }, {
+      id: 2,
+      nama: 'Benar/Salah'
+    }, {
+      id: 3,
+      nama: 'Menjodohkan'
+    }, {
+      id: 4,
+      nama: 'Isian Singkat'
+    }, {
+      id: 5,
+      nama: 'Essay'
+    }]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_BasicForm__WEBPACK_IMPORTED_MODULE_5__["TextForm"], {
+    formW: "4",
+    name: "kode",
+    label: "Kode",
+    placeholder: "Kode Soal",
+    handleChange: handleChange,
+    value: values.kode
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), form(values.type), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-8"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "submit",
+    className: "btn btn-success",
+    disabled: loading
+  }, "SIMPAN ", loading && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fa fa-spinner fa-spin"
+  }), " "))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-4"
+  }, errors.constructor === Array && errors.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "bg-warning",
+    style: {
+      padding: '5%',
+      margin: '5%'
+    }
+  }, errorMessages(errors)), success && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "bg-success",
+    style: {
+      padding: '5%',
+      margin: '5%'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "lead"
+  }, "Sukses!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "data berhasil disimpan"))))));
+};
+
+var PilihanGandaForm = function PilihanGandaForm(props) {
+  var values = props.values,
+      handleChange = props.handleChange,
+      setValues = props.setValues;
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    console.log(values.aType);
+
+    if (values.aType === undefined) {
+      console.log('set');
+      setValues(_objectSpread(_objectSpread({}, values), {}, {
+        aType: 1,
+        jawabans: [""],
+        kunci: []
+      }));
+    }
+  }, []);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {//if (values.aType) setValues({ ...values, kunci: [] })
+    //PR
+  }, [values.aType]);
+
+  var handleCheck = function handleCheck(e) {
+    if (values.aType == 1) setValues(_objectSpread(_objectSpread({}, values), {}, {
+      kunci: [parseInt(e.target.value) + 1]
+    }));else if (values.aType == 2) {
+      if (e.target.checked) setValues(_objectSpread(_objectSpread({}, values), {}, {
+        kunci: [].concat(_toConsumableArray(values.kunci), [parseInt(e.target.value) + 1])
+      }));else {
+        var filteredKunci = values.kunci.filter(function (k) {
+          return k !== parseInt(e.target.value) + 1;
+        });
+        setValues(_objectSpread(_objectSpread({}, values), {}, {
+          kunci: filteredKunci
+        }));
+      }
+    }
+  };
+
+  var newJawaban = function newJawaban(e) {
+    setValues(_objectSpread(_objectSpread({}, values), {}, {
+      jawabans: [].concat(_toConsumableArray(values.jawabans), [""])
+    }));
+  };
+
+  var handleJawaban = function handleJawaban(e) {
+    var newJawabans = _toConsumableArray(values.jawabans);
+
+    newJawabans[e.target.name] = e.target.value;
+    setValues(_objectSpread(_objectSpread({}, values), {}, {
+      jawabans: newJawabans
+    }));
+  };
+
+  var delJawaban = function delJawaban(e) {
+    var deletedKeys = [];
+    var filteredJawabans = values.jawabans.filter(function (jawaban, i) {
+      if (e.target.value === jawaban) deletedKeys.push(i + 1);
+      return e.target.value !== jawaban;
+    });
+    var filteredKeys = values.kunci.filter(function (k, i) {
+      return deletedKeys.indexOf(k) === -1;
+    });
+    setValues(_objectSpread(_objectSpread({}, values), {}, {
+      jawabans: filteredJawabans,
+      kunci: filteredKeys
+    }));
+  }; //console.log(values)
+
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_BasicForm__WEBPACK_IMPORTED_MODULE_5__["TextAreaForm"], {
+    label: "Pertanyaan",
+    formW: "10",
+    name: "q",
+    value: values.q,
+    placeholder: "isikan pertanyaan...",
+    handleChange: handleChange
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_BasicForm__WEBPACK_IMPORTED_MODULE_5__["SelectForm"], {
+    label: "Tipe Jawaban",
+    name: "aType",
+    value: values.aType,
+    handleChange: handleChange,
+    options: [{
+      id: 1,
+      nama: 'Satu Jawaban'
+    }, {
+      id: 2,
+      nama: 'Multi Jawaban'
+    }]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    className: "col-md-2"
+  }, "Jawaban ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-sm btn-outline-primary",
+    onClick: newJawaban
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-plus"
+  })), "                "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-8"
+  }, values.jawabans && values.jawabans.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: "list-group"
+  }, values.jawabans.map(function (jawaban, i) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, {
+      key: i
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      style: {
+        listStyle: 'none'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "form-inline float-left mb-1",
+      style: {
+        width: '100%'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      style: {
+        width: '1.3em'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, String.fromCharCode(65 + i))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "text",
+      size: "45",
+      name: i,
+      value: jawaban,
+      className: "form-control mr-1",
+      onChange: handleJawaban
+    }), values.aType == 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      name: "kunci",
+      type: "radio",
+      value: i,
+      checked: parseInt(values.kunci) === i + 1,
+      onChange: handleCheck,
+      className: "custom-rd mr-1"
+    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      name: "kunci",
+      type: "checkbox",
+      value: i,
+      checked: values.kunci.indexOf(i + 1) !== -1,
+      onChange: handleCheck,
+      className: "custom-cb mr-1"
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      type: "button",
+      value: jawaban,
+      onClick: delJawaban,
+      className: "btn btn-xs btn-outline-danger"
+    }, "\xD7"))));
+  })))));
+};
+
+var BenarSalahForm = function BenarSalahForm(props) {
+  var values = props.values,
+      handleChange = props.handleChange,
+      setValues = props.setValues;
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (values.kunci === undefined) setValues(_objectSpread(_objectSpread({}, values), {}, {
+      kunci: '1'
+    }));
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_BasicForm__WEBPACK_IMPORTED_MODULE_5__["TextAreaForm"], {
+    label: "Pertanyaan",
+    formW: "10",
+    name: "q",
+    value: values.q,
+    placeholder: "isikan pertanyaan...",
+    handleChange: handleChange
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_BasicForm__WEBPACK_IMPORTED_MODULE_5__["RadioForm"], {
+    label: "Jawaban",
+    name: "kunci",
+    handleChange: handleChange,
+    value: values.kunci,
+    options: [['1', 'BENAR'], ['0', 'SALAH']]
+  }));
+};
+
+var MenjodohkanForm = function MenjodohkanForm(props) {
+  var values = props.values,
+      handleChange = props.handleChange,
+      setValues = props.setValues;
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (values.pertanyaans === undefined) setValues(_objectSpread(_objectSpread({}, values), {}, {
+      pertanyaans: [''],
+      jawabans: [''],
+      kunci: []
+    }));
+  }, []);
+
+  var handleCheck = function handleCheck(e) {
+    if (values.aType == 1) setValues(_objectSpread(_objectSpread({}, values), {}, {
+      kunci: [parseInt(e.target.value) + 1]
+    }));else if (values.aType == 2) {
+      if (e.target.checked) setValues(_objectSpread(_objectSpread({}, values), {}, {
+        kunci: [].concat(_toConsumableArray(values.kunci), [parseInt(e.target.value) + 1])
+      }));else {
+        var filteredKunci = values.kunci.filter(function (k) {
+          return k !== parseInt(e.target.value) + 1;
+        });
+        setValues(_objectSpread(_objectSpread({}, values), {}, {
+          kunci: filteredKunci
+        }));
+      }
+    }
+  };
+
+  var newJawaban = function newJawaban(e) {
+    setValues(_objectSpread(_objectSpread({}, values), {}, {
+      jawabans: [].concat(_toConsumableArray(values.jawabans), [""])
+    }));
+  };
+
+  var handleJawaban = function handleJawaban(e) {
+    var newJawabans = _toConsumableArray(values.jawabans);
+
+    newJawabans[e.target.name] = e.target.value;
+    setValues(_objectSpread(_objectSpread({}, values), {}, {
+      jawabans: newJawabans
+    }));
+  };
+
+  var delJawaban = function delJawaban(e) {
+    var deletedKeys = [];
+    var filteredJawabans = values.jawabans.filter(function (jawaban, i) {
+      if (e.target.value === jawaban) deletedKeys.push(i + 1);
+      return e.target.value !== jawaban;
+    });
+    var filteredKeys = values.kunci.filter(function (k, i) {
+      return deletedKeys.indexOf(k) === -1;
+    });
+    setValues(_objectSpread(_objectSpread({}, values), {}, {
+      jawabans: filteredJawabans,
+      kunci: filteredKeys
+    }));
+  };
+
+  var newPertanyaan = function newPertanyaan(e) {
+    setValues(_objectSpread(_objectSpread({}, values), {}, {
+      pertanyaans: [].concat(_toConsumableArray(values.pertanyaans), [""])
+    }));
+  };
+
+  var handlePertanyaan = function handlePertanyaan(e) {
+    var newPertanyaans = _toConsumableArray(values.pertanyaans);
+
+    newPertanyaans[e.target.name] = e.target.value;
+    setValues(_objectSpread(_objectSpread({}, values), {}, {
+      pertanyaans: newPertanyaans
+    }));
+  };
+
+  var delPertanyaan = function delPertanyaan(e) {
+    var deletedKeys = [];
+    var filteredPertanyaans = values.pertanyaans.filter(function (pertanyaan, i) {
+      if (e.target.value === pertanyaan) deletedKeys.push(i + 1);
+      return e.target.value !== pertanyaan;
+    });
+    var filteredKeys = values.kunci.filter(function (k, i) {
+      return deletedKeys.indexOf(k) === -1;
+    });
+    setValues(_objectSpread(_objectSpread({}, values), {}, {
+      pertanyaans: filteredPertanyaans,
+      kunci: filteredKeys
+    }));
+  };
+
+  var handleDragStart = function handleDragStart(data) {
+    return function (event) {
+      var newKunci = values.kunci.filter(function (k) {
+        return k.q !== data.id;
+      });
+      setValues(_objectSpread(_objectSpread({}, values), {}, {
+        kunci: newKunci
+      }));
+      event.dataTransfer.setData("dragContent", data.id);
+    };
+  };
+
+  var handleDrop = function handleDrop(data) {
+    return function (event) {
+      event.preventDefault();
+      var exist = values.kunci.filter(function (line) {
+        return line.a === data.id;
+      });
+      if (exist.length > 0) return;
+      var from = JSON.parse(event.dataTransfer.getData("dragContent"));
+      var to = data.id; //setLines([...lines, { q: from, a: to }])
+
+      console.log(_objectSpread(_objectSpread({}, values), {}, {
+        kunci: [].concat(_toConsumableArray(values.kunci), [{
+          q: from,
+          a: to
+        }])
+      }));
+      setValues(_objectSpread(_objectSpread({}, values), {}, {
+        kunci: [].concat(_toConsumableArray(values.kunci), [{
+          q: from,
+          a: to
+        }])
+      }));
+      return false;
+    };
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_BasicForm__WEBPACK_IMPORTED_MODULE_5__["TextAreaForm"], {
+    labelW: "0",
+    formW: "12",
+    name: "q",
+    value: values.q,
+    placeholder: "isikan perintah/petunjuk mengerjakan...",
+    handleChange: handleChange
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    className: "col-5"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Pertanyaan"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-sm btn-outline-primary ml-1 mr-3",
+    onClick: newPertanyaan
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-plus"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-2"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    className: "col-5"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Jawaban"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-sm btn-outline-success ml-1",
+    onClick: newJawaban
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-plus"
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-5"
+  }, values.pertanyaans && values.pertanyaans.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: "list-group"
+  }, values.pertanyaans.map(function (pertanyaan, i) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, {
+      key: i
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      style: {
+        listStyle: 'none'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "form"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      className: "m-0"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, String.fromCharCode(65 + i))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      draggable: "true",
+      onDragStart: handleDragStart({
+        id: i
+      }),
+      className: "float-right fas fa-question-circle listq-".concat(i)
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "text",
+      name: i,
+      value: pertanyaan,
+      className: "form-control m-0",
+      onChange: handlePertanyaan
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      type: "button",
+      value: pertanyaan,
+      onClick: delPertanyaan,
+      className: "btn btn-xs btn-outline-danger"
+    }, "\xD7"))));
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-2 m-0"
+  }, values.kunci && values.kunci.constructor === Array && values.kunci.map(function (line, i) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_lineto__WEBPACK_IMPORTED_MODULE_4___default.a, {
+      key: i,
+      from: "listq-".concat(line.q),
+      to: "lista-".concat(line.a)
+    });
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-5"
+  }, values.jawabans && values.jawabans.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: "list-group"
+  }, values.jawabans.map(function (jawaban, i) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, {
+      key: 'a' + i
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      style: {
+        listStyle: 'none'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "form",
+      draggable: "true",
+      onDragOver: function onDragOver(e) {
+        e.preventDefault();
+      },
+      onDrop: handleDrop({
+        id: i
+      })
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "fas fa-check-circle lista-".concat(i)
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      className: "m-0"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, String.fromCharCode(65 + i))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "text",
+      name: i,
+      value: jawaban,
+      className: "form-control m-0",
+      onChange: handleJawaban
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      type: "button",
+      value: jawaban,
+      onClick: delJawaban,
+      className: "float-right btn btn-xs btn-outline-danger mt-1"
+    }, "\xD7"))));
+  })))));
+};
+
+var IsianForm = function IsianForm(props) {
+  var values = props.values,
+      handleChange = props.handleChange,
+      setValues = props.setValues;
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (values.kunci === undefined) setValues(_objectSpread(_objectSpread({}, values), {}, {
+      kunci: []
+    }));
+  }, []);
+
+  var handleText = function handleText(e) {
+    var match = e.target.value.match(/\[\[.*?\]\]/g);
+    var kunci = match ? match.reduce(function (filtered, s) {
+      if (s.replace(/\[|]/g, '') != "") filtered.push(s.replace(/\[|]/g, ''));
+      return filtered;
+    }, []) : [];
+    setValues(_objectSpread(_objectSpread({}, values), {}, {
+      q: e.target.value,
+      kunci: kunci
+    }));
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-10 offset-md-2 col-12"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "p-3 mb-2 bg-info text-white"
+  }, "Isikan jawaban didalam tanda [[]]. ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), " Contoh: Ibu kota Indonesia adalah [[Jakarta]]."))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_BasicForm__WEBPACK_IMPORTED_MODULE_5__["TextAreaForm"], {
+    label: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Pertanyaan -", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "Jawaban"),
+    formW: "10",
+    name: "q",
+    value: values.q,
+    placeholder: values.aType == 1 ? "isikan pertanyaan" : "isikan pertintah/petunjuk mengerjakan",
+    handleChange: handleText
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-10 offset-md-2 col-12"
+  }, values.kunci && values.kunci.map(function (kunci, i) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      key: i,
+      className: "badge badge-primary mr-1",
+      style: {
+        fontSize: '1rem'
+      }
+    }, kunci);
+  }))));
+};
+
+var EssayForm = function EssayForm(props) {
+  var values = props.values,
+      handleChange = props.handleChange,
+      setValues = props.setValues;
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (values.kunci === undefined) setValues(_objectSpread(_objectSpread({}, values), {}, {
+      kunci: ""
+    }));
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_BasicForm__WEBPACK_IMPORTED_MODULE_5__["TextAreaForm"], {
+    label: "Pertanyaan",
+    formW: "10",
+    name: "q",
+    value: values.q,
+    placeholder: "isikan pertanyaan",
+    handleChange: handleChange
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_html_BasicForm__WEBPACK_IMPORTED_MODULE_5__["TextAreaForm"], {
+    label: "Jawaban",
+    formW: "10",
+    name: "kunci",
+    value: values.kunci,
+    placeholder: "Isikan kunci jawaban",
+    handleChange: handleChange
+  }));
+};
+
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["withRouter"])(SoalForm));
+
+/***/ }),
+
+/***/ "./resources/js/components/soal/SoalList.js":
+/*!**************************************************!*\
+  !*** ./resources/js/components/soal/SoalList.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+function SoalList(props) {
+  var soals = props.soals,
+      from = props.from,
+      loading = props.loading,
+      setAction = props.setAction,
+      _props$action = props.action,
+      action = _props$action === void 0 ? "default" : _props$action,
+      select = props.select,
+      showType = props.showType;
+  var no = from | 0;
+  var jenis = {
+    1: 'pilihan ganda',
+    2: 'benar/salah',
+    3: 'menjodohkan',
+    4: 'isian singkat',
+    5: 'essay'
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: "list-group"
+  }, soals.map(function (soal, key) {
+    soal.jenis = jenis[soal.type];
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Item, {
+      soal: soal,
+      key: key,
+      no: no++,
+      action: action,
+      select: select,
+      setAction: setAction,
+      showType: showType
+    });
+  }), soals.length === 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Belum ada data soal")), loading && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-spinner fa-spin"
+  }));
+}
+
+var Item = function Item(props) {
+  var soal = props.soal,
+      no = props.no,
+      action = props.action,
+      select = props.select,
+      setAction = props.setAction,
+      showType = props.showType;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      selected = _useState2[0],
+      setSelected = _useState2[1];
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "list-group-item p-1",
+    style: {
+      backgroundColor: selected ? 'rgba(0,0,0,0.05)' : '#fff'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, no, " . "), showType && "[".concat(soal.jenis, "]"), " ", soal.kode && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "[", soal.kode, "]"), " ", JSON.parse(soal.pertanyaan).q, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "float-right"
+  }, action === "default" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-xs btn-warning ml-1",
+    value: "soalUpdate-".concat(soal.id),
+    onClick: setAction
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-edit"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    style: {
+      display: 'none'
+    },
+    className: "btn btn-xs btn-danger ml-1",
+    value: "soalDelete-".concat(soal.id),
+    onClick: setAction
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-trash"
+  }))), action === "select" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    name: "select",
+    className: "custom-cb",
+    value: soal.id,
+    type: "checkbox",
+    onChange: select,
+    onClick: function onClick() {
+      setSelected(!selected);
+    }
+  }))));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (SoalList);
+
+/***/ }),
+
+/***/ "./resources/js/components/soal/SoalSearch.js":
+/*!****************************************************!*\
+  !*** ./resources/js/components/soal/SoalSearch.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_useForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/useForm */ "./resources/js/utils/useForm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+function SoalSearch(props) {
+  var setSearch = props.setSearch,
+      defaultValues = props.defaultValues;
+
+  var _useForm = Object(_utils_useForm__WEBPACK_IMPORTED_MODULE_1__["default"])(submit),
+      values = _useForm.values,
+      handleChange = _useForm.handleChange,
+      setValues = _useForm.setValues;
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (defaultValues.pertanyaan || defaultValues.kode || defaultValues.type) setValues(_objectSpread({}, defaultValues));
+  }, []);
+
+  var submit = function submit(e) {
+    e.preventDefault();
+    setSearch({
+      soal: values
+    });
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: submit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "container d-flex h-100 flex-column"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "flex-grow-1 mb-1"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row justify-content-center"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-3 mb-1"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    className: "form-control",
+    placeholder: "pertanyaan",
+    name: "pertanyaan",
+    value: values.pertanyaan || '',
+    onChange: handleChange
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-2 mb-1"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    className: "form-control",
+    placeholder: "kode",
+    name: "kode",
+    value: values.kode || '',
+    onChange: handleChange
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-2 mb-1"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+    className: "custom-select",
+    name: "type",
+    value: values.type || '',
+    onChange: handleChange
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: ""
+  }, "- Semua -"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: "1"
+  }, "Pilihan Ganda"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: "2"
+  }, "Benar/Salah"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: "3"
+  }, "Menjodohkan"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: "4"
+  }, "Isian Singkat"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: "5"
+  }, "Essay"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-2 mb-1"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-warning float-left",
+    style: {
+      width: '48%',
+      padding: "0.375rem 0.5rem"
+    },
+    onClick: function onClick() {
+      return setValues({});
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-times"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-success float-right",
+    style: {
+      width: '48%',
+      padding: "0.375rem 0.5rem"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-search"
+  }))))));
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (SoalSearch);
+
+/***/ })
+
+}]);

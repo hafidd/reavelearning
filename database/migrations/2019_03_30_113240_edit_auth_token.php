@@ -14,7 +14,7 @@ class EditAuthToken extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('auth_token')->nullable()->change();
+            $table->string('auth_token')->nullable();
         });
     }
 

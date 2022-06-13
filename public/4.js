@@ -1,1 +1,605 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{117:function(n,t,e){"use strict";(function(n){var l=e(271),r=e(272),o=e(273);function i(){return s.TYPED_ARRAY_SUPPORT?2147483647:1073741823}function a(n,t){if(i()<t)throw new RangeError("Invalid typed array length");return s.TYPED_ARRAY_SUPPORT?(n=new Uint8Array(t)).__proto__=s.prototype:(null===n&&(n=new s(t)),n.length=t),n}function s(n,t,e){if(!(s.TYPED_ARRAY_SUPPORT||this instanceof s))return new s(n,t,e);if("number"==typeof n){if("string"==typeof t)throw new Error("If encoding is specified then the first argument must be a string");return d(this,n)}return q(this,n,t,e)}function q(n,t,e,l){if("number"==typeof t)throw new TypeError('"value" argument must not be a number');return"undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer?function(n,t,e,l){if(t.byteLength,e<0||t.byteLength<e)throw new RangeError("'offset' is out of bounds");if(t.byteLength<e+(l||0))throw new RangeError("'length' is out of bounds");t=void 0===e&&void 0===l?new Uint8Array(t):void 0===l?new Uint8Array(t,e):new Uint8Array(t,e,l);s.TYPED_ARRAY_SUPPORT?(n=t).__proto__=s.prototype:n=f(n,t);return n}(n,t,e,l):"string"==typeof t?function(n,t,e){"string"==typeof e&&""!==e||(e="utf8");if(!s.isEncoding(e))throw new TypeError('"encoding" must be a valid string encoding');var l=0|u(t,e),r=(n=a(n,l)).write(t,e);r!==l&&(n=n.slice(0,r));return n}(n,t,e):function(n,t){if(s.isBuffer(t)){var e=0|p(t.length);return 0===(n=a(n,e)).length?n:(t.copy(n,0,0,e),n)}if(t){if("undefined"!=typeof ArrayBuffer&&t.buffer instanceof ArrayBuffer||"length"in t)return"number"!=typeof t.length||(l=t.length)!=l?a(n,0):f(n,t);if("Buffer"===t.type&&o(t.data))return f(n,t.data)}var l;throw new TypeError("First argument must be a string, Buffer, ArrayBuffer, Array, or array-like object.")}(n,t)}function c(n){if("number"!=typeof n)throw new TypeError('"size" argument must be a number');if(n<0)throw new RangeError('"size" argument must not be negative')}function d(n,t){if(c(t),n=a(n,t<0?0:0|p(t)),!s.TYPED_ARRAY_SUPPORT)for(var e=0;e<t;++e)n[e]=0;return n}function f(n,t){var e=t.length<0?0:0|p(t.length);n=a(n,e);for(var l=0;l<e;l+=1)n[l]=255&t[l];return n}function p(n){if(n>=i())throw new RangeError("Attempt to allocate Buffer larger than maximum size: 0x"+i().toString(16)+" bytes");return 0|n}function u(n,t){if(s.isBuffer(n))return n.length;if("undefined"!=typeof ArrayBuffer&&"function"==typeof ArrayBuffer.isView&&(ArrayBuffer.isView(n)||n instanceof ArrayBuffer))return n.byteLength;"string"!=typeof n&&(n=""+n);var e=n.length;if(0===e)return 0;for(var l=!1;;)switch(t){case"ascii":case"latin1":case"binary":return e;case"utf8":case"utf-8":case void 0:return D(n).length;case"ucs2":case"ucs-2":case"utf16le":case"utf-16le":return 2*e;case"hex":return e>>>1;case"base64":return N(n).length;default:if(l)return D(n).length;t=(""+t).toLowerCase(),l=!0}}function h(n,t,e){var l=n[t];n[t]=n[e],n[e]=l}function b(n,t,e,l,r){if(0===n.length)return-1;if("string"==typeof e?(l=e,e=0):e>2147483647?e=2147483647:e<-2147483648&&(e=-2147483648),e=+e,isNaN(e)&&(e=r?0:n.length-1),e<0&&(e=n.length+e),e>=n.length){if(r)return-1;e=n.length-1}else if(e<0){if(!r)return-1;e=0}if("string"==typeof t&&(t=s.from(t,l)),s.isBuffer(t))return 0===t.length?-1:g(n,t,e,l,r);if("number"==typeof t)return t&=255,s.TYPED_ARRAY_SUPPORT&&"function"==typeof Uint8Array.prototype.indexOf?r?Uint8Array.prototype.indexOf.call(n,t,e):Uint8Array.prototype.lastIndexOf.call(n,t,e):g(n,[t],e,l,r);throw new TypeError("val must be string, number or Buffer")}function g(n,t,e,l,r){var o,i=1,a=n.length,s=t.length;if(void 0!==l&&("ucs2"===(l=String(l).toLowerCase())||"ucs-2"===l||"utf16le"===l||"utf-16le"===l)){if(n.length<2||t.length<2)return-1;i=2,a/=2,s/=2,e/=2}function q(n,t){return 1===i?n[t]:n.readUInt16BE(t*i)}if(r){var c=-1;for(o=e;o<a;o++)if(q(n,o)===q(t,-1===c?0:o-c)){if(-1===c&&(c=o),o-c+1===s)return c*i}else-1!==c&&(o-=o-c),c=-1}else for(e+s>a&&(e=a-s),o=e;o>=0;o--){for(var d=!0,f=0;f<s;f++)if(q(n,o+f)!==q(t,f)){d=!1;break}if(d)return o}return-1}function w(n,t,e,l){e=Number(e)||0;var r=n.length-e;l?(l=Number(l))>r&&(l=r):l=r;var o=t.length;if(o%2!=0)throw new TypeError("Invalid hex string");l>o/2&&(l=o/2);for(var i=0;i<l;++i){var a=parseInt(t.substr(2*i,2),16);if(isNaN(a))return i;n[e+i]=a}return i}function m(n,t,e,l){return j(D(t,n.length-e),n,e,l)}function k(n,t,e,l){return j(function(n){for(var t=[],e=0;e<n.length;++e)t.push(255&n.charCodeAt(e));return t}(t),n,e,l)}function v(n,t,e,l){return k(n,t,e,l)}function y(n,t,e,l){return j(N(t),n,e,l)}function x(n,t,e,l){return j(function(n,t){for(var e,l,r,o=[],i=0;i<n.length&&!((t-=2)<0);++i)e=n.charCodeAt(i),l=e>>8,r=e%256,o.push(r),o.push(l);return o}(t,n.length-e),n,e,l)}function E(n,t,e){return 0===t&&e===n.length?l.fromByteArray(n):l.fromByteArray(n.slice(t,e))}function A(n,t,e){e=Math.min(n.length,e);for(var l=[],r=t;r<e;){var o,i,a,s,q=n[r],c=null,d=q>239?4:q>223?3:q>191?2:1;if(r+d<=e)switch(d){case 1:q<128&&(c=q);break;case 2:128==(192&(o=n[r+1]))&&(s=(31&q)<<6|63&o)>127&&(c=s);break;case 3:o=n[r+1],i=n[r+2],128==(192&o)&&128==(192&i)&&(s=(15&q)<<12|(63&o)<<6|63&i)>2047&&(s<55296||s>57343)&&(c=s);break;case 4:o=n[r+1],i=n[r+2],a=n[r+3],128==(192&o)&&128==(192&i)&&128==(192&a)&&(s=(15&q)<<18|(63&o)<<12|(63&i)<<6|63&a)>65535&&s<1114112&&(c=s)}null===c?(c=65533,d=1):c>65535&&(c-=65536,l.push(c>>>10&1023|55296),c=56320|1023&c),l.push(c),r+=d}return function(n){var t=n.length;if(t<=R)return String.fromCharCode.apply(String,n);var e="",l=0;for(;l<t;)e+=String.fromCharCode.apply(String,n.slice(l,l+=R));return e}(l)}t.Buffer=s,t.SlowBuffer=function(n){+n!=n&&(n=0);return s.alloc(+n)},t.INSPECT_MAX_BYTES=50,s.TYPED_ARRAY_SUPPORT=void 0!==n.TYPED_ARRAY_SUPPORT?n.TYPED_ARRAY_SUPPORT:function(){try{var n=new Uint8Array(1);return n.__proto__={__proto__:Uint8Array.prototype,foo:function(){return 42}},42===n.foo()&&"function"==typeof n.subarray&&0===n.subarray(1,1).byteLength}catch(n){return!1}}(),t.kMaxLength=i(),s.poolSize=8192,s._augment=function(n){return n.__proto__=s.prototype,n},s.from=function(n,t,e){return q(null,n,t,e)},s.TYPED_ARRAY_SUPPORT&&(s.prototype.__proto__=Uint8Array.prototype,s.__proto__=Uint8Array,"undefined"!=typeof Symbol&&Symbol.species&&s[Symbol.species]===s&&Object.defineProperty(s,Symbol.species,{value:null,configurable:!0})),s.alloc=function(n,t,e){return function(n,t,e,l){return c(t),t<=0?a(n,t):void 0!==e?"string"==typeof l?a(n,t).fill(e,l):a(n,t).fill(e):a(n,t)}(null,n,t,e)},s.allocUnsafe=function(n){return d(null,n)},s.allocUnsafeSlow=function(n){return d(null,n)},s.isBuffer=function(n){return!(null==n||!n._isBuffer)},s.compare=function(n,t){if(!s.isBuffer(n)||!s.isBuffer(t))throw new TypeError("Arguments must be Buffers");if(n===t)return 0;for(var e=n.length,l=t.length,r=0,o=Math.min(e,l);r<o;++r)if(n[r]!==t[r]){e=n[r],l=t[r];break}return e<l?-1:l<e?1:0},s.isEncoding=function(n){switch(String(n).toLowerCase()){case"hex":case"utf8":case"utf-8":case"ascii":case"latin1":case"binary":case"base64":case"ucs2":case"ucs-2":case"utf16le":case"utf-16le":return!0;default:return!1}},s.concat=function(n,t){if(!o(n))throw new TypeError('"list" argument must be an Array of Buffers');if(0===n.length)return s.alloc(0);var e;if(void 0===t)for(t=0,e=0;e<n.length;++e)t+=n[e].length;var l=s.allocUnsafe(t),r=0;for(e=0;e<n.length;++e){var i=n[e];if(!s.isBuffer(i))throw new TypeError('"list" argument must be an Array of Buffers');i.copy(l,r),r+=i.length}return l},s.byteLength=u,s.prototype._isBuffer=!0,s.prototype.swap16=function(){var n=this.length;if(n%2!=0)throw new RangeError("Buffer size must be a multiple of 16-bits");for(var t=0;t<n;t+=2)h(this,t,t+1);return this},s.prototype.swap32=function(){var n=this.length;if(n%4!=0)throw new RangeError("Buffer size must be a multiple of 32-bits");for(var t=0;t<n;t+=4)h(this,t,t+3),h(this,t+1,t+2);return this},s.prototype.swap64=function(){var n=this.length;if(n%8!=0)throw new RangeError("Buffer size must be a multiple of 64-bits");for(var t=0;t<n;t+=8)h(this,t,t+7),h(this,t+1,t+6),h(this,t+2,t+5),h(this,t+3,t+4);return this},s.prototype.toString=function(){var n=0|this.length;return 0===n?"":0===arguments.length?A(this,0,n):function(n,t,e){var l=!1;if((void 0===t||t<0)&&(t=0),t>this.length)return"";if((void 0===e||e>this.length)&&(e=this.length),e<=0)return"";if((e>>>=0)<=(t>>>=0))return"";for(n||(n="utf8");;)switch(n){case"hex":return T(this,t,e);case"utf8":case"utf-8":return A(this,t,e);case"ascii":return _(this,t,e);case"latin1":case"binary":return P(this,t,e);case"base64":return E(this,t,e);case"ucs2":case"ucs-2":case"utf16le":case"utf-16le":return B(this,t,e);default:if(l)throw new TypeError("Unknown encoding: "+n);n=(n+"").toLowerCase(),l=!0}}.apply(this,arguments)},s.prototype.equals=function(n){if(!s.isBuffer(n))throw new TypeError("Argument must be a Buffer");return this===n||0===s.compare(this,n)},s.prototype.inspect=function(){var n="",e=t.INSPECT_MAX_BYTES;return this.length>0&&(n=this.toString("hex",0,e).match(/.{2}/g).join(" "),this.length>e&&(n+=" ... ")),"<Buffer "+n+">"},s.prototype.compare=function(n,t,e,l,r){if(!s.isBuffer(n))throw new TypeError("Argument must be a Buffer");if(void 0===t&&(t=0),void 0===e&&(e=n?n.length:0),void 0===l&&(l=0),void 0===r&&(r=this.length),t<0||e>n.length||l<0||r>this.length)throw new RangeError("out of range index");if(l>=r&&t>=e)return 0;if(l>=r)return-1;if(t>=e)return 1;if(this===n)return 0;for(var o=(r>>>=0)-(l>>>=0),i=(e>>>=0)-(t>>>=0),a=Math.min(o,i),q=this.slice(l,r),c=n.slice(t,e),d=0;d<a;++d)if(q[d]!==c[d]){o=q[d],i=c[d];break}return o<i?-1:i<o?1:0},s.prototype.includes=function(n,t,e){return-1!==this.indexOf(n,t,e)},s.prototype.indexOf=function(n,t,e){return b(this,n,t,e,!0)},s.prototype.lastIndexOf=function(n,t,e){return b(this,n,t,e,!1)},s.prototype.write=function(n,t,e,l){if(void 0===t)l="utf8",e=this.length,t=0;else if(void 0===e&&"string"==typeof t)l=t,e=this.length,t=0;else{if(!isFinite(t))throw new Error("Buffer.write(string, encoding, offset[, length]) is no longer supported");t|=0,isFinite(e)?(e|=0,void 0===l&&(l="utf8")):(l=e,e=void 0)}var r=this.length-t;if((void 0===e||e>r)&&(e=r),n.length>0&&(e<0||t<0)||t>this.length)throw new RangeError("Attempt to write outside buffer bounds");l||(l="utf8");for(var o=!1;;)switch(l){case"hex":return w(this,n,t,e);case"utf8":case"utf-8":return m(this,n,t,e);case"ascii":return k(this,n,t,e);case"latin1":case"binary":return v(this,n,t,e);case"base64":return y(this,n,t,e);case"ucs2":case"ucs-2":case"utf16le":case"utf-16le":return x(this,n,t,e);default:if(o)throw new TypeError("Unknown encoding: "+l);l=(""+l).toLowerCase(),o=!0}},s.prototype.toJSON=function(){return{type:"Buffer",data:Array.prototype.slice.call(this._arr||this,0)}};var R=4096;function _(n,t,e){var l="";e=Math.min(n.length,e);for(var r=t;r<e;++r)l+=String.fromCharCode(127&n[r]);return l}function P(n,t,e){var l="";e=Math.min(n.length,e);for(var r=t;r<e;++r)l+=String.fromCharCode(n[r]);return l}function T(n,t,e){var l=n.length;(!t||t<0)&&(t=0),(!e||e<0||e>l)&&(e=l);for(var r="",o=t;o<e;++o)r+=O(n[o]);return r}function B(n,t,e){for(var l=n.slice(t,e),r="",o=0;o<l.length;o+=2)r+=String.fromCharCode(l[o]+256*l[o+1]);return r}function z(n,t,e){if(n%1!=0||n<0)throw new RangeError("offset is not uint");if(n+t>e)throw new RangeError("Trying to access beyond buffer length")}function U(n,t,e,l,r,o){if(!s.isBuffer(n))throw new TypeError('"buffer" argument must be a Buffer instance');if(t>r||t<o)throw new RangeError('"value" argument is out of bounds');if(e+l>n.length)throw new RangeError("Index out of range")}function S(n,t,e,l){t<0&&(t=65535+t+1);for(var r=0,o=Math.min(n.length-e,2);r<o;++r)n[e+r]=(t&255<<8*(l?r:1-r))>>>8*(l?r:1-r)}function Y(n,t,e,l){t<0&&(t=4294967295+t+1);for(var r=0,o=Math.min(n.length-e,4);r<o;++r)n[e+r]=t>>>8*(l?r:3-r)&255}function I(n,t,e,l,r,o){if(e+l>n.length)throw new RangeError("Index out of range");if(e<0)throw new RangeError("Index out of range")}function C(n,t,e,l,o){return o||I(n,0,e,4),r.write(n,t,e,l,23,4),e+4}function M(n,t,e,l,o){return o||I(n,0,e,8),r.write(n,t,e,l,52,8),e+8}s.prototype.slice=function(n,t){var e,l=this.length;if((n=~~n)<0?(n+=l)<0&&(n=0):n>l&&(n=l),(t=void 0===t?l:~~t)<0?(t+=l)<0&&(t=0):t>l&&(t=l),t<n&&(t=n),s.TYPED_ARRAY_SUPPORT)(e=this.subarray(n,t)).__proto__=s.prototype;else{var r=t-n;e=new s(r,void 0);for(var o=0;o<r;++o)e[o]=this[o+n]}return e},s.prototype.readUIntLE=function(n,t,e){n|=0,t|=0,e||z(n,t,this.length);for(var l=this[n],r=1,o=0;++o<t&&(r*=256);)l+=this[n+o]*r;return l},s.prototype.readUIntBE=function(n,t,e){n|=0,t|=0,e||z(n,t,this.length);for(var l=this[n+--t],r=1;t>0&&(r*=256);)l+=this[n+--t]*r;return l},s.prototype.readUInt8=function(n,t){return t||z(n,1,this.length),this[n]},s.prototype.readUInt16LE=function(n,t){return t||z(n,2,this.length),this[n]|this[n+1]<<8},s.prototype.readUInt16BE=function(n,t){return t||z(n,2,this.length),this[n]<<8|this[n+1]},s.prototype.readUInt32LE=function(n,t){return t||z(n,4,this.length),(this[n]|this[n+1]<<8|this[n+2]<<16)+16777216*this[n+3]},s.prototype.readUInt32BE=function(n,t){return t||z(n,4,this.length),16777216*this[n]+(this[n+1]<<16|this[n+2]<<8|this[n+3])},s.prototype.readIntLE=function(n,t,e){n|=0,t|=0,e||z(n,t,this.length);for(var l=this[n],r=1,o=0;++o<t&&(r*=256);)l+=this[n+o]*r;return l>=(r*=128)&&(l-=Math.pow(2,8*t)),l},s.prototype.readIntBE=function(n,t,e){n|=0,t|=0,e||z(n,t,this.length);for(var l=t,r=1,o=this[n+--l];l>0&&(r*=256);)o+=this[n+--l]*r;return o>=(r*=128)&&(o-=Math.pow(2,8*t)),o},s.prototype.readInt8=function(n,t){return t||z(n,1,this.length),128&this[n]?-1*(255-this[n]+1):this[n]},s.prototype.readInt16LE=function(n,t){t||z(n,2,this.length);var e=this[n]|this[n+1]<<8;return 32768&e?4294901760|e:e},s.prototype.readInt16BE=function(n,t){t||z(n,2,this.length);var e=this[n+1]|this[n]<<8;return 32768&e?4294901760|e:e},s.prototype.readInt32LE=function(n,t){return t||z(n,4,this.length),this[n]|this[n+1]<<8|this[n+2]<<16|this[n+3]<<24},s.prototype.readInt32BE=function(n,t){return t||z(n,4,this.length),this[n]<<24|this[n+1]<<16|this[n+2]<<8|this[n+3]},s.prototype.readFloatLE=function(n,t){return t||z(n,4,this.length),r.read(this,n,!0,23,4)},s.prototype.readFloatBE=function(n,t){return t||z(n,4,this.length),r.read(this,n,!1,23,4)},s.prototype.readDoubleLE=function(n,t){return t||z(n,8,this.length),r.read(this,n,!0,52,8)},s.prototype.readDoubleBE=function(n,t){return t||z(n,8,this.length),r.read(this,n,!1,52,8)},s.prototype.writeUIntLE=function(n,t,e,l){(n=+n,t|=0,e|=0,l)||U(this,n,t,e,Math.pow(2,8*e)-1,0);var r=1,o=0;for(this[t]=255&n;++o<e&&(r*=256);)this[t+o]=n/r&255;return t+e},s.prototype.writeUIntBE=function(n,t,e,l){(n=+n,t|=0,e|=0,l)||U(this,n,t,e,Math.pow(2,8*e)-1,0);var r=e-1,o=1;for(this[t+r]=255&n;--r>=0&&(o*=256);)this[t+r]=n/o&255;return t+e},s.prototype.writeUInt8=function(n,t,e){return n=+n,t|=0,e||U(this,n,t,1,255,0),s.TYPED_ARRAY_SUPPORT||(n=Math.floor(n)),this[t]=255&n,t+1},s.prototype.writeUInt16LE=function(n,t,e){return n=+n,t|=0,e||U(this,n,t,2,65535,0),s.TYPED_ARRAY_SUPPORT?(this[t]=255&n,this[t+1]=n>>>8):S(this,n,t,!0),t+2},s.prototype.writeUInt16BE=function(n,t,e){return n=+n,t|=0,e||U(this,n,t,2,65535,0),s.TYPED_ARRAY_SUPPORT?(this[t]=n>>>8,this[t+1]=255&n):S(this,n,t,!1),t+2},s.prototype.writeUInt32LE=function(n,t,e){return n=+n,t|=0,e||U(this,n,t,4,4294967295,0),s.TYPED_ARRAY_SUPPORT?(this[t+3]=n>>>24,this[t+2]=n>>>16,this[t+1]=n>>>8,this[t]=255&n):Y(this,n,t,!0),t+4},s.prototype.writeUInt32BE=function(n,t,e){return n=+n,t|=0,e||U(this,n,t,4,4294967295,0),s.TYPED_ARRAY_SUPPORT?(this[t]=n>>>24,this[t+1]=n>>>16,this[t+2]=n>>>8,this[t+3]=255&n):Y(this,n,t,!1),t+4},s.prototype.writeIntLE=function(n,t,e,l){if(n=+n,t|=0,!l){var r=Math.pow(2,8*e-1);U(this,n,t,e,r-1,-r)}var o=0,i=1,a=0;for(this[t]=255&n;++o<e&&(i*=256);)n<0&&0===a&&0!==this[t+o-1]&&(a=1),this[t+o]=(n/i>>0)-a&255;return t+e},s.prototype.writeIntBE=function(n,t,e,l){if(n=+n,t|=0,!l){var r=Math.pow(2,8*e-1);U(this,n,t,e,r-1,-r)}var o=e-1,i=1,a=0;for(this[t+o]=255&n;--o>=0&&(i*=256);)n<0&&0===a&&0!==this[t+o+1]&&(a=1),this[t+o]=(n/i>>0)-a&255;return t+e},s.prototype.writeInt8=function(n,t,e){return n=+n,t|=0,e||U(this,n,t,1,127,-128),s.TYPED_ARRAY_SUPPORT||(n=Math.floor(n)),n<0&&(n=255+n+1),this[t]=255&n,t+1},s.prototype.writeInt16LE=function(n,t,e){return n=+n,t|=0,e||U(this,n,t,2,32767,-32768),s.TYPED_ARRAY_SUPPORT?(this[t]=255&n,this[t+1]=n>>>8):S(this,n,t,!0),t+2},s.prototype.writeInt16BE=function(n,t,e){return n=+n,t|=0,e||U(this,n,t,2,32767,-32768),s.TYPED_ARRAY_SUPPORT?(this[t]=n>>>8,this[t+1]=255&n):S(this,n,t,!1),t+2},s.prototype.writeInt32LE=function(n,t,e){return n=+n,t|=0,e||U(this,n,t,4,2147483647,-2147483648),s.TYPED_ARRAY_SUPPORT?(this[t]=255&n,this[t+1]=n>>>8,this[t+2]=n>>>16,this[t+3]=n>>>24):Y(this,n,t,!0),t+4},s.prototype.writeInt32BE=function(n,t,e){return n=+n,t|=0,e||U(this,n,t,4,2147483647,-2147483648),n<0&&(n=4294967295+n+1),s.TYPED_ARRAY_SUPPORT?(this[t]=n>>>24,this[t+1]=n>>>16,this[t+2]=n>>>8,this[t+3]=255&n):Y(this,n,t,!1),t+4},s.prototype.writeFloatLE=function(n,t,e){return C(this,n,t,!0,e)},s.prototype.writeFloatBE=function(n,t,e){return C(this,n,t,!1,e)},s.prototype.writeDoubleLE=function(n,t,e){return M(this,n,t,!0,e)},s.prototype.writeDoubleBE=function(n,t,e){return M(this,n,t,!1,e)},s.prototype.copy=function(n,t,e,l){if(e||(e=0),l||0===l||(l=this.length),t>=n.length&&(t=n.length),t||(t=0),l>0&&l<e&&(l=e),l===e)return 0;if(0===n.length||0===this.length)return 0;if(t<0)throw new RangeError("targetStart out of bounds");if(e<0||e>=this.length)throw new RangeError("sourceStart out of bounds");if(l<0)throw new RangeError("sourceEnd out of bounds");l>this.length&&(l=this.length),n.length-t<l-e&&(l=n.length-t+e);var r,o=l-e;if(this===n&&e<t&&t<l)for(r=o-1;r>=0;--r)n[r+t]=this[r+e];else if(o<1e3||!s.TYPED_ARRAY_SUPPORT)for(r=0;r<o;++r)n[r+t]=this[r+e];else Uint8Array.prototype.set.call(n,this.subarray(e,e+o),t);return o},s.prototype.fill=function(n,t,e,l){if("string"==typeof n){if("string"==typeof t?(l=t,t=0,e=this.length):"string"==typeof e&&(l=e,e=this.length),1===n.length){var r=n.charCodeAt(0);r<256&&(n=r)}if(void 0!==l&&"string"!=typeof l)throw new TypeError("encoding must be a string");if("string"==typeof l&&!s.isEncoding(l))throw new TypeError("Unknown encoding: "+l)}else"number"==typeof n&&(n&=255);if(t<0||this.length<t||this.length<e)throw new RangeError("Out of range index");if(e<=t)return this;var o;if(t>>>=0,e=void 0===e?this.length:e>>>0,n||(n=0),"number"==typeof n)for(o=t;o<e;++o)this[o]=n;else{var i=s.isBuffer(n)?n:D(new s(n,l).toString()),a=i.length;for(o=0;o<e-t;++o)this[o+t]=i[o%a]}return this};var L=/[^+\/0-9A-Za-z-_]/g;function O(n){return n<16?"0"+n.toString(16):n.toString(16)}function D(n,t){var e;t=t||1/0;for(var l=n.length,r=null,o=[],i=0;i<l;++i){if((e=n.charCodeAt(i))>55295&&e<57344){if(!r){if(e>56319){(t-=3)>-1&&o.push(239,191,189);continue}if(i+1===l){(t-=3)>-1&&o.push(239,191,189);continue}r=e;continue}if(e<56320){(t-=3)>-1&&o.push(239,191,189),r=e;continue}e=65536+(r-55296<<10|e-56320)}else r&&(t-=3)>-1&&o.push(239,191,189);if(r=null,e<128){if((t-=1)<0)break;o.push(e)}else if(e<2048){if((t-=2)<0)break;o.push(e>>6|192,63&e|128)}else if(e<65536){if((t-=3)<0)break;o.push(e>>12|224,e>>6&63|128,63&e|128)}else{if(!(e<1114112))throw new Error("Invalid code point");if((t-=4)<0)break;o.push(e>>18|240,e>>12&63|128,e>>6&63|128,63&e|128)}}return o}function N(n){return l.toByteArray(function(n){if((n=function(n){return n.trim?n.trim():n.replace(/^\s+|\s+$/g,"")}(n).replace(L,"")).length<2)return"";for(;n.length%4!=0;)n+="=";return n}(n))}function j(n,t,e,l){for(var r=0;r<l&&!(r+e>=t.length||r>=n.length);++r)t[r+e]=n[r];return r}}).call(this,e(47))},150:function(n,t,e){var l=e(250);"string"==typeof l&&(l=[[n.i,l,""]]);var r={hmr:!0,transform:void 0,insertInto:void 0};e(87)(l,r);l.locals&&(n.exports=l.locals)},250:function(n,t,e){(n.exports=e(86)(!1)).push([n.i,"/*!\n * Quill Editor v1.3.0\n * https://quilljs.com/\n * Copyright (c) 2014, Jason Chen\n * Copyright (c) 2013, salesforce.com\n */\n.ql-container {\n  box-sizing: border-box;\n  font-family: Helvetica, Arial, sans-serif;\n  font-size: 13px;\n  height: 100%;\n  margin: 0px;\n  position: relative;\n}\n.ql-container.ql-disabled .ql-tooltip {\n  visibility: hidden;\n}\n.ql-container.ql-disabled .ql-editor ul[data-checked] > li::before {\n  pointer-events: none;\n}\n.ql-clipboard {\n  left: -100000px;\n  height: 1px;\n  overflow-y: hidden;\n  position: absolute;\n  top: 50%;\n}\n.ql-clipboard p {\n  margin: 0;\n  padding: 0;\n}\n.ql-editor {\n  box-sizing: border-box;\n  line-height: 1.42;\n  height: 100%;\n  outline: none;\n  overflow-y: auto;\n  padding: 12px 15px;\n  -o-tab-size: 4;\n     tab-size: 4;\n  -moz-tab-size: 4;\n  text-align: left;\n  white-space: pre-wrap;\n  word-wrap: break-word;\n}\n.ql-editor > * {\n  cursor: text;\n}\n.ql-editor p,\n.ql-editor ol,\n.ql-editor ul,\n.ql-editor pre,\n.ql-editor blockquote,\n.ql-editor h1,\n.ql-editor h2,\n.ql-editor h3,\n.ql-editor h4,\n.ql-editor h5,\n.ql-editor h6 {\n  margin: 0;\n  padding: 0;\n  counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol,\n.ql-editor ul {\n  padding-left: 1.5em;\n}\n.ql-editor ol > li,\n.ql-editor ul > li {\n  list-style-type: none;\n}\n.ql-editor ul > li::before {\n  content: '\\2022';\n}\n.ql-editor ul[data-checked=true],\n.ql-editor ul[data-checked=false] {\n  pointer-events: none;\n}\n.ql-editor ul[data-checked=true] > li *,\n.ql-editor ul[data-checked=false] > li * {\n  pointer-events: all;\n}\n.ql-editor ul[data-checked=true] > li::before,\n.ql-editor ul[data-checked=false] > li::before {\n  color: #777;\n  cursor: pointer;\n  pointer-events: all;\n}\n.ql-editor ul[data-checked=true] > li::before {\n  content: '\\2611';\n}\n.ql-editor ul[data-checked=false] > li::before {\n  content: '\\2610';\n}\n.ql-editor li::before {\n  display: inline-block;\n  white-space: nowrap;\n  width: 1.2em;\n}\n.ql-editor li:not(.ql-direction-rtl)::before {\n  margin-left: -1.5em;\n  margin-right: 0.3em;\n  text-align: right;\n}\n.ql-editor li.ql-direction-rtl::before {\n  margin-left: 0.3em;\n  margin-right: -1.5em;\n}\n.ql-editor ol li:not(.ql-direction-rtl),\n.ql-editor ul li:not(.ql-direction-rtl) {\n  padding-left: 1.5em;\n}\n.ql-editor ol li.ql-direction-rtl,\n.ql-editor ul li.ql-direction-rtl {\n  padding-right: 1.5em;\n}\n.ql-editor ol li {\n  counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n  counter-increment: list-0;\n}\n.ql-editor ol li:before {\n  content: counter(list-0, decimal) '. ';\n}\n.ql-editor ol li.ql-indent-1 {\n  counter-increment: list-1;\n}\n.ql-editor ol li.ql-indent-1:before {\n  content: counter(list-1, lower-alpha) '. ';\n}\n.ql-editor ol li.ql-indent-1 {\n  counter-reset: list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-2 {\n  counter-increment: list-2;\n}\n.ql-editor ol li.ql-indent-2:before {\n  content: counter(list-2, lower-roman) '. ';\n}\n.ql-editor ol li.ql-indent-2 {\n  counter-reset: list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-3 {\n  counter-increment: list-3;\n}\n.ql-editor ol li.ql-indent-3:before {\n  content: counter(list-3, decimal) '. ';\n}\n.ql-editor ol li.ql-indent-3 {\n  counter-reset: list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-4 {\n  counter-increment: list-4;\n}\n.ql-editor ol li.ql-indent-4:before {\n  content: counter(list-4, lower-alpha) '. ';\n}\n.ql-editor ol li.ql-indent-4 {\n  counter-reset: list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-5 {\n  counter-increment: list-5;\n}\n.ql-editor ol li.ql-indent-5:before {\n  content: counter(list-5, lower-roman) '. ';\n}\n.ql-editor ol li.ql-indent-5 {\n  counter-reset: list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-6 {\n  counter-increment: list-6;\n}\n.ql-editor ol li.ql-indent-6:before {\n  content: counter(list-6, decimal) '. ';\n}\n.ql-editor ol li.ql-indent-6 {\n  counter-reset: list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-7 {\n  counter-increment: list-7;\n}\n.ql-editor ol li.ql-indent-7:before {\n  content: counter(list-7, lower-alpha) '. ';\n}\n.ql-editor ol li.ql-indent-7 {\n  counter-reset: list-8 list-9;\n}\n.ql-editor ol li.ql-indent-8 {\n  counter-increment: list-8;\n}\n.ql-editor ol li.ql-indent-8:before {\n  content: counter(list-8, lower-roman) '. ';\n}\n.ql-editor ol li.ql-indent-8 {\n  counter-reset: list-9;\n}\n.ql-editor ol li.ql-indent-9 {\n  counter-increment: list-9;\n}\n.ql-editor ol li.ql-indent-9:before {\n  content: counter(list-9, decimal) '. ';\n}\n.ql-editor .ql-indent-1:not(.ql-direction-rtl) {\n  padding-left: 3em;\n}\n.ql-editor li.ql-indent-1:not(.ql-direction-rtl) {\n  padding-left: 4.5em;\n}\n.ql-editor .ql-indent-1.ql-direction-rtl.ql-align-right {\n  padding-right: 3em;\n}\n.ql-editor li.ql-indent-1.ql-direction-rtl.ql-align-right {\n  padding-right: 4.5em;\n}\n.ql-editor .ql-indent-2:not(.ql-direction-rtl) {\n  padding-left: 6em;\n}\n.ql-editor li.ql-indent-2:not(.ql-direction-rtl) {\n  padding-left: 7.5em;\n}\n.ql-editor .ql-indent-2.ql-direction-rtl.ql-align-right {\n  padding-right: 6em;\n}\n.ql-editor li.ql-indent-2.ql-direction-rtl.ql-align-right {\n  padding-right: 7.5em;\n}\n.ql-editor .ql-indent-3:not(.ql-direction-rtl) {\n  padding-left: 9em;\n}\n.ql-editor li.ql-indent-3:not(.ql-direction-rtl) {\n  padding-left: 10.5em;\n}\n.ql-editor .ql-indent-3.ql-direction-rtl.ql-align-right {\n  padding-right: 9em;\n}\n.ql-editor li.ql-indent-3.ql-direction-rtl.ql-align-right {\n  padding-right: 10.5em;\n}\n.ql-editor .ql-indent-4:not(.ql-direction-rtl) {\n  padding-left: 12em;\n}\n.ql-editor li.ql-indent-4:not(.ql-direction-rtl) {\n  padding-left: 13.5em;\n}\n.ql-editor .ql-indent-4.ql-direction-rtl.ql-align-right {\n  padding-right: 12em;\n}\n.ql-editor li.ql-indent-4.ql-direction-rtl.ql-align-right {\n  padding-right: 13.5em;\n}\n.ql-editor .ql-indent-5:not(.ql-direction-rtl) {\n  padding-left: 15em;\n}\n.ql-editor li.ql-indent-5:not(.ql-direction-rtl) {\n  padding-left: 16.5em;\n}\n.ql-editor .ql-indent-5.ql-direction-rtl.ql-align-right {\n  padding-right: 15em;\n}\n.ql-editor li.ql-indent-5.ql-direction-rtl.ql-align-right {\n  padding-right: 16.5em;\n}\n.ql-editor .ql-indent-6:not(.ql-direction-rtl) {\n  padding-left: 18em;\n}\n.ql-editor li.ql-indent-6:not(.ql-direction-rtl) {\n  padding-left: 19.5em;\n}\n.ql-editor .ql-indent-6.ql-direction-rtl.ql-align-right {\n  padding-right: 18em;\n}\n.ql-editor li.ql-indent-6.ql-direction-rtl.ql-align-right {\n  padding-right: 19.5em;\n}\n.ql-editor .ql-indent-7:not(.ql-direction-rtl) {\n  padding-left: 21em;\n}\n.ql-editor li.ql-indent-7:not(.ql-direction-rtl) {\n  padding-left: 22.5em;\n}\n.ql-editor .ql-indent-7.ql-direction-rtl.ql-align-right {\n  padding-right: 21em;\n}\n.ql-editor li.ql-indent-7.ql-direction-rtl.ql-align-right {\n  padding-right: 22.5em;\n}\n.ql-editor .ql-indent-8:not(.ql-direction-rtl) {\n  padding-left: 24em;\n}\n.ql-editor li.ql-indent-8:not(.ql-direction-rtl) {\n  padding-left: 25.5em;\n}\n.ql-editor .ql-indent-8.ql-direction-rtl.ql-align-right {\n  padding-right: 24em;\n}\n.ql-editor li.ql-indent-8.ql-direction-rtl.ql-align-right {\n  padding-right: 25.5em;\n}\n.ql-editor .ql-indent-9:not(.ql-direction-rtl) {\n  padding-left: 27em;\n}\n.ql-editor li.ql-indent-9:not(.ql-direction-rtl) {\n  padding-left: 28.5em;\n}\n.ql-editor .ql-indent-9.ql-direction-rtl.ql-align-right {\n  padding-right: 27em;\n}\n.ql-editor li.ql-indent-9.ql-direction-rtl.ql-align-right {\n  padding-right: 28.5em;\n}\n.ql-editor .ql-video {\n  display: block;\n  max-width: 100%;\n}\n.ql-editor .ql-video.ql-align-center {\n  margin: 0 auto;\n}\n.ql-editor .ql-video.ql-align-right {\n  margin: 0 0 0 auto;\n}\n.ql-editor .ql-bg-black {\n  background-color: #000;\n}\n.ql-editor .ql-bg-red {\n  background-color: #e60000;\n}\n.ql-editor .ql-bg-orange {\n  background-color: #f90;\n}\n.ql-editor .ql-bg-yellow {\n  background-color: #ff0;\n}\n.ql-editor .ql-bg-green {\n  background-color: #008a00;\n}\n.ql-editor .ql-bg-blue {\n  background-color: #06c;\n}\n.ql-editor .ql-bg-purple {\n  background-color: #93f;\n}\n.ql-editor .ql-color-white {\n  color: #fff;\n}\n.ql-editor .ql-color-red {\n  color: #e60000;\n}\n.ql-editor .ql-color-orange {\n  color: #f90;\n}\n.ql-editor .ql-color-yellow {\n  color: #ff0;\n}\n.ql-editor .ql-color-green {\n  color: #008a00;\n}\n.ql-editor .ql-color-blue {\n  color: #06c;\n}\n.ql-editor .ql-color-purple {\n  color: #93f;\n}\n.ql-editor .ql-font-serif {\n  font-family: Georgia, Times New Roman, serif;\n}\n.ql-editor .ql-font-monospace {\n  font-family: Monaco, Courier New, monospace;\n}\n.ql-editor .ql-size-small {\n  font-size: 0.75em;\n}\n.ql-editor .ql-size-large {\n  font-size: 1.5em;\n}\n.ql-editor .ql-size-huge {\n  font-size: 2.5em;\n}\n.ql-editor .ql-direction-rtl {\n  direction: rtl;\n  text-align: inherit;\n}\n.ql-editor .ql-align-center {\n  text-align: center;\n}\n.ql-editor .ql-align-justify {\n  text-align: justify;\n}\n.ql-editor .ql-align-right {\n  text-align: right;\n}\n.ql-editor .ql-embed-selected {\n  border: 1px solid #777;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.ql-editor.ql-blank::before {\n  color: rgba(0,0,0,0.6);\n  content: attr(data-placeholder);\n  font-style: italic;\n  pointer-events: none;\n  position: absolute;\n}\n.ql-snow.ql-toolbar:after,\n.ql-snow .ql-toolbar:after {\n  clear: both;\n  content: '';\n  display: table;\n}\n.ql-snow.ql-toolbar button,\n.ql-snow .ql-toolbar button {\n  background: none;\n  border: none;\n  cursor: pointer;\n  display: inline-block;\n  float: left;\n  height: 24px;\n  padding: 3px 5px;\n  width: 28px;\n}\n.ql-snow.ql-toolbar button svg,\n.ql-snow .ql-toolbar button svg {\n  float: left;\n  height: 100%;\n}\n.ql-snow.ql-toolbar button:active:hover,\n.ql-snow .ql-toolbar button:active:hover {\n  outline: none;\n}\n.ql-snow.ql-toolbar input.ql-image[type=file],\n.ql-snow .ql-toolbar input.ql-image[type=file] {\n  display: none;\n}\n.ql-snow.ql-toolbar button:hover,\n.ql-snow .ql-toolbar button:hover,\n.ql-snow.ql-toolbar button:focus,\n.ql-snow .ql-toolbar button:focus,\n.ql-snow.ql-toolbar button.ql-active,\n.ql-snow .ql-toolbar button.ql-active,\n.ql-snow.ql-toolbar .ql-picker-label:hover,\n.ql-snow .ql-toolbar .ql-picker-label:hover,\n.ql-snow.ql-toolbar .ql-picker-label.ql-active,\n.ql-snow .ql-toolbar .ql-picker-label.ql-active,\n.ql-snow.ql-toolbar .ql-picker-item:hover,\n.ql-snow .ql-toolbar .ql-picker-item:hover,\n.ql-snow.ql-toolbar .ql-picker-item.ql-selected,\n.ql-snow .ql-toolbar .ql-picker-item.ql-selected {\n  color: #06c;\n}\n.ql-snow.ql-toolbar button:hover .ql-fill,\n.ql-snow .ql-toolbar button:hover .ql-fill,\n.ql-snow.ql-toolbar button:focus .ql-fill,\n.ql-snow .ql-toolbar button:focus .ql-fill,\n.ql-snow.ql-toolbar button.ql-active .ql-fill,\n.ql-snow .ql-toolbar button.ql-active .ql-fill,\n.ql-snow.ql-toolbar .ql-picker-label:hover .ql-fill,\n.ql-snow .ql-toolbar .ql-picker-label:hover .ql-fill,\n.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-fill,\n.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-fill,\n.ql-snow.ql-toolbar .ql-picker-item:hover .ql-fill,\n.ql-snow .ql-toolbar .ql-picker-item:hover .ql-fill,\n.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-fill,\n.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-fill,\n.ql-snow.ql-toolbar button:hover .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar button:hover .ql-stroke.ql-fill,\n.ql-snow.ql-toolbar button:focus .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar button:focus .ql-stroke.ql-fill,\n.ql-snow.ql-toolbar button.ql-active .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar button.ql-active .ql-stroke.ql-fill,\n.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,\n.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,\n.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,\n.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill {\n  fill: #06c;\n}\n.ql-snow.ql-toolbar button:hover .ql-stroke,\n.ql-snow .ql-toolbar button:hover .ql-stroke,\n.ql-snow.ql-toolbar button:focus .ql-stroke,\n.ql-snow .ql-toolbar button:focus .ql-stroke,\n.ql-snow.ql-toolbar button.ql-active .ql-stroke,\n.ql-snow .ql-toolbar button.ql-active .ql-stroke,\n.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke,\n.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke,\n.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke,\n.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke,\n.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke,\n.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke,\n.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke,\n.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke,\n.ql-snow.ql-toolbar button:hover .ql-stroke-miter,\n.ql-snow .ql-toolbar button:hover .ql-stroke-miter,\n.ql-snow.ql-toolbar button:focus .ql-stroke-miter,\n.ql-snow .ql-toolbar button:focus .ql-stroke-miter,\n.ql-snow.ql-toolbar button.ql-active .ql-stroke-miter,\n.ql-snow .ql-toolbar button.ql-active .ql-stroke-miter,\n.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke-miter,\n.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke-miter,\n.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,\n.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,\n.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke-miter,\n.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke-miter,\n.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,\n.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter {\n  stroke: #06c;\n}\n@media (pointer: coarse) {\n  .ql-snow.ql-toolbar button:hover:not(.ql-active),\n  .ql-snow .ql-toolbar button:hover:not(.ql-active) {\n    color: #444;\n  }\n  .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-fill,\n  .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-fill,\n  .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke.ql-fill,\n  .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke.ql-fill {\n    fill: #444;\n  }\n  .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke,\n  .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke,\n  .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke-miter,\n  .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke-miter {\n    stroke: #444;\n  }\n}\n.ql-snow {\n  box-sizing: border-box;\n}\n.ql-snow * {\n  box-sizing: border-box;\n}\n.ql-snow .ql-hidden {\n  display: none;\n}\n.ql-snow .ql-out-bottom,\n.ql-snow .ql-out-top {\n  visibility: hidden;\n}\n.ql-snow .ql-tooltip {\n  position: absolute;\n  -webkit-transform: translateY(10px);\n          transform: translateY(10px);\n}\n.ql-snow .ql-tooltip a {\n  cursor: pointer;\n  text-decoration: none;\n}\n.ql-snow .ql-tooltip.ql-flip {\n  -webkit-transform: translateY(-10px);\n          transform: translateY(-10px);\n}\n.ql-snow .ql-formats {\n  display: inline-block;\n  vertical-align: middle;\n}\n.ql-snow .ql-formats:after {\n  clear: both;\n  content: '';\n  display: table;\n}\n.ql-snow .ql-stroke {\n  fill: none;\n  stroke: #444;\n  stroke-linecap: round;\n  stroke-linejoin: round;\n  stroke-width: 2;\n}\n.ql-snow .ql-stroke-miter {\n  fill: none;\n  stroke: #444;\n  stroke-miterlimit: 10;\n  stroke-width: 2;\n}\n.ql-snow .ql-fill,\n.ql-snow .ql-stroke.ql-fill {\n  fill: #444;\n}\n.ql-snow .ql-empty {\n  fill: none;\n}\n.ql-snow .ql-even {\n  fill-rule: evenodd;\n}\n.ql-snow .ql-thin,\n.ql-snow .ql-stroke.ql-thin {\n  stroke-width: 1;\n}\n.ql-snow .ql-transparent {\n  opacity: 0.4;\n}\n.ql-snow .ql-direction svg:last-child {\n  display: none;\n}\n.ql-snow .ql-direction.ql-active svg:last-child {\n  display: inline;\n}\n.ql-snow .ql-direction.ql-active svg:first-child {\n  display: none;\n}\n.ql-snow .ql-editor h1 {\n  font-size: 2em;\n}\n.ql-snow .ql-editor h2 {\n  font-size: 1.5em;\n}\n.ql-snow .ql-editor h3 {\n  font-size: 1.17em;\n}\n.ql-snow .ql-editor h4 {\n  font-size: 1em;\n}\n.ql-snow .ql-editor h5 {\n  font-size: 0.83em;\n}\n.ql-snow .ql-editor h6 {\n  font-size: 0.67em;\n}\n.ql-snow .ql-editor a {\n  text-decoration: underline;\n}\n.ql-snow .ql-editor blockquote {\n  border-left: 4px solid #ccc;\n  margin-bottom: 5px;\n  margin-top: 5px;\n  padding-left: 16px;\n}\n.ql-snow .ql-editor code,\n.ql-snow .ql-editor pre {\n  background-color: #f0f0f0;\n  border-radius: 3px;\n}\n.ql-snow .ql-editor pre {\n  white-space: pre-wrap;\n  margin-bottom: 5px;\n  margin-top: 5px;\n  padding: 5px 10px;\n}\n.ql-snow .ql-editor code {\n  font-size: 85%;\n  padding-bottom: 2px;\n  padding-top: 2px;\n}\n.ql-snow .ql-editor code:before,\n.ql-snow .ql-editor code:after {\n  content: \"\\A0\";\n  letter-spacing: -2px;\n}\n.ql-snow .ql-editor pre.ql-syntax {\n  background-color: #23241f;\n  color: #f8f8f2;\n  overflow: visible;\n}\n.ql-snow .ql-editor img {\n  max-width: 100%;\n}\n.ql-snow .ql-picker {\n  color: #444;\n  display: inline-block;\n  float: left;\n  font-size: 14px;\n  font-weight: 500;\n  height: 24px;\n  position: relative;\n  vertical-align: middle;\n}\n.ql-snow .ql-picker-label {\n  cursor: pointer;\n  display: inline-block;\n  height: 100%;\n  padding-left: 8px;\n  padding-right: 2px;\n  position: relative;\n  width: 100%;\n}\n.ql-snow .ql-picker-label::before {\n  display: inline-block;\n  line-height: 22px;\n}\n.ql-snow .ql-picker-options {\n  background-color: #fff;\n  display: none;\n  min-width: 100%;\n  padding: 4px 8px;\n  position: absolute;\n  white-space: nowrap;\n}\n.ql-snow .ql-picker-options .ql-picker-item {\n  cursor: pointer;\n  display: block;\n  padding-bottom: 5px;\n  padding-top: 5px;\n}\n.ql-snow .ql-picker.ql-expanded .ql-picker-label {\n  color: #ccc;\n  z-index: 2;\n}\n.ql-snow .ql-picker.ql-expanded .ql-picker-label .ql-fill {\n  fill: #ccc;\n}\n.ql-snow .ql-picker.ql-expanded .ql-picker-label .ql-stroke {\n  stroke: #ccc;\n}\n.ql-snow .ql-picker.ql-expanded .ql-picker-options {\n  display: block;\n  margin-top: -1px;\n  top: 100%;\n  z-index: 1;\n}\n.ql-snow .ql-color-picker,\n.ql-snow .ql-icon-picker {\n  width: 28px;\n}\n.ql-snow .ql-color-picker .ql-picker-label,\n.ql-snow .ql-icon-picker .ql-picker-label {\n  padding: 2px 4px;\n}\n.ql-snow .ql-color-picker .ql-picker-label svg,\n.ql-snow .ql-icon-picker .ql-picker-label svg {\n  right: 4px;\n}\n.ql-snow .ql-icon-picker .ql-picker-options {\n  padding: 4px 0px;\n}\n.ql-snow .ql-icon-picker .ql-picker-item {\n  height: 24px;\n  width: 24px;\n  padding: 2px 4px;\n}\n.ql-snow .ql-color-picker .ql-picker-options {\n  padding: 3px 5px;\n  width: 152px;\n}\n.ql-snow .ql-color-picker .ql-picker-item {\n  border: 1px solid transparent;\n  float: left;\n  height: 16px;\n  margin: 2px;\n  padding: 0px;\n  width: 16px;\n}\n.ql-snow .ql-picker:not(.ql-color-picker):not(.ql-icon-picker) svg {\n  position: absolute;\n  margin-top: -9px;\n  right: 0;\n  top: 50%;\n  width: 18px;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-label]:not([data-label=''])::before,\n.ql-snow .ql-picker.ql-font .ql-picker-label[data-label]:not([data-label=''])::before,\n.ql-snow .ql-picker.ql-size .ql-picker-label[data-label]:not([data-label=''])::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-label]:not([data-label=''])::before,\n.ql-snow .ql-picker.ql-font .ql-picker-item[data-label]:not([data-label=''])::before,\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-label]:not([data-label=''])::before {\n  content: attr(data-label);\n}\n.ql-snow .ql-picker.ql-header {\n  width: 98px;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item::before {\n  content: 'Normal';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-value=\"1\"]::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"1\"]::before {\n  content: 'Heading 1';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-value=\"2\"]::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"2\"]::before {\n  content: 'Heading 2';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-value=\"3\"]::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"3\"]::before {\n  content: 'Heading 3';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-value=\"4\"]::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"4\"]::before {\n  content: 'Heading 4';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-value=\"5\"]::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"5\"]::before {\n  content: 'Heading 5';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-value=\"6\"]::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"6\"]::before {\n  content: 'Heading 6';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"1\"]::before {\n  font-size: 2em;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"2\"]::before {\n  font-size: 1.5em;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"3\"]::before {\n  font-size: 1.17em;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"4\"]::before {\n  font-size: 1em;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"5\"]::before {\n  font-size: 0.83em;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"6\"]::before {\n  font-size: 0.67em;\n}\n.ql-snow .ql-picker.ql-font {\n  width: 108px;\n}\n.ql-snow .ql-picker.ql-font .ql-picker-label::before,\n.ql-snow .ql-picker.ql-font .ql-picker-item::before {\n  content: 'Sans Serif';\n}\n.ql-snow .ql-picker.ql-font .ql-picker-label[data-value=serif]::before,\n.ql-snow .ql-picker.ql-font .ql-picker-item[data-value=serif]::before {\n  content: 'Serif';\n}\n.ql-snow .ql-picker.ql-font .ql-picker-label[data-value=monospace]::before,\n.ql-snow .ql-picker.ql-font .ql-picker-item[data-value=monospace]::before {\n  content: 'Monospace';\n}\n.ql-snow .ql-picker.ql-font .ql-picker-item[data-value=serif]::before {\n  font-family: Georgia, Times New Roman, serif;\n}\n.ql-snow .ql-picker.ql-font .ql-picker-item[data-value=monospace]::before {\n  font-family: Monaco, Courier New, monospace;\n}\n.ql-snow .ql-picker.ql-size {\n  width: 98px;\n}\n.ql-snow .ql-picker.ql-size .ql-picker-label::before,\n.ql-snow .ql-picker.ql-size .ql-picker-item::before {\n  content: 'Normal';\n}\n.ql-snow .ql-picker.ql-size .ql-picker-label[data-value=small]::before,\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=small]::before {\n  content: 'Small';\n}\n.ql-snow .ql-picker.ql-size .ql-picker-label[data-value=large]::before,\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=large]::before {\n  content: 'Large';\n}\n.ql-snow .ql-picker.ql-size .ql-picker-label[data-value=huge]::before,\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=huge]::before {\n  content: 'Huge';\n}\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=small]::before {\n  font-size: 10px;\n}\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=large]::before {\n  font-size: 18px;\n}\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=huge]::before {\n  font-size: 32px;\n}\n.ql-snow .ql-color-picker.ql-background .ql-picker-item {\n  background-color: #fff;\n}\n.ql-snow .ql-color-picker.ql-color .ql-picker-item {\n  background-color: #000;\n}\n.ql-toolbar.ql-snow {\n  border: 1px solid #ccc;\n  box-sizing: border-box;\n  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n  padding: 8px;\n}\n.ql-toolbar.ql-snow .ql-formats {\n  margin-right: 15px;\n}\n.ql-toolbar.ql-snow .ql-picker-label {\n  border: 1px solid transparent;\n}\n.ql-toolbar.ql-snow .ql-picker-options {\n  border: 1px solid transparent;\n  box-shadow: rgba(0,0,0,0.2) 0 2px 8px;\n}\n.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label {\n  border-color: #ccc;\n}\n.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {\n  border-color: #ccc;\n}\n.ql-toolbar.ql-snow .ql-color-picker .ql-picker-item.ql-selected,\n.ql-toolbar.ql-snow .ql-color-picker .ql-picker-item:hover {\n  border-color: #000;\n}\n.ql-toolbar.ql-snow + .ql-container.ql-snow {\n  border-top: 0px;\n}\n.ql-snow .ql-tooltip {\n  background-color: #fff;\n  border: 1px solid #ccc;\n  box-shadow: 0px 0px 5px #ddd;\n  color: #444;\n  padding: 5px 12px;\n  white-space: nowrap;\n}\n.ql-snow .ql-tooltip::before {\n  content: \"Visit URL:\";\n  line-height: 26px;\n  margin-right: 8px;\n}\n.ql-snow .ql-tooltip input[type=text] {\n  display: none;\n  border: 1px solid #ccc;\n  font-size: 13px;\n  height: 26px;\n  margin: 0px;\n  padding: 3px 5px;\n  width: 170px;\n}\n.ql-snow .ql-tooltip a.ql-preview {\n  display: inline-block;\n  max-width: 200px;\n  overflow-x: hidden;\n  text-overflow: ellipsis;\n  vertical-align: top;\n}\n.ql-snow .ql-tooltip a.ql-action::after {\n  border-right: 1px solid #ccc;\n  content: 'Edit';\n  margin-left: 16px;\n  padding-right: 8px;\n}\n.ql-snow .ql-tooltip a.ql-remove::before {\n  content: 'Remove';\n  margin-left: 8px;\n}\n.ql-snow .ql-tooltip a {\n  line-height: 26px;\n}\n.ql-snow .ql-tooltip.ql-editing a.ql-preview,\n.ql-snow .ql-tooltip.ql-editing a.ql-remove {\n  display: none;\n}\n.ql-snow .ql-tooltip.ql-editing input[type=text] {\n  display: inline-block;\n}\n.ql-snow .ql-tooltip.ql-editing a.ql-action::after {\n  border-right: 0px;\n  content: 'Save';\n  padding-right: 0px;\n}\n.ql-snow .ql-tooltip[data-mode=link]::before {\n  content: \"Enter link:\";\n}\n.ql-snow .ql-tooltip[data-mode=formula]::before {\n  content: \"Enter formula:\";\n}\n.ql-snow .ql-tooltip[data-mode=video]::before {\n  content: \"Enter video:\";\n}\n.ql-snow a {\n  color: #06c;\n}\n.ql-container.ql-snow {\n  border: 1px solid #ccc;\n}\n",""])},271:function(n,t,e){"use strict";t.byteLength=function(n){var t=q(n),e=t[0],l=t[1];return 3*(e+l)/4-l},t.toByteArray=function(n){for(var t,e=q(n),l=e[0],i=e[1],a=new o(function(n,t,e){return 3*(t+e)/4-e}(0,l,i)),s=0,c=i>0?l-4:l,d=0;d<c;d+=4)t=r[n.charCodeAt(d)]<<18|r[n.charCodeAt(d+1)]<<12|r[n.charCodeAt(d+2)]<<6|r[n.charCodeAt(d+3)],a[s++]=t>>16&255,a[s++]=t>>8&255,a[s++]=255&t;2===i&&(t=r[n.charCodeAt(d)]<<2|r[n.charCodeAt(d+1)]>>4,a[s++]=255&t);1===i&&(t=r[n.charCodeAt(d)]<<10|r[n.charCodeAt(d+1)]<<4|r[n.charCodeAt(d+2)]>>2,a[s++]=t>>8&255,a[s++]=255&t);return a},t.fromByteArray=function(n){for(var t,e=n.length,r=e%3,o=[],i=0,a=e-r;i<a;i+=16383)o.push(c(n,i,i+16383>a?a:i+16383));1===r?(t=n[e-1],o.push(l[t>>2]+l[t<<4&63]+"==")):2===r&&(t=(n[e-2]<<8)+n[e-1],o.push(l[t>>10]+l[t>>4&63]+l[t<<2&63]+"="));return o.join("")};for(var l=[],r=[],o="undefined"!=typeof Uint8Array?Uint8Array:Array,i="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",a=0,s=i.length;a<s;++a)l[a]=i[a],r[i.charCodeAt(a)]=a;function q(n){var t=n.length;if(t%4>0)throw new Error("Invalid string. Length must be a multiple of 4");var e=n.indexOf("=");return-1===e&&(e=t),[e,e===t?0:4-e%4]}function c(n,t,e){for(var r,o,i=[],a=t;a<e;a+=3)r=(n[a]<<16&16711680)+(n[a+1]<<8&65280)+(255&n[a+2]),i.push(l[(o=r)>>18&63]+l[o>>12&63]+l[o>>6&63]+l[63&o]);return i.join("")}r["-".charCodeAt(0)]=62,r["_".charCodeAt(0)]=63},272:function(n,t){t.read=function(n,t,e,l,r){var o,i,a=8*r-l-1,s=(1<<a)-1,q=s>>1,c=-7,d=e?r-1:0,f=e?-1:1,p=n[t+d];for(d+=f,o=p&(1<<-c)-1,p>>=-c,c+=a;c>0;o=256*o+n[t+d],d+=f,c-=8);for(i=o&(1<<-c)-1,o>>=-c,c+=l;c>0;i=256*i+n[t+d],d+=f,c-=8);if(0===o)o=1-q;else{if(o===s)return i?NaN:1/0*(p?-1:1);i+=Math.pow(2,l),o-=q}return(p?-1:1)*i*Math.pow(2,o-l)},t.write=function(n,t,e,l,r,o){var i,a,s,q=8*o-r-1,c=(1<<q)-1,d=c>>1,f=23===r?Math.pow(2,-24)-Math.pow(2,-77):0,p=l?0:o-1,u=l?1:-1,h=t<0||0===t&&1/t<0?1:0;for(t=Math.abs(t),isNaN(t)||t===1/0?(a=isNaN(t)?1:0,i=c):(i=Math.floor(Math.log(t)/Math.LN2),t*(s=Math.pow(2,-i))<1&&(i--,s*=2),(t+=i+d>=1?f/s:f*Math.pow(2,1-d))*s>=2&&(i++,s/=2),i+d>=c?(a=0,i=c):i+d>=1?(a=(t*s-1)*Math.pow(2,r),i+=d):(a=t*Math.pow(2,d-1)*Math.pow(2,r),i=0));r>=8;n[e+p]=255&a,p+=u,a/=256,r-=8);for(i=i<<r|a,q+=r;q>0;n[e+p]=255&i,p+=u,i/=256,q-=8);n[e+p-u]|=128*h}},273:function(n,t){var e={}.toString;n.exports=Array.isArray||function(n){return"[object Array]"==e.call(n)}}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[4],{
+
+/***/ "./node_modules/react-compound-timer/build/components/Timer/Timer.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/react-compound-timer/build/components/Timer/Timer.js ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var TimerModel_1 = __webpack_require__(/*! ../../lib/models/TimerModel */ "./node_modules/react-compound-timer/build/lib/models/TimerModel.js");
+var TimerContext = react_1.default.createContext({
+    ms: 0,
+    s: 0,
+    m: 0,
+    h: 0,
+    d: 0,
+    formatValue: function (value) { return String(value); },
+});
+var TimerValue = function (_a) {
+    var unit = _a.unit, formatValue = _a.formatValue;
+    return (react_1.default.createElement(Timer.Consumer, null, function (props) {
+        var format = formatValue || props.formatValue;
+        return format(props[unit]) || null;
+    }));
+};
+var Milliseconds = function (props) { return (react_1.default.createElement(TimerValue, __assign({ unit: "ms" }, props))); };
+var Seconds = function (props) { return (react_1.default.createElement(TimerValue, __assign({ unit: "s" }, props))); };
+var Minutes = function (props) { return (react_1.default.createElement(TimerValue, __assign({ unit: "m" }, props))); };
+var Hours = function (props) { return (react_1.default.createElement(TimerValue, __assign({ unit: "h" }, props))); };
+var Days = function (props) { return (react_1.default.createElement(TimerValue, __assign({ unit: "d" }, props))); };
+var Timer = /** @class */ (function (_super) {
+    __extends(Timer, _super);
+    function Timer(props) {
+        var _this = _super.call(this, props) || this;
+        var _a = _this.props, initialTime = _a.initialTime, direction = _a.direction, timeToUpdate = _a.timeToUpdate, lastUnit = _a.lastUnit, checkpoints = _a.checkpoints;
+        _this.timer = new TimerModel_1.TimerModel({
+            initialTime: initialTime,
+            direction: direction,
+            timeToUpdate: timeToUpdate,
+            lastUnit: lastUnit,
+            checkpoints: checkpoints,
+            onChange: _this.setState.bind(_this),
+        });
+        _this.state = __assign({}, _this.timer.timeParts, { timerState: 'INITED' });
+        _this.start = _this.start.bind(_this);
+        _this.pause = _this.pause.bind(_this);
+        _this.resume = _this.resume.bind(_this);
+        _this.stop = _this.stop.bind(_this);
+        _this.reset = _this.reset.bind(_this);
+        _this.setTime = _this.setTime.bind(_this);
+        _this.getTime = _this.getTime.bind(_this);
+        _this.getTimerState = _this.getTimerState.bind(_this);
+        _this.setDirection = _this.setDirection.bind(_this);
+        _this.setCheckpoints = _this.setCheckpoints.bind(_this);
+        return _this;
+    }
+    Timer.getUI = function (children, renderProps) {
+        if (children === null) {
+            return null;
+        }
+        if (Array.isArray(children) || react_1.default.isValidElement(children)) {
+            return children;
+        }
+        if (children.prototype && children.prototype.isReactComponent) {
+            return react_1.default.createElement(children, renderProps);
+        }
+        if (typeof children === 'function') {
+            return children(renderProps);
+        }
+        throw new Error('Please use one of the supported APIs for children');
+    };
+    Timer.prototype.componentDidMount = function () {
+        var startImmediately = this.props.startImmediately;
+        startImmediately && this.timer.start();
+    };
+    Timer.prototype.componentWillUnmount = function () {
+        this.timer.stop();
+    };
+    Timer.prototype.render = function () {
+        var _a = this, start = _a.start, pause = _a.pause, resume = _a.resume, stop = _a.stop, reset = _a.reset, getTime = _a.getTime, getTimerState = _a.getTimerState, setTime = _a.setTime, setDirection = _a.setDirection, setCheckpoints = _a.setCheckpoints;
+        var _b = this.state, ms = _b.ms, s = _b.s, m = _b.m, h = _b.h, d = _b.d, timerState = _b.timerState;
+        var _c = this.props, formatValue = _c.formatValue, children = _c.children;
+        return (react_1.default.createElement(TimerContext.Provider, { value: { ms: ms, s: s, m: m, h: h, d: d, formatValue: formatValue } }, Timer.getUI(children, {
+            start: start,
+            resume: resume,
+            pause: pause,
+            stop: stop,
+            reset: reset,
+            getTime: getTime,
+            getTimerState: getTimerState,
+            setTime: setTime,
+            setDirection: setDirection,
+            setCheckpoints: setCheckpoints,
+            timerState: timerState,
+        })));
+    };
+    Timer.prototype.setTime = function (time) {
+        this.timer.setTime(time);
+    };
+    Timer.prototype.getTime = function () {
+        return this.timer.getTime();
+    };
+    Timer.prototype.getTimerState = function () {
+        return this.timer.state;
+    };
+    Timer.prototype.setDirection = function (direction) {
+        this.timer.setDirection(direction);
+    };
+    Timer.prototype.setCheckpoints = function (checkpoints) {
+        this.timer.setCheckpoints(checkpoints);
+    };
+    Timer.prototype.start = function () {
+        this.timer.start();
+        this.props.onStart();
+    };
+    Timer.prototype.stop = function () {
+        this.timer.stop();
+        this.props.onStop();
+    };
+    Timer.prototype.pause = function () {
+        this.timer.pause();
+        this.props.onPause();
+    };
+    Timer.prototype.reset = function () {
+        this.timer.reset();
+        this.props.onReset();
+    };
+    Timer.prototype.resume = function () {
+        this.timer.resume();
+        this.props.onResume();
+    };
+    Timer.Consumer = TimerContext.Consumer;
+    Timer.Milliseconds = Milliseconds;
+    Timer.Seconds = Seconds;
+    Timer.Minutes = Minutes;
+    Timer.Hours = Hours;
+    Timer.Days = Days;
+    Timer.defaultProps = {
+        timeToUpdate: 1000,
+        direction: 'forward',
+        initialTime: 0,
+        startImmediately: true,
+        lastUnit: 'd',
+        checkpoints: [],
+        children: null,
+        formatValue: function (value) { return String(value); },
+        onStart: function () { },
+        onResume: function () { },
+        onPause: function () { },
+        onStop: function () { },
+        onReset: function () { },
+    };
+    return Timer;
+}(react_1.default.PureComponent));
+exports.default = Timer;
+//# sourceMappingURL=Timer.js.map
+
+/***/ }),
+
+/***/ "./node_modules/react-compound-timer/build/hook/useTimer.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/react-compound-timer/build/hook/useTimer.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var TimerModel_1 = __webpack_require__(/*! ../lib/models/TimerModel */ "./node_modules/react-compound-timer/build/lib/models/TimerModel.js");
+var getTimeParts_1 = __importDefault(__webpack_require__(/*! ../lib/helpers/getTimeParts */ "./node_modules/react-compound-timer/build/lib/helpers/getTimeParts.js"));
+function useTimer(_a) {
+    var _b = _a === void 0 ? {} : _a, _c = _b.initialTime, initialTime = _c === void 0 ? 0 : _c, _d = _b.direction, direction = _d === void 0 ? "forward" : _d, _e = _b.timeToUpdate, timeToUpdate = _e === void 0 ? 1000 : _e, _f = _b.startImmediately, startImmediately = _f === void 0 ? true : _f, _g = _b.lastUnit, lastUnit = _g === void 0 ? "d" : _g, _h = _b.checkpoints, checkpoints = _h === void 0 ? [] : _h, onStart = _b.onStart, onResume = _b.onResume, onPause = _b.onPause, onStop = _b.onStop, onReset = _b.onReset;
+    var _j = react_1.useState(__assign({}, getTimeParts_1.default(initialTime < 0 ? 0 : initialTime, lastUnit), { state: 'INITED' })), timerValues = _j[0], setTimerValues = _j[1];
+    var timer = react_1.useMemo(function () {
+        return new TimerModel_1.TimerModel({
+            initialTime: initialTime,
+            direction: direction,
+            timeToUpdate: timeToUpdate,
+            lastUnit: lastUnit,
+            checkpoints: checkpoints,
+            onChange: function (timerValue) {
+                return setTimerValues(function (state) { return (__assign({}, state, timerValue)); });
+            },
+        });
+    }, []);
+    var setTime = react_1.useCallback(function (time) { return timer.setTime(time); }, [timer]);
+    var getTime = react_1.useCallback(function () { return timer.getTime(); }, [timer]);
+    var getTimerState = react_1.useCallback(function () { return timer.state; }, [timer]);
+    var setDirection = react_1.useCallback(function (direction) { return timer.setDirection(direction); }, [timer]);
+    var setLastUnit = react_1.useCallback(function (lastUnit) { return timer.setLastUnit(lastUnit); }, [timer]);
+    var setCheckpoints = react_1.useCallback(function (checkpoints) { return timer.setCheckpoints(checkpoints); }, [timer]);
+    var setTimeToUpdate = react_1.useCallback(function (interval) { return timer.setTimeToUpdate(interval); }, [timer]);
+    var start = react_1.useCallback(function () { timer.start(); onStart && onStart(); }, [timer, onStart]);
+    var stop = react_1.useCallback(function () { timer.stop(); onStop && onStop(); }, [timer, onStop]);
+    var pause = react_1.useCallback(function () { timer.pause(); onPause && onPause(); }, [timer, onPause]);
+    var reset = react_1.useCallback(function () { timer.reset(); onReset && onReset(); }, [timer, onReset]);
+    var resume = react_1.useCallback(function () { timer.resume(); onResume && onResume(); }, [timer, onResume]);
+    var controls = react_1.useMemo(function () { return ({
+        start: start,
+        stop: stop,
+        pause: pause,
+        reset: reset,
+        resume: resume,
+        setTime: setTime,
+        getTime: getTime,
+        getTimerState: getTimerState,
+        setDirection: setDirection,
+        setLastUnit: setLastUnit,
+        setTimeToUpdate: setTimeToUpdate,
+        setCheckpoints: setCheckpoints,
+    }); }, [
+        start, stop, pause, reset, resume,
+        setTime, getTime, getTimerState, setDirection, setLastUnit, setTimeToUpdate, setCheckpoints,
+    ]);
+    react_1.useEffect(function () {
+        if (startImmediately) {
+            start();
+        }
+        return function () {
+            stop();
+        };
+    }, []);
+    return {
+        controls: controls,
+        value: timerValues,
+    };
+}
+exports.useTimer = useTimer;
+//# sourceMappingURL=useTimer.js.map
+
+/***/ }),
+
+/***/ "./node_modules/react-compound-timer/build/index.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/react-compound-timer/build/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var Timer_1 = __importDefault(__webpack_require__(/*! ./components/Timer/Timer */ "./node_modules/react-compound-timer/build/components/Timer/Timer.js"));
+var getTimeParts_1 = __importDefault(__webpack_require__(/*! ./lib/helpers/getTimeParts */ "./node_modules/react-compound-timer/build/lib/helpers/getTimeParts.js"));
+exports.getTimeParts = getTimeParts_1.default;
+var useTimer_1 = __webpack_require__(/*! ./hook/useTimer */ "./node_modules/react-compound-timer/build/hook/useTimer.js");
+exports.useTimer = useTimer_1.useTimer;
+exports.default = Timer_1.default;
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/react-compound-timer/build/lib/helpers/getTimeParts.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/react-compound-timer/build/lib/helpers/getTimeParts.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+function getTimeParts(time, lastUnit) {
+    var units = ['ms', 's', 'm', 'h', 'd'];
+    var lastUnitIndex = units.findIndex(function (unit) { return unit === lastUnit; });
+    var dividers = [1000, 60, 60, 24, 1];
+    var dividersAcc = [1, 1000, 60000, 3600000, 86400000];
+    var startValue = {
+        ms: 0,
+        s: 0,
+        m: 0,
+        h: 0,
+        d: 0,
+    };
+    var output = units.reduce(function (obj, unit, index) {
+        if (index > lastUnitIndex) {
+            obj[unit] = 0;
+        }
+        else if (index === lastUnitIndex) {
+            obj[unit] = Math.floor(time / dividersAcc[index]);
+        }
+        else {
+            obj[unit] = Math.floor(time / dividersAcc[index]) % dividers[index];
+        }
+        return obj;
+    }, startValue);
+    return output;
+}
+exports.default = getTimeParts;
+//# sourceMappingURL=getTimeParts.js.map
+
+/***/ }),
+
+/***/ "./node_modules/react-compound-timer/build/lib/helpers/now.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/react-compound-timer/build/lib/helpers/now.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+function now() {
+    if (typeof window === 'undefined' || !('performance' in window)) {
+        return Date.now();
+    }
+    return performance.now();
+}
+exports.default = now;
+//# sourceMappingURL=now.js.map
+
+/***/ }),
+
+/***/ "./node_modules/react-compound-timer/build/lib/models/TimerModel.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/react-compound-timer/build/lib/models/TimerModel.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var getTimeParts_1 = __importDefault(__webpack_require__(/*! ../helpers/getTimeParts */ "./node_modules/react-compound-timer/build/lib/helpers/getTimeParts.js"));
+var now_1 = __importDefault(__webpack_require__(/*! ../helpers/now */ "./node_modules/react-compound-timer/build/lib/helpers/now.js"));
+var TimerState_1 = __importDefault(__webpack_require__(/*! ./TimerState */ "./node_modules/react-compound-timer/build/lib/models/TimerState.js"));
+var TimerModel = /** @class */ (function () {
+    function TimerModel(_a) {
+        var initialTime = _a.initialTime, direction = _a.direction, timeToUpdate = _a.timeToUpdate, lastUnit = _a.lastUnit, checkpoints = _a.checkpoints, onChange = _a.onChange;
+        this.internalTime = now_1.default();
+        this.initialTime = initialTime;
+        this.time = initialTime;
+        this.direction = direction;
+        this.timeToUpdate = timeToUpdate;
+        this.lastUnit = lastUnit;
+        this.checkpoints = checkpoints;
+        this.innerState = new TimerState_1.default(onChange);
+        this.onChange = onChange;
+        this.timerId = null;
+    }
+    Object.defineProperty(TimerModel.prototype, "state", {
+        get: function () {
+            return this.innerState.getState();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TimerModel.prototype, "timeParts", {
+        get: function () {
+            return this.getTimeParts(this.computeTime());
+        },
+        enumerable: true,
+        configurable: true
+    });
+    TimerModel.prototype.getTimeParts = function (time) {
+        return getTimeParts_1.default(time, this.lastUnit);
+    };
+    TimerModel.prototype.setTime = function (time) {
+        this.internalTime = now_1.default();
+        this.initialTime = time;
+        this.time = this.initialTime;
+        this.onChange(this.getTimeParts(this.time));
+    };
+    TimerModel.prototype.getTime = function () {
+        return this.time;
+    };
+    TimerModel.prototype.setLastUnit = function (lastUnit) {
+        if (this.innerState.isPlaying()) {
+            this.pause();
+            this.lastUnit = lastUnit;
+            this.resume(true);
+        }
+        else {
+            this.lastUnit = lastUnit;
+        }
+    };
+    TimerModel.prototype.setTimeToUpdate = function (interval) {
+        if (this.innerState.isPlaying()) {
+            this.pause();
+            this.timeToUpdate = interval;
+            this.resume();
+        }
+        else {
+            this.timeToUpdate = interval;
+        }
+    };
+    TimerModel.prototype.setDirection = function (direction) {
+        this.direction = direction;
+    };
+    TimerModel.prototype.setCheckpoints = function (checkpoints) {
+        this.checkpoints = checkpoints;
+    };
+    TimerModel.prototype.start = function () {
+        if (this.innerState.setPlaying()) {
+            this.setTimerInterval(true);
+        }
+    };
+    TimerModel.prototype.resume = function (callImmediately) {
+        if (callImmediately === void 0) { callImmediately = false; }
+        if (!this.innerState.isStopped() && this.innerState.setPlaying()) {
+            this.setTimerInterval(callImmediately);
+        }
+    };
+    TimerModel.prototype.pause = function () {
+        if (this.innerState.setPaused()) {
+            clearInterval(this.timerId);
+        }
+    };
+    TimerModel.prototype.stop = function () {
+        if (this.innerState.setStopped()) {
+            clearInterval(this.timerId);
+        }
+    };
+    TimerModel.prototype.reset = function () {
+        this.time = this.initialTime;
+        this.onChange(this.getTimeParts(this.time));
+    };
+    TimerModel.prototype.setTimerInterval = function (callImmediately) {
+        var _this = this;
+        if (callImmediately === void 0) { callImmediately = false; }
+        if (this.timerId) {
+            clearInterval(this.timerId);
+        }
+        this.internalTime = now_1.default();
+        var repeatedFunc = function () {
+            var oldTime = _this.time;
+            var updatedTime = _this.computeTime();
+            _this.onChange(_this.getTimeParts(updatedTime));
+            _this.checkpoints.map(function (_a) {
+                var time = _a.time, callback = _a.callback;
+                var checkForForward = time > oldTime && time <= updatedTime;
+                var checkForBackward = time < oldTime && time >= updatedTime;
+                var checkIntersection = _this.direction === 'backward' ?
+                    checkForBackward :
+                    checkForForward;
+                if (checkIntersection) {
+                    callback();
+                }
+            });
+        };
+        callImmediately && this.onChange(this.getTimeParts(this.time));
+        this.timerId = window.setInterval(repeatedFunc, this.timeToUpdate);
+    };
+    TimerModel.prototype.computeTime = function () {
+        if (this.innerState.isPlaying()) {
+            var currentInternalTime = now_1.default();
+            var delta = Math.abs(currentInternalTime - this.internalTime);
+            switch (this.direction) {
+                case 'forward':
+                    this.time = this.time + delta;
+                    this.internalTime = currentInternalTime;
+                    return this.time;
+                case 'backward': {
+                    this.time = this.time - delta;
+                    this.internalTime = currentInternalTime;
+                    if (this.time < 0) {
+                        this.stop();
+                        return 0;
+                    }
+                    return this.time;
+                }
+                default:
+                    return this.time;
+            }
+        }
+        return this.time;
+    };
+    return TimerModel;
+}());
+exports.TimerModel = TimerModel;
+//# sourceMappingURL=TimerModel.js.map
+
+/***/ }),
+
+/***/ "./node_modules/react-compound-timer/build/lib/models/TimerState.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/react-compound-timer/build/lib/models/TimerState.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.INITED = 'INITED';
+exports.PLAYING = 'PLAYING';
+exports.PAUSED = 'PAUSED';
+exports.STOPPED = 'STOPPED';
+var TimerState = /** @class */ (function () {
+    function TimerState(onChangeStatus) {
+        var _this = this;
+        if (onChangeStatus === void 0) { onChangeStatus = function (obj) { }; }
+        this.state = exports.INITED;
+        this.onChange = function () { return onChangeStatus({ state: _this.state }); };
+        this.state = exports.INITED;
+    }
+    TimerState.prototype.getState = function () {
+        return this.state;
+    };
+    TimerState.prototype.setInited = function () {
+        if (this.state === exports.INITED) {
+            return false;
+        }
+        this.state = exports.INITED;
+        this.onChange();
+        return true;
+    };
+    TimerState.prototype.isInited = function () {
+        return this.state === exports.INITED;
+    };
+    TimerState.prototype.setPlaying = function () {
+        if (this.state === exports.PLAYING) {
+            return false;
+        }
+        this.state = exports.PLAYING;
+        this.onChange();
+        return true;
+    };
+    TimerState.prototype.isPlaying = function () {
+        return this.state === exports.PLAYING;
+    };
+    TimerState.prototype.setPaused = function () {
+        if (this.state !== exports.PLAYING) {
+            return false;
+        }
+        this.state = exports.PAUSED;
+        this.onChange();
+        return true;
+    };
+    TimerState.prototype.isPaused = function () {
+        return this.state === exports.PAUSED;
+    };
+    TimerState.prototype.setStopped = function () {
+        if (this.state === exports.INITED) {
+            return false;
+        }
+        this.state = exports.STOPPED;
+        this.onChange();
+        return true;
+    };
+    TimerState.prototype.isStopped = function () {
+        return this.state === exports.STOPPED;
+    };
+    return TimerState;
+}());
+exports.default = TimerState;
+//# sourceMappingURL=TimerState.js.map
+
+/***/ })
+
+}]);

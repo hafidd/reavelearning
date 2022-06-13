@@ -1,1 +1,454 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[0],{138:function(e,t,r){"use strict";var n=function(e){};e.exports=function(e,t,r,o,i,u,a,s){if(n(t),!e){var l;if(void 0===t)l=new Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var c=[r,o,i,u,a,s],f=0;(l=new Error(t.replace(/%s/g,function(){return c[f++]}))).name="Invariant Violation"}throw l.framesToPop=1,l}}},139:function(e,t,r){"use strict";e.exports={}},240:function(e,t,r){e.exports=r(241)()},241:function(e,t,r){"use strict";var n=r(127),o=r(138),i=r(242);e.exports=function(){function e(e,t,r,n,u,a){a!==i&&o(!1,"Calling PropTypes validators directly is not supported by the `prop-types` package. Use PropTypes.checkPropTypes() to call them. Read more at http://fb.me/use-check-prop-types")}function t(){return e}e.isRequired=e;var r={array:e,bool:e,func:e,number:e,object:e,string:e,symbol:e,any:e,arrayOf:t,element:e,instanceOf:t,node:e,objectOf:t,oneOf:t,oneOfType:t,shape:t,exact:t};return r.checkPropTypes=n,r.PropTypes=r,r}},242:function(e,t,r){"use strict";e.exports="SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED"},243:function(e,t,r){"use strict";e.exports=r(244)},244:function(e,t,r){"use strict";var n=r(60),o=r(139),i=r(127),u="function"==typeof Symbol&&Symbol.for,a=u?Symbol.for("react.element"):60103,s=u?Symbol.for("react.call"):60104,l=u?Symbol.for("react.return"):60105,c=u?Symbol.for("react.portal"):60106,f=u?Symbol.for("react.fragment"):60107,p="function"==typeof Symbol&&Symbol.iterator;function h(e){for(var t=arguments.length-1,r="Minified React error #"+e+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant="+e,n=0;n<t;n++)r+="&args[]="+encodeURIComponent(arguments[n+1]);throw(t=Error(r+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.")).name="Invariant Violation",t.framesToPop=1,t}var d={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};function y(e,t,r){this.props=e,this.context=t,this.refs=o,this.updater=r||d}function m(e,t,r){this.props=e,this.context=t,this.refs=o,this.updater=r||d}function v(){}y.prototype.isReactComponent={},y.prototype.setState=function(e,t){"object"!=typeof e&&"function"!=typeof e&&null!=e&&h("85"),this.updater.enqueueSetState(this,e,t,"setState")},y.prototype.forceUpdate=function(e){this.updater.enqueueForceUpdate(this,e,"forceUpdate")},v.prototype=y.prototype;var b=m.prototype=new v;function x(e,t,r){this.props=e,this.context=t,this.refs=o,this.updater=r||d}b.constructor=m,n(b,y.prototype),b.isPureReactComponent=!0;var g=x.prototype=new v;g.constructor=x,n(g,y.prototype),g.unstable_isAsyncReactComponent=!0,g.render=function(){return this.props.children};var w={current:null},_=Object.prototype.hasOwnProperty,O={key:!0,ref:!0,__self:!0,__source:!0};function k(e,t,r){var n,o={},i=null,u=null;if(null!=t)for(n in void 0!==t.ref&&(u=t.ref),void 0!==t.key&&(i=""+t.key),t)_.call(t,n)&&!O.hasOwnProperty(n)&&(o[n]=t[n]);var s=arguments.length-2;if(1===s)o.children=r;else if(1<s){for(var l=Array(s),c=0;c<s;c++)l[c]=arguments[c+2];o.children=l}if(e&&e.defaultProps)for(n in s=e.defaultProps)void 0===o[n]&&(o[n]=s[n]);return{$$typeof:a,type:e,key:i,ref:u,props:o,_owner:w.current}}function E(e){return"object"==typeof e&&null!==e&&e.$$typeof===a}var A=/\/+/g,P=[];function T(e,t,r,n){if(P.length){var o=P.pop();return o.result=e,o.keyPrefix=t,o.func=r,o.context=n,o.count=0,o}return{result:e,keyPrefix:t,func:r,context:n,count:0}}function S(e){e.result=null,e.keyPrefix=null,e.func=null,e.context=null,e.count=0,10>P.length&&P.push(e)}function j(e,t,r,n){var o=typeof e;"undefined"!==o&&"boolean"!==o||(e=null);var i=!1;if(null===e)i=!0;else switch(o){case"string":case"number":i=!0;break;case"object":switch(e.$$typeof){case a:case s:case l:case c:i=!0}}if(i)return r(n,e,""===t?"."+R(e,0):t),1;if(i=0,t=""===t?".":t+":",Array.isArray(e))for(var u=0;u<e.length;u++){var f=t+R(o=e[u],u);i+=j(o,f,r,n)}else if(null==e?f=null:f="function"==typeof(f=p&&e[p]||e["@@iterator"])?f:null,"function"==typeof f)for(e=f.call(e),u=0;!(o=e.next()).done;)i+=j(o=o.value,f=t+R(o,u++),r,n);else"object"===o&&h("31","[object Object]"===(r=""+e)?"object with keys {"+Object.keys(e).join(", ")+"}":r,"");return i}function R(e,t){return"object"==typeof e&&null!==e&&null!=e.key?function(e){var t={"=":"=0",":":"=2"};return"$"+(""+e).replace(/[=:]/g,function(e){return t[e]})}(e.key):t.toString(36)}function C(e,t){e.func.call(e.context,t,e.count++)}function N(e,t,r){var n=e.result,o=e.keyPrefix;e=e.func.call(e.context,t,e.count++),Array.isArray(e)?q(e,n,r,i.thatReturnsArgument):null!=e&&(E(e)&&(t=o+(!e.key||t&&t.key===e.key?"":(""+e.key).replace(A,"$&/")+"/")+r,e={$$typeof:a,type:e.type,key:t,ref:e.ref,props:e.props,_owner:e._owner}),n.push(e))}function q(e,t,r,n,o){var i="";null!=r&&(i=(""+r).replace(A,"$&/")+"/"),t=T(t,i,n,o),null==e||j(e,"",N,t),S(t)}var I={Children:{map:function(e,t,r){if(null==e)return e;var n=[];return q(e,n,null,t,r),n},forEach:function(e,t,r){if(null==e)return e;t=T(null,null,t,r),null==e||j(e,"",C,t),S(t)},count:function(e){return null==e?0:j(e,"",i.thatReturnsNull,null)},toArray:function(e){var t=[];return q(e,t,null,i.thatReturnsArgument),t},only:function(e){return E(e)||h("143"),e}},Component:y,PureComponent:m,unstable_AsyncComponent:x,Fragment:f,createElement:k,cloneElement:function(e,t,r){var o=n({},e.props),i=e.key,u=e.ref,s=e._owner;if(null!=t){if(void 0!==t.ref&&(u=t.ref,s=w.current),void 0!==t.key&&(i=""+t.key),e.type&&e.type.defaultProps)var l=e.type.defaultProps;for(c in t)_.call(t,c)&&!O.hasOwnProperty(c)&&(o[c]=void 0===t[c]&&void 0!==l?l[c]:t[c])}var c=arguments.length-2;if(1===c)o.children=r;else if(1<c){l=Array(c);for(var f=0;f<c;f++)l[f]=arguments[f+2];o.children=l}return{$$typeof:a,type:e.type,key:i,ref:u,props:o,_owner:s}},createFactory:function(e){var t=k.bind(null,e);return t.type=e,t},isValidElement:E,version:"16.2.0",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{ReactCurrentOwner:w,assign:n}},M=Object.freeze({default:I}),U=M&&I||M;e.exports=U.default?U.default:U},38:function(e,t,r){var n;n=function(e,t){return function(e){var t={};function r(n){if(t[n])return t[n].exports;var o=t[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,r),o.l=!0,o.exports}return r.m=e,r.c=t,r.i=function(e){return e},r.d=function(e,t,n){r.o(e,t)||Object.defineProperty(e,t,{configurable:!1,enumerable:!0,get:n})},r.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return r.d(t,"a",t),t},r.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},r.p="",r(r.s=2)}([function(t,r){t.exports=e},function(e,r){e.exports=t},function(e,t,r){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.SteppedLine=t.Line=t.SteppedLineTo=void 0;var n=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n])}return e},o=function(){return function(e,t){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return function(e,t){var r=[],n=!0,o=!1,i=void 0;try{for(var u,a=e[Symbol.iterator]();!(n=(u=a.next()).done)&&(r.push(u.value),!t||r.length!==t);n=!0);}catch(e){o=!0,i=e}finally{try{!n&&a.return&&a.return()}finally{if(o)throw i}}return r}(e,t);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),i=function(){function e(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}return function(t,r,n){return r&&e(t.prototype,r),n&&e(t,n),t}}(),u=l(r(0)),a=r(1),s=l(a);function l(e){return e&&e.__esModule?e:{default:e}}function c(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function f(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function p(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}var h={x:.5,y:.5},d={borderColor:u.default.string,borderStyle:u.default.string,borderWidth:u.default.number,className:u.default.string,zIndex:u.default.number},y=function(e){function t(){return c(this,t),f(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return p(t,a.Component),i(t,[{key:"componentWillMount",value:function(){this.fromAnchor=this.parseAnchor(this.props.fromAnchor),this.toAnchor=this.parseAnchor(this.props.toAnchor),this.delay=this.parseDelay(this.props.delay)}},{key:"componentDidMount",value:function(){this.delay=this.parseDelay(this.props.delay),void 0!==this.delay&&this.deferUpdate(this.delay)}},{key:"componentWillReceiveProps",value:function(e){e.fromAnchor!==this.props.fromAnchor&&(this.fromAnchor=this.parseAnchor(this.props.fromAnchor)),e.toAnchor!==this.props.toAnchor&&(this.toAnchor=this.parseAnchor(this.props.toAnchor)),this.delay=this.parseDelay(e.delay),void 0!==this.delay&&this.deferUpdate(this.delay)}},{key:"componentWillUnmount",value:function(){this.t&&(clearTimeout(this.t),this.t=null)}},{key:"shouldComponentUpdate",value:function(){return!0}},{key:"deferUpdate",value:function(e){var t=this;this.t&&clearTimeout(this.t),this.t=setTimeout(function(){return t.forceUpdate()},e)}},{key:"parseDelay",value:function(e){if(void 0===e)return e;if("boolean"==typeof e&&e)return 0;var t=parseInt(e,10);if(isNaN(t)||!isFinite(t))throw new Error('LinkTo could not parse delay attribute "'+e+'"');return t}},{key:"parseAnchorPercent",value:function(e){var t=parseFloat(e)/100;if(isNaN(t)||!isFinite(t))throw new Error('LinkTo could not parse percent value "'+e+'"');return t}},{key:"parseAnchorText",value:function(e){switch(e){case"top":return{y:0};case"left":return{x:0};case"middle":return{y:.5};case"center":return{x:.5};case"bottom":return{y:1};case"right":return{x:1}}return null}},{key:"parseAnchor",value:function(e){if(!e)return h;var t=e.split(" ");if(t.length>2)throw new Error('LinkTo anchor format is "<x> <y>"');var r=o(t,2),n=r[0],i=r[1];return Object.assign({},h,n?this.parseAnchorText(n)||{x:this.parseAnchorPercent(n)}:{},i?this.parseAnchorText(i)||{y:this.parseAnchorPercent(i)}:{})}},{key:"findElement",value:function(e){return document.getElementsByClassName(e)[0]}},{key:"detect",value:function(){var e=this.props,t=e.from,r=e.to,n=e.within,o=void 0===n?"":n,i=this.findElement(t),u=this.findElement(r);if(!i||!u)return!1;var a=this.fromAnchor,s=this.toAnchor,l=i.getBoundingClientRect(),c=u.getBoundingClientRect(),f=window.pageXOffset,p=window.pageYOffset;if(o){var h=this.findElement(o).getBoundingClientRect();f-=h.left+(window.pageXOffset||document.documentElement.scrollLeft),p-=h.top+(window.pageYOffset||document.documentElement.scrollTop)}var d=l.left+l.width*a.x+f,y=c.left+c.width*s.x+f;return{x0:d,y0:l.top+l.height*a.y+p,x1:y,y1:c.top+c.height*s.y+p}}},{key:"render",value:function(){var e=this.detect();return e?s.default.createElement(m,n({},e,this.props)):null}}]),t}();t.default=y,y.propTypes=Object.assign({},{from:u.default.string.isRequired,to:u.default.string.isRequired,within:u.default.string,fromAnchor:u.default.string,toAnchor:u.default.string,delay:u.default.oneOfType([u.default.number,u.default.bool])},d);t.SteppedLineTo=function(e){function t(){return c(this,t),f(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return p(t,y),i(t,[{key:"render",value:function(){var e=this.detect();return e?s.default.createElement(v,n({},e,this.props)):null}}]),t}();var m=t.Line=function(e){function t(){return c(this,t),f(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return p(t,a.PureComponent),i(t,[{key:"componentDidMount",value:function(){this.within.appendChild(this.el)}},{key:"componentWillUnmount",value:function(){this.within.removeChild(this.el)}},{key:"findElement",value:function(e){return document.getElementsByClassName(e)[0]}},{key:"render",value:function(){var e=this,t=this.props,r=t.x0,o=t.y0,i=t.x1,u=t.y1,a=t.within,l=void 0===a?"":a;this.within=l?this.findElement(l):document.body;var c=u-o,f=i-r,p=180*Math.atan2(c,f)/Math.PI,h={position:"absolute",top:o+"px",left:r+"px",width:Math.sqrt(f*f+c*c)+"px",zIndex:Number.isFinite(this.props.zIndex)?String(this.props.zIndex):"1",transform:"rotate("+p+"deg)",transformOrigin:"0 0"},d={borderTopColor:this.props.borderColor||"#f00",borderTopStyle:this.props.borderStyle||"solid",borderTopWidth:this.props.borderWidth||1},y={className:this.props.className,style:Object.assign({},d,h)};return s.default.createElement("div",{className:"react-lineto-placeholder"},s.default.createElement("div",n({ref:function(t){e.el=t}},y)))}}]),t}();m.propTypes=Object.assign({},{x0:u.default.number.isRequired,y0:u.default.number.isRequired,x1:u.default.number.isRequired,y1:u.default.number.isRequired},d);var v=t.SteppedLine=function(e){function t(){return c(this,t),f(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return p(t,a.PureComponent),i(t,[{key:"render",value:function(){return"h"===this.props.orientation?this.renderHorizontal():this.renderVertical()}},{key:"renderVertical",value:function(){var e=this.props,t=e.x0,r=e.y0,o=e.x1,i=e.y1,u=o-t;if(0===u)return s.default.createElement(m,this.props);var a=this.props.borderWidth||1,l=(r+i)/2,c=u>0?a:0,f=Math.min(t,o)-c,p=Math.max(t,o);return s.default.createElement("div",{className:"react-steppedlineto"},s.default.createElement(m,n({},this.props,{x0:t,y0:r,x1:t,y1:l})),s.default.createElement(m,n({},this.props,{x0:o,y0:i,x1:o,y1:l})),s.default.createElement(m,n({},this.props,{x0:f,y0:l,x1:p,y1:l})))}},{key:"renderHorizontal",value:function(){var e=this.props,t=e.x0,r=e.y0,o=e.x1,i=e.y1,u=i-r;if(0===u)return s.default.createElement(m,this.props);var a=this.props.borderWidth||1,l=(t+o)/2,c=u<0?a:0,f=Math.min(r,i)-c,p=Math.max(r,i);return s.default.createElement("div",{className:"react-steppedlineto"},s.default.createElement(m,n({},this.props,{x0:t,y0:r,x1:l,y1:r})),s.default.createElement(m,n({},this.props,{x0:o,y0:i,x1:l,y1:i})),s.default.createElement(m,n({},this.props,{x0:l,y0:f,x1:l,y1:p})))}}]),t}();v.propTypes=Object.assign({},{x0:u.default.number.isRequired,y0:u.default.number.isRequired,x1:u.default.number.isRequired,y1:u.default.number.isRequired,orientation:u.default.oneOf(["h","v"])},d)}])},e.exports=n(r(240),r(243))}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[0],{
+
+/***/ "./resources/js/components/html/BasicForm.js":
+/*!***************************************************!*\
+  !*** ./resources/js/components/html/BasicForm.js ***!
+  \***************************************************/
+/*! exports provided: TextForm, SelectForm, RadioForm, RadioForm2, TextAreaForm */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TextForm", function() { return TextForm; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectForm", function() { return SelectForm; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RadioForm", function() { return RadioForm; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RadioForm2", function() { return RadioForm2; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TextAreaForm", function() { return TextAreaForm; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function TextForm(props) {
+  var type = props.type,
+      name = props.name,
+      placeholder = props.placeholder,
+      handleChange = props.handleChange,
+      value = props.value,
+      required = props.required,
+      label = props.label,
+      labelW = props.labelW,
+      formW = props.formW,
+      formtext = props.formtext,
+      form = props.form;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    className: "col-md-" + (labelW || 2) + " col-form-label"
+  }, label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-" + (formW || 6)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    form: form,
+    type: type || 'text',
+    className: "form-control",
+    name: name,
+    placeholder: placeholder,
+    onChange: handleChange,
+    value: value || '',
+    required: required
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", {
+    className: "form-text text-muted"
+  }, formtext)));
+}
+
+function SelectForm(props) {
+  var name = props.name,
+      placeholder = props.placeholder,
+      options = props.options,
+      handleChange = props.handleChange,
+      value = props.value,
+      required = props.required,
+      label = props.label,
+      labelW = props.labelW,
+      formW = props.formW;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    className: "col-md-" + (labelW || 2) + " col-form-label"
+  }, label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-" + (formW || 4)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+    className: "custom-select",
+    name: name,
+    onChange: handleChange,
+    value: value || '',
+    required: required
+  }, placeholder && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: ""
+  }, placeholder), options.map(function (option) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+      key: option.id,
+      value: option.id
+    }, option.nama);
+  }))));
+}
+
+function RadioForm(props) {
+  var name = props.name,
+      options = props.options,
+      handleChange = props.handleChange,
+      value = props.value,
+      required = props.required,
+      label = props.label,
+      labelW = props.labelW,
+      formW = props.formW,
+      form = props.form,
+      _props$labelClass = props.labelClass,
+      labelClass = _props$labelClass === void 0 ? "" : _props$labelClass;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    className: "col-md-" + (labelW || 2) + " col-form-label"
+  }, label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-" + (formW || 4),
+    style: {
+      marginTop: "0.4rem"
+    }
+  }, options.map(function (option) {
+    var labelC = option[2] ? option[2] : labelClass;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "form-check form-check-inline",
+      key: option[0]
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      className: "form-check-label ".concat(labelC)
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      form: form,
+      className: "form-check-input",
+      type: "radio",
+      name: name,
+      onChange: handleChange,
+      value: option[0],
+      checked: value == option[0],
+      required: required
+    }), " ", option[1]));
+  })));
+}
+
+function RadioForm2(props) {
+  var name = props.name,
+      options = props.options,
+      handleChange = props.handleChange,
+      value = props.value,
+      required = props.required,
+      label = props.label,
+      labelW = props.labelW,
+      formW = props.formW,
+      form = props.form,
+      _props$labelClass2 = props.labelClass,
+      labelClass = _props$labelClass2 === void 0 ? "" : _props$labelClass2;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    className: "col-md-" + (labelW || 2) + " col-form-label"
+  }, label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-" + (formW || 4),
+    style: {
+      marginTop: "0.4rem"
+    }
+  }, options.map(function (option) {
+    var labelC = option[2] ? option[2] : labelClass;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "form-check form-check-inline",
+      key: option[0]
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      className: "form-check-label ".concat(labelC)
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      form: form,
+      className: "form-check-input",
+      type: "radio",
+      name: name,
+      onChange: handleChange,
+      value: option[0],
+      checked: value === option[0],
+      required: required
+    }), " ", option[1]));
+  })));
+}
+
+function TextAreaForm(props) {
+  var name = props.name,
+      handleChange = props.handleChange,
+      value = props.value,
+      placeholder = props.placeholder,
+      required = props.required,
+      label = props.label,
+      labelW = props.labelW,
+      formW = props.formW;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    className: "col-md-" + (labelW || 2) + " col-form-label"
+  }, label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-" + (formW || 4)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+    style: {
+      width: '100%'
+    },
+    className: "form-control",
+    name: name,
+    onChange: handleChange,
+    value: value || '',
+    placeholder: placeholder,
+    required: required
+  })));
+}
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/html/Pagination.js":
+/*!****************************************************!*\
+  !*** ./resources/js/components/html/Pagination.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_paginate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-paginate */ "./node_modules/react-paginate/dist/react-paginate.js");
+/* harmony import */ var react_paginate__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_paginate__WEBPACK_IMPORTED_MODULE_1__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+function Pagination(props) {
+  var _React$createElement;
+
+  var pageData = props.pageData,
+      handlePageClick = props.handlePageClick,
+      page = props.page;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "pagination",
+    style: {
+      display: pageData.pageCount > 1 ? 'block' : 'none'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_paginate__WEBPACK_IMPORTED_MODULE_1___default.a, (_React$createElement = {
+    previousLabel: "prev",
+    nextLabel: 'next',
+    breakLabel: '...',
+    breakClassName: 'break-me',
+    pageCount: pageData.pageCount,
+    marginPagesDisplayed: 1,
+    pageRangeDisplayed: 3,
+    onPageChange: handlePageClick,
+    initialPage: page - 1,
+    containerClassName: 'pagination pagination-sm',
+    pageClassName: 'page-item',
+    previousClassName: 'page-item',
+    nextClassName: 'page-item',
+    breakClassNamee: 'page-item',
+    nextLinkClassName: 'page-link'
+  }, _defineProperty(_React$createElement, "previousClassName", 'page-link'), _defineProperty(_React$createElement, "pageLinkClassName", 'page-link'), _defineProperty(_React$createElement, "breakLinkClassName", 'page-link'), _defineProperty(_React$createElement, "activeClassName", 'active'), _React$createElement)));
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Pagination);
+
+/***/ }),
+
+/***/ "./resources/js/components/html/Template.js":
+/*!**************************************************!*\
+  !*** ./resources/js/components/html/Template.js ***!
+  \**************************************************/
+/*! exports provided: PageTitle, Alert, Loading, DefaultImage, NotifMessage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PageTitle", function() { return PageTitle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Alert", function() { return Alert; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Loading", function() { return Loading; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DefaultImage", function() { return DefaultImage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotifMessage", function() { return NotifMessage; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function PageTitle(props) {
+  var _props$title = props.title,
+      title = _props$title === void 0 ? 'Judul Halaman' : _props$title,
+      _props$navs = props.navs,
+      navs = _props$navs === void 0 ? [] : _props$navs;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row mt-2 mb-0"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-12"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+    className: "float-left"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, title)), navs.map(function (n, key) {
+    if (n.show) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      key: key,
+      value: n.action,
+      onClick: n.clickHandle,
+      className: "btn ".concat(n.className ? n.className : 'btn-primary', " float-right ml-1")
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "fas ".concat(n.icon ? n.icon : 'fa-plus')
+    }), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, n.text || ''));
+  })));
+}
+
+function Alert(props) {
+  var message = props.message,
+      type = props.type,
+      clickHandle = props.clickHandle,
+      _props$html = props.html,
+      html = _props$html === void 0 ? false : _props$html;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "alert alert-".concat(type ? type : 'info'),
+    style: {
+      overflow: 'hidden'
+    },
+    role: "alert"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "float-left"
+  }, html ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    dangerouslySetInnerHTML: {
+      __html: message
+    }
+  }) : message), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-xs float-right",
+    onClick: function onClick() {
+      return clickHandle();
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-times"
+  })));
+}
+
+function Loading(props) {
+  return props.loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "col-12 text-center"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-spinner fa-spin"
+  }), " ", props.text ? props.text : 'Loading...') : '';
+}
+
+function DefaultImage(props) {
+  var _props$text = props.text,
+      text = _props$text === void 0 ? "" : _props$text,
+      w = props.w,
+      h = props.h;
+  var r = Math.floor(Math.random() * 255);
+  var g = Math.floor(Math.random() * 255);
+  var b = Math.floor(Math.random() * 255);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    style: {
+      width: w ? w : '100%',
+      height: h ? h : 150,
+      backgroundColor: "rgb(".concat(r, ", ").concat(g, ", ").concat(b, ")"),
+      color: 'white',
+      textShadow: "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
+      textAlign: 'middle',
+      fontSize: 60,
+      paddingTop: 30,
+      textTransform: 'uppercase'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, text.substring(0, 1), " ", text.substring(text.length - 1, text.length)));
+}
+
+function NotifMessage(props) {
+  var text = props.text,
+      _props$success = props.success,
+      success = _props$success === void 0 ? true : _props$success;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas ".concat(!success ? 'fa-exclamation text-danger' : 'fa-check text-success')
+  }), " ", text);
+}
+
+function ModalWarpper(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal",
+    style: {
+      display: 'block',
+      overflow: 'auto'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-dialog modal-lg",
+    role: "document"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-content"
+  }, props.children)));
+}
+
+
+
+/***/ }),
+
+/***/ "./resources/js/utils/useForm.js":
+/*!***************************************!*\
+  !*** ./resources/js/utils/useForm.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+var useForm = function useForm(callback) {
+  var fields = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(fields),
+      _useState2 = _slicedToArray(_useState, 2),
+      values = _useState2[0],
+      setValues = _useState2[1];
+
+  var handleSubmit = function handleSubmit(event) {
+    if (event) event.preventDefault();
+    callback();
+  };
+
+  var handleChange = function handleChange(event) {
+    event.persist();
+    setValues(function (values) {
+      return _objectSpread(_objectSpread({}, values), {}, _defineProperty({}, event.target.name, event.target.value));
+    });
+  };
+
+  function getErrors() {
+    var msg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    var errMsg = [];
+    errMsg = Object.keys(msg).map(function (key) {
+      return msg[key].map(function (item) {
+        return item;
+      });
+    });
+    return errMsg;
+  }
+
+  return {
+    handleChange: handleChange,
+    handleSubmit: handleSubmit,
+    setValues: setValues,
+    values: values,
+    getErrors: getErrors
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (useForm);
+
+/***/ })
+
+}]);

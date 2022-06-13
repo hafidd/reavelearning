@@ -113,8 +113,9 @@ class MulaiKuisController extends Controller
         $soals = KuisSoal::with(['soal' => function ($q) {
             $q->select('id', 'type', 'pertanyaan', 'kode');
         }])->where(['kuis_id' => $mapel_kuis->kuis_id])->get();
+        //print_r($soals->toArray()); exit;
         $soals_r = array_map(function ($data) {
-            if ($data['soal']['type'] == 4) {
+            if ($data['soal'] && $data['soal']['type'] == 4) {
                 $q = preg_replace('/\[\[(.*?)\]\]/i', "[[]]", json_decode($data['soal']['pertanyaan'])->q);
                 $data['soal']['pertanyaan'] = json_encode(['q' => $q]);
             }
