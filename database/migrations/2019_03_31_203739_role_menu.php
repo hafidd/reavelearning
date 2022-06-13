@@ -53,11 +53,13 @@ class RoleMenu extends Migration
      */
     public function down()
     {
+      //  DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('role');
         });
         Schema::dropIfExists('menurole');
         Schema::dropIfExists('roles');
         Schema::dropIfExists('menus');
+     //   DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }
