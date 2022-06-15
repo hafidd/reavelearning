@@ -110,9 +110,9 @@ class DatabaseSeeder extends Seeder
             ],
             7 => [
               'id' => '59',
-              'name' => 'Profil',
-              'path' => 'profil',
-              'component' => 'Profil',
+              'name' => 'Profile',
+              'path' => 'profile',
+              'component' => 'Profile',
               'desc' => '-',
               'order' => '1',
               'parent' => NULL,
